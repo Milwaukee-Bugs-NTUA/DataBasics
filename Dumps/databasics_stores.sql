@@ -34,8 +34,18 @@ CREATE TABLE `stores` (
   `opening_hour` time NOT NULL,
   `closing_hour` time NOT NULL,
   PRIMARY KEY (`store_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stores`
+--
+
+LOCK TABLES `stores` WRITE;
+/*!40000 ALTER TABLE `stores` DISABLE KEYS */;
+INSERT INTO `stores` VALUES (1,264,'Argiroupoli','vel',126,'Z3983','07:00:00','20:00:00'),(2,460,'Kaissariani','pharetra',57,'200639','07:00:00','20:00:00'),(3,579,'Zografou','augue.',39,'61499','07:00:00','20:00:00'),(4,622,'Marousi','Donec',86,'4273 GR','07:00:00','20:00:00'),(5,159,'Kifisia','sed',62,'M0V 4A0','07:00:00','20:00:00'),(6,564,'Kipseli','mauris.',66,'9380','07:00:00','20:00:00'),(7,269,'Patissia','aliquet',128,'465723','07:00:00','20:00:00'),(8,587,'Syntagma','Aenean',32,'6242','07:00:00','20:00:00'),(9,342,'Thessaloniki','metus.',103,'Y98 1GT','07:00:00','20:00:00'),(10,667,'Patra','aliquet',4,'95665-69976','07:00:00','20:00:00');
+/*!40000 ALTER TABLE `stores` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -46,4 +56,4 @@ CREATE TABLE `stores` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-26 20:00:34
+-- Dump completed on 2020-04-29 22:26:00
