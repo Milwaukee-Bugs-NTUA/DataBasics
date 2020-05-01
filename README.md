@@ -9,5 +9,8 @@ This repo was created for version control of the project implemented during Data
 For the directories of this project, we choose the structure mentioned above:
 
 * The source code for the back-end is located in the folder `back-end`.
-* Files for the ER-model are located in the folder `ER`
+* Files for the ER-model are located in the folder `ER`.
+* The folder `SQL Database Dumps` includes the files for generating the database and its test data.
 * The source code for the front-end is locate in the folder `front-end`.
+
+As far as the dump files are concerned, we do not recommend you to include them in your project repos. However, we did just for presentation purposes to the teachers of this class.
