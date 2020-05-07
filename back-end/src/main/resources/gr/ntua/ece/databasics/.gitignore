@@ -1,0 +1,2 @@
+# Ingore local system specific database connection configuration
+app.properties

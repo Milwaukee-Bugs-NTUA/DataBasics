@@ -1,0 +1,18 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+# Ignore Editor specific configuration directory
+.idea
+# Ignore Gradle build output directory
+build
+
+# Backup files etc.
+*~
+\#*\#
+*.bak
+*.backup
+.*.sw[a-z]
+
+# Mac OS specific
+.DS_Store
+# Windows specific
+Thumbs.db*
