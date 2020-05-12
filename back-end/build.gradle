@@ -21,6 +21,7 @@ repositories {
 }
 
 dependencies {
+    compile project(':data-model')                             // Basic Data-model project
     compile "javax.servlet:javax.servlet-api:3.1.0"            //the Java servlet libraries
     compile "org.restlet.jee:org.restlet:2.4.2"                //for writing RESTful APIs
     compile "org.restlet.jee:org.restlet.ext.fileupload:2.4.2" //for handling file uploads in Restlet
