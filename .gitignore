@@ -1,0 +1,15 @@
+# Ignore Editor specific configuration directory
+.idea
+.vscode
+
+# Backup files etc.
+*~
+\#*\#
+*.bak
+*.backup
+.*.sw[a-z]
+
+# Mac OS specific
+.DS_Store
+# Windows specific
+Thumbs.db*

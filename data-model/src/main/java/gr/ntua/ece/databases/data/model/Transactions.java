@@ -23,14 +23,6 @@ public class Transactions {
         this.transactionContains = transactionContains;
     }
 
-    public OfferedInStore getOfferedInStore() {
-        return offeredInStore;
-    }
-
-    public void setOfferedInStore(OfferedInStore offeredInStore) {
-        this.offeredInStore = offeredInStore;
-    }
-
     public Timestamp getDateTime() {
         return dateTime;
     }
