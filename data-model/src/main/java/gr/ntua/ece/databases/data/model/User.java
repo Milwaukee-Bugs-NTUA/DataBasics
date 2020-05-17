@@ -16,7 +16,7 @@ enum MaritalStatus {
 }
 
 public class User {
-    private Long cardNumber;
+    private long cardNumber;
     private String email;
     private String password;
     private String firstName;
