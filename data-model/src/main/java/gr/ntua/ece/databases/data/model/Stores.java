@@ -1,6 +1,7 @@
 package gr.ntua.ece.databases.data.model;
 
 import java.util.*;
+import java.sql.Time;
 
 public class Stores {
     private long storeID;
@@ -9,8 +10,8 @@ public class Stores {
     private String addressStreet;
     private int addressNumber;
     private String addressPostalCode;
-    private Date openingHour;
-    private Date closingHour;
+    private Time openingHour;
+    private Time closingHour;
 
     public long getStoreID() {
         return storeID;
@@ -60,19 +61,19 @@ public class Stores {
         this.addressPostalCode = addressPostalCode;
     }
 
-    public Date getOpeningHour() {
+    public Time getOpeningHour() {
         return openingHour;
     }
 
-    public void setOpeningHour(Date openingHour) {
+    public void setOpeningHour(Time openingHour) {
         this.openingHour = openingHour;
     }
 
-    public Date getClosingHour() {
+    public Time getClosingHour() {
         return closingHour;
     }
 
-    public void setClosingHour(Date closingHour) {
+    public void setClosingHour(Time closingHour) {
         this.closingHour = closingHour;
     }
 
@@ -80,7 +81,7 @@ public class Stores {
 
     }
 
-    public Stores(long storeID, int size, String addressCity, String addressStreet, int addressNumber, String addressPostalCode, Date openingHour, Date closingHour) {
+    public Stores(long storeID, int size, String addressCity, String addressStreet, int addressNumber, String addressPostalCode, Time openingHour, Time closingHour) {
         this.storeID = storeID;
         this.size = size;
         this.addressCity = addressCity;

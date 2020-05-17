@@ -1,7 +1,7 @@
 package gr.ntua.ece.databases.data.model;
 
 import java.util.*;
-import java.sql.*;
+import java.sql.Timestamp;
 
 enum PaymentMethod {
     cash,
@@ -9,17 +9,17 @@ enum PaymentMethod {
 }
 
 public class Transactions {
-    private dateTime datetime;
+    private Timestamp dateTime;
     private long  cardNumber;
     private float totalCost;
     private PaymentMethod paymentMethod;
 
-    public dateTime getDatetime() {
-        return datetime;
+    public Timestamp getDateTime() {
+        return dateTime;
     }
 
-    public void setDatetime(dateTime datetime) {
-        this.datetime = datetime;
+    public void setDateTime(Timestamp dateTime) {
+        this.dateTime = dateTime;
     }
 
     public long getCardNumber() {
@@ -50,8 +50,8 @@ public class Transactions {
         
     }
 
-    public Transactions(dateTime datetime, long cardNumber, float totalCost, gr.ntua.ece.databases.data.model.PaymentMethod paymentMethod) {
-        this.datetime = datetime;
+    public Transactions(Timestamp dateTime, long cardNumber, float totalCost, gr.ntua.ece.databases.data.model.PaymentMethod paymentMethod) {
+        this.dateTime = dateTime;
         this.cardNumber = cardNumber;
         this.totalCost = totalCost;
         this.paymentMethod = paymentMethod;
