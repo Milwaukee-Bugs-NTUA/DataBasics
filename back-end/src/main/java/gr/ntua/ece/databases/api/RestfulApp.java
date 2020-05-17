@@ -1,6 +1,6 @@
-package gr.ntua.ece.databasics.api;
+package gr.ntua.ece.databases.api;
 
-import gr.ntua.ece.databasics.api.resource.*;
+import gr.ntua.ece.databases.api.resource.*;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.data.Method;
@@ -19,6 +19,7 @@ public class RestfulApp extends Application {
         //Perform a heath check
         System.out.println("Just before router part");
         router.attach("/HealthCheck", HealthCheck.class);
+        router.attach("/profile/{UserId}",UserProfile.class);
         
         //Enable CORS for all origins (don't use this in a production service)
         CorsFilter corsFilter = new CorsFilter(getContext(), router);

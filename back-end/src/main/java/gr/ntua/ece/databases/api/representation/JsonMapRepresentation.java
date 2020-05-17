@@ -1,4 +1,4 @@
-package gr.ntua.ece.databasics.api.representation;
+package gr.ntua.ece.databases.api.representation;
 
 import com.google.gson.Gson;
 import org.restlet.data.MediaType;

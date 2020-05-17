@@ -16,7 +16,7 @@ enum MaritalStatus {
 }
 
 public class User {
-    private long cardNumber;
+    private Long cardNumber;
     private String email;
     private String password;
     private String firstName;
@@ -24,13 +24,24 @@ public class User {
     private Date dateOfBirth;
     private Sex sex;
     private String addressStreet;
-    private int addressNumber;
+    private int  addressNumber;
     private String addressPostalCode;
     private String addressCity;
     private String phoneNumber;
     private MaritalStatus maritalStatus;
-    private int numberOfChildren;
-    private int points;
+    private int  numberOfChildren;
+    private int  points;
+
+    public User() {
+    }
+
+    public Long getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(Long cardNumber) {
+        this.cardNumber = cardNumber;
+    }
 
     public String getEmail() {
         return email;
@@ -80,6 +91,10 @@ public class User {
         this.sex = sex;
     }
 
+    public void setSex(String sex) {
+        this.sex = Sex.valueOf(sex);
+    }
+
     public String getAddressStreet() {
         return addressStreet;
     }
@@ -88,11 +103,11 @@ public class User {
         this.addressStreet = addressStreet;
     }
 
-    public int getAddressNumber() {
+    public int  getAddressNumber() {
         return addressNumber;
     }
 
-    public void setAddressNumber(int addressNumber) {
+    public void setAddressNumber(int  addressNumber) {
         this.addressNumber = addressNumber;
     }
 
@@ -128,23 +143,24 @@ public class User {
         this.maritalStatus = maritalStatus;
     }
 
-    public int getNumberOfChildren() {
+    public void setMaritalStatus(String maritalStatus) {
+        this.maritalStatus = MaritalStatus.valueOf(maritalStatus);
+    }
+
+    public int  getNumberOfChildren() {
         return numberOfChildren;
     }
 
-    public void setNumberOfChildren(int numberOfChildren) {
+    public void setNumberOfChildren(int  numberOfChildren) {
         this.numberOfChildren = numberOfChildren;
     }
 
-    public int getPoints() {
+    public int  getPoints() {
         return points;
     }
 
-    public void setPoints(int points) {
+    public void setPoints(int  points) {
         this.points = points;
-    }
-
-    public User() {
     }
 
 }

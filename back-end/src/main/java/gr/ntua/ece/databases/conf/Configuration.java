@@ -1,6 +1,6 @@
-package gr.ntua.ece.databasics.conf;
+package gr.ntua.ece.databases.conf;
 
-import gr.ntua.ece.databasics.data.DataAccess;
+import gr.ntua.ece.databases.data.DataAccess;
 
 import java.util.Properties;
 import java.util.Set;
