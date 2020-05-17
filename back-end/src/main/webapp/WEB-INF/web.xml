@@ -11,7 +11,7 @@
 
     <context-param>
         <param-name>properties</param-name>
-        <param-value>/gr/ntua/ece/databasics/app.properties</param-value>
+        <param-value>/gr/ntua/ece/databases/app.properties</param-value>
     </context-param>
 
     <!-- //////// -->
@@ -24,7 +24,7 @@
         <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
         <init-param>
             <param-name>org.restlet.application</param-name>
-            <param-value>gr.ntua.ece.databasics.api.RestfulApp</param-value>
+            <param-value>gr.ntua.ece.databases.api.RestfulApp</param-value>
         </init-param>
     </servlet>
 
@@ -40,7 +40,7 @@
 
 
     <listener>
-        <listener-class>gr.ntua.ece.databasics.conf.Listener</listener-class>
+        <listener-class>gr.ntua.ece.databases.conf.Listener</listener-class>
     </listener>
 
 </web-app>
