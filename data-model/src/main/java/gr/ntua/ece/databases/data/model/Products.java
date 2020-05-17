@@ -3,16 +3,25 @@ package gr.ntua.ece.databases.data.model;
 import java.util.*;
 
 public class Products {
-    private long barcode;
+    private Long barcode;
     private String name;
     private String brandName;
     private float price;
+    private OfferedInStore offeredInStore;
 
-    public long getBarcode() {
+    public OfferedInStore getOfferedInStore() {
+        return offeredInStore;
+    }
+
+    public void setOfferedInStore(OfferedInStore offeredInStore) {
+        this.offeredInStore = offeredInStore;
+    }
+
+    public Long getBarcode() {
         return barcode;
     }
 
-    public void setBarcode(long barcode) {
+    public void setBarcode(Long barcode) {
         this.barcode = barcode;
     }
 
@@ -44,10 +53,14 @@ public class Products {
 
     }
 
-    public Products(long barcode, String name, String brandName, float price) {
+    /*
+    public Products(Long barcode, String name, String brandName, float price, OfferedInStore offeredInStore) {
         this.barcode = barcode;
         this.name = name;
         this.brandName = brandName;
         this.price = price;
+        this.offeredInStore = offeredInStore;
     }
+
+     */
 }

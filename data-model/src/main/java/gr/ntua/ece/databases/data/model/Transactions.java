@@ -10,9 +10,26 @@ enum PaymentMethod {
 
 public class Transactions {
     private Timestamp dateTime;
-    private long  cardNumber;
+    private Long  cardNumber;
     private float totalCost;
     private PaymentMethod paymentMethod;
+    private Contains transactionContains;
+
+    public Contains getTransactionContains() {
+        return transactionContains;
+    }
+
+    public void setTransactionContains(Contains transactionContains) {
+        this.transactionContains = transactionContains;
+    }
+
+    public OfferedInStore getOfferedInStore() {
+        return offeredInStore;
+    }
+
+    public void setOfferedInStore(OfferedInStore offeredInStore) {
+        this.offeredInStore = offeredInStore;
+    }
 
     public Timestamp getDateTime() {
         return dateTime;
@@ -22,11 +39,11 @@ public class Transactions {
         this.dateTime = dateTime;
     }
 
-    public long getCardNumber() {
+    public Long getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(long cardNumber) {
+    public void setCardNumber(Long cardNumber) {
         this.cardNumber = cardNumber;
     }
 
@@ -50,10 +67,14 @@ public class Transactions {
         
     }
 
-    public Transactions(Timestamp dateTime, long cardNumber, float totalCost, gr.ntua.ece.databases.data.model.PaymentMethod paymentMethod) {
+    /*
+    public Transactions(Timestamp dateTime, Long cardNumber, float totalCost, gr.ntua.ece.databases.data.model.PaymentMethod paymentMethod, Contains transactionContains) {
         this.dateTime = dateTime;
         this.cardNumber = cardNumber;
         this.totalCost = totalCost;
         this.paymentMethod = paymentMethod;
+        this.transactionContains = transactionContains;
     }
+
+     */
 }

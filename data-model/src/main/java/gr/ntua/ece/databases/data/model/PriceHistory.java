@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 public class PriceHistory {
     private Timestamp startingDate;
-    private long barcode;
+    private Long barcode;
     private Timestamp endingDate;
     private float oldPrice;
 
@@ -17,11 +17,11 @@ public class PriceHistory {
         this.startingDate = startingDate;
     }
 
-    public long getBarcode() {
+    public Long getBarcode() {
         return barcode;
     }
 
-    public void setBarcode(long barcode) {
+    public void setBarcode(Long barcode) {
         this.barcode = barcode;
     }
 
@@ -45,10 +45,12 @@ public class PriceHistory {
 
     }
 
-    public PriceHistory(Timestamp startingDate, long barcode, Timestamp endingDate, float oldPrice) {
+    /*
+    public PriceHistory(Timestamp startingDate, Long barcode, Timestamp endingDate, float oldPrice) {
         this.startingDate = startingDate;
         this.barcode = barcode;
         this.endingDate = endingDate;
         this.oldPrice = oldPrice;
     }
+     */
 }

@@ -4,7 +4,7 @@ import java.util.*;
 import java.sql.Time;
 
 public class Stores {
-    private long storeID;
+    private Long storeID;
     private int size;
     private String addressCity;
     private String addressStreet;
@@ -13,11 +13,11 @@ public class Stores {
     private Time openingHour;
     private Time closingHour;
 
-    public long getStoreID() {
+    public Long getStoreID() {
         return storeID;
     }
 
-    public void setStoreID(long storeID) {
+    public void setStoreID(Long storeID) {
         this.storeID = storeID;
     }
 
@@ -81,7 +81,8 @@ public class Stores {
 
     }
 
-    public Stores(long storeID, int size, String addressCity, String addressStreet, int addressNumber, String addressPostalCode, Time openingHour, Time closingHour) {
+    /*
+    public Stores(Long storeID, int size, String addressCity, String addressStreet, int addressNumber, String addressPostalCode, Time openingHour, Time closingHour) {
         this.storeID = storeID;
         this.size = size;
         this.addressCity = addressCity;
@@ -91,4 +92,6 @@ public class Stores {
         this.openingHour = openingHour;
         this.closingHour = closingHour;
     }
+
+     */
 }
