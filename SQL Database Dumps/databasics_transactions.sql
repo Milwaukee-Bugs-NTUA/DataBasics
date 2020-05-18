@@ -29,8 +29,11 @@ CREATE TABLE `transactions` (
   `card_number` bigint(255) NOT NULL,
   `total_cost` float NOT NULL,
   `payment_method` enum('cash','card') NOT NULL,
+  `purchased_from` bigint(255) NOT NULL,
   PRIMARY KEY (`datetime`,`card_number`),
   KEY `card_id_idx` (`card_number`),
+  KEY `FK_transactions_stores_idx` (`purchased_from`),
+  CONSTRAINT `FK_transactions_stores` FOREIGN KEY (`purchased_from`) REFERENCES `stores` (`store_id`),
   CONSTRAINT `card_number` FOREIGN KEY (`card_number`) REFERENCES `users` (`card_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -53,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-29 22:26:01
+-- Dump completed on 2020-05-18 20:01:37
