@@ -17,7 +17,6 @@ public class RestfulApp extends Application {
         Router router = new Router(getContext());
 
         //Perform a heath check
-        System.out.println("Just before router part");
         router.attach("/HealthCheck", HealthCheck.class);
         router.attach("/profile/{UserId}",UserProfile.class);
         
