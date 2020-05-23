@@ -12,7 +12,7 @@ public class UserInfo {
     private List<Time> happyHoursEntry;
     private List<Time> happyHoursDeparture;
     private Long meanTransactionsPerWeek;
-    private Long getMeanTransactionsPerMonth;
+    private Long meanTransactionsPerMonth;
 
     private UserInfo userInfo;
 
@@ -75,12 +75,12 @@ public class UserInfo {
         this.meanTransactionsPerWeek = meanTransactionsPerWeek;
     }
 
-    public Long getGetMeanTransactionsPerMonth() {
-        return getMeanTransactionsPerMonth;
+    public Long getMeanTransactionsPerMonth() {
+        return meanTransactionsPerMonth;
     }
 
-    public void setGetMeanTransactionsPerMonth(Long getMeanTransactionsPerMonth) {
-        this.getMeanTransactionsPerMonth = getMeanTransactionsPerMonth;
+    public void setMeanTransactionsPerMonth(Long meanTransactionsPerMonth) {
+        this.meanTransactionsPerMonth = meanTransactionsPerMonth;
     }
 
     public gr.ntua.ece.databases.data.model.UserInfo getUserInfo() {
