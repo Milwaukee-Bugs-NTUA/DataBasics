@@ -12,7 +12,7 @@ enum MaritalStatus {
     single,
     married,
     divorced,
-    inRelationship
+    in_relationship
 }
 
 public class User {
