@@ -1,9 +1,9 @@
-package gr.ntua.ece.databasics.api.resource;
+package gr.ntua.ece.databases.api.resource;
 
-import gr.ntua.ece.databasics.api.representation.JsonMapRepresentation;
-import gr.ntua.ece.databasics.conf.Configuration;
-import gr.ntua.ece.databasics.data.DataAccess;
-import gr.ntua.ece.databasics.data.DataAccessException;
+import gr.ntua.ece.databases.api.representation.JsonMapRepresentation;
+import gr.ntua.ece.databases.conf.Configuration;
+import gr.ntua.ece.databases.data.DataAccess;
+import gr.ntua.ece.databases.data.DataAccessException;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;

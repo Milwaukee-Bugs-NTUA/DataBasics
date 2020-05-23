@@ -1,4 +1,4 @@
-package gr.ntua.ece.databasics.data;
+package gr.ntua.ece.databases.data;
 
 public class DataAccessException extends Exception {
 

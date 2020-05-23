@@ -1,4 +1,4 @@
-package gr.ntua.ece.databasics.data;
+package gr.ntua.ece.databases.data;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,6 +10,8 @@ import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import gr.ntua.ece.databases.data.model.*;
 
 public class DataAccess {
 
@@ -50,4 +52,38 @@ public class DataAccess {
         }
     }
 
+    public User fetchUserProfile(Long userId) throws DataAccessException {
+
+        Object[] sqlParamsForUser = new Object[]{userId};
+
+        String sqlQueryForUser = "select * from users where card_number = ?";
+
+        try {
+            User user = jdbcTemplate.queryForObject(sqlQueryForUser, sqlParamsForUser, (ResultSet rs, int rowNum) -> {
+                User dataload = new User();
+                dataload.setCardNumber(rs.getLong(1));
+                dataload.setEmail(rs.getString(2));
+                dataload.setFirstName(rs.getString(4));
+                dataload.setLastName(rs.getString(5));
+                dataload.setDateOfBirth(rs.getDate(6));
+                dataload.setSex(rs.getString(7));
+                dataload.setAddressStreet(rs.getString(8));
+                dataload.setAddressNumber(rs.getInt(9));
+                dataload.setAddressPostalCode(rs.getString(10));
+                dataload.setAddressCity(rs.getString(11));
+                dataload.setPhoneNumber(rs.getString(12));
+                dataload.setMaritalStatus(rs.getString(13));
+                dataload.setNumberOfChildren(rs.getInt(14));
+                dataload.setPoints(rs.getInt(15));
+                return dataload;
+            });
+
+            return user;
+        } 
+        
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package gr.ntua.ece.databasics.conf;
+package gr.ntua.ece.databases.conf;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;

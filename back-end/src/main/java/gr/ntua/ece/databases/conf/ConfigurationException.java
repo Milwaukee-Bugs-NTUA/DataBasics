@@ -1,4 +1,4 @@
-package gr.ntua.ece.databasics.conf;
+package gr.ntua.ece.databases.conf;
 
 public class ConfigurationException extends RuntimeException {
 
