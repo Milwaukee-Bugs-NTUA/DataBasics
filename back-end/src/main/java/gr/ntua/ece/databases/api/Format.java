@@ -81,6 +81,46 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
+        public Representation generateRepresentationUsersIndex(List<User> result) {
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                   w.beginArray(); // [
+                    for(User rec: result) {
+                        w.beginObject(); // {
+                        w.name("FirstName").value(rec.getFirstName());
+                        w.name("LastName").value(rec.getLastName());
+                        w.name("Email").value(rec.getEmail());                
+                        w.endObject(); // }
+                        w.flush();
+                    }
+                    w.endArray(); // ]
+                } catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
+
+
+        public Representation generateRepresentationProductsIndex(List<Product> result) {
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                   w.beginArray(); // [
+                    for(Product rec: result) {
+                        w.beginObject(); // {
+                        w.name("Barcode").value(Long.toString(rec.getBarcode()));
+                        w.name("ProductName").value(rec.getName());
+                        w.name("ProductBrandName").value(rec.getBrandName());
+                        w.name("Price").value(Float.toString(rec.getPrice()));                
+                        w.endObject(); // }
+                        w.flush();
+                    }
+                    w.endArray(); // ]
+                } catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
+
 
     };
     private static final class CustomJsonRepresentation extends WriterRepresentation {

@@ -52,41 +52,6 @@ public class DataAccess {
         }
     }
 
-    public User fetchUserProfile(Long userId) throws DataAccessException {
-
-        Object[] sqlParamsForUser = new Object[]{userId};
-
-        String sqlQueryForUser = "select * from users where card_number = ?";
-
-        try {
-            User user = jdbcTemplate.queryForObject(sqlQueryForUser, sqlParamsForUser, (ResultSet rs, int rowNum) -> {
-                User dataload = new User();
-                dataload.setCardNumber(rs.getLong(1));
-                dataload.setEmail(rs.getString(2));
-                dataload.setFirstName(rs.getString(3));
-                dataload.setLastName(rs.getString(4));
-                dataload.setDateOfBirth(rs.getDate(5));
-                dataload.setSex(rs.getString(6));
-                dataload.setAddressStreet(rs.getString(7));
-                dataload.setAddressNumber(rs.getInt(8));
-                dataload.setAddressPostalCode(rs.getString(9));
-                dataload.setAddressCity(rs.getString(10));
-                dataload.setPhoneNumber(rs.getString(11));
-                dataload.setMaritalStatus(rs.getString(12));
-                dataload.setNumberOfChildren(rs.getInt(13));
-                dataload.setPoints(rs.getInt(14));
-                return dataload;
-            });
-
-            return user;
-        } 
-        
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new DataAccessException(e.getMessage(), e);
-        }
-    }
-
     public List<Store> fetchStores() throws DataAccessException {
 
         String sqlQueryForStores = "select store_id,address_city from stores";
@@ -130,6 +95,89 @@ public class DataAccess {
             });
 
             return store;
+        } 
+        
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public List<User> fetchUsersIndex() throws DataAccessException {
+
+        String sqlQueryForUsers = "select card_number,first_name,last_name,email from users";
+        List<User> results;
+
+        try {
+            results = jdbcTemplate.query(sqlQueryForUsers, (ResultSet rs, int rowNum) -> {
+                User dataload = new User();
+                dataload.setCardNumber(rs.getLong(1));
+                dataload.setFirstName(rs.getString(2));
+                dataload.setLastName(rs.getString(3));
+                dataload.setEmail(rs.getString(4));
+                return dataload;
+            });
+
+            return results;
+        } 
+        
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public User fetchUserProfile(Long userId) throws DataAccessException {
+
+        Object[] sqlParamsForUser = new Object[]{userId};
+
+        String sqlQueryForUser = "select * from users where card_number = ?";
+
+        try {
+            User user = jdbcTemplate.queryForObject(sqlQueryForUser, sqlParamsForUser, (ResultSet rs, int rowNum) -> {
+                User dataload = new User();
+                dataload.setCardNumber(rs.getLong(1));
+                dataload.setEmail(rs.getString(2));
+                dataload.setFirstName(rs.getString(3));
+                dataload.setLastName(rs.getString(4));
+                dataload.setDateOfBirth(rs.getDate(5));
+                dataload.setSex(rs.getString(6));
+                dataload.setAddressStreet(rs.getString(7));
+                dataload.setAddressNumber(rs.getInt(8));
+                dataload.setAddressPostalCode(rs.getString(9));
+                dataload.setAddressCity(rs.getString(10));
+                dataload.setPhoneNumber(rs.getString(11));
+                dataload.setMaritalStatus(rs.getString(12));
+                dataload.setNumberOfChildren(rs.getInt(13));
+                dataload.setPoints(rs.getInt(14));
+                return dataload;
+            });
+
+            return user;
+        } 
+        
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public List<Product> fetchProductsIndex() throws DataAccessException {
+
+        String sqlQueryForProducts = "select barcode,name,brand_name,price from products";
+        List<Product> results;
+
+        try {
+            results = jdbcTemplate.query(sqlQueryForProducts, (ResultSet rs, int rowNum) -> {
+                Product dataload = new Product();
+                dataload.setBarcode(rs.getLong(1));
+                dataload.setName(rs.getString(2));
+                dataload.setBrandName(rs.getString(3));
+                dataload.setPrice(rs.getFloat(4));
+                return dataload;
+            });
+
+            return results;
         } 
         
         catch (Exception e) {
