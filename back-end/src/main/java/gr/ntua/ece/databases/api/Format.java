@@ -43,6 +43,24 @@ public enum Format implements RepresentationGenerator {
                 }
             });
         }
+
+        public Representation generateRepresentationStores(List<Store> result) {
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                   w.beginArray(); // [
+                    for(Store rec: result) {
+                        w.beginObject(); // {
+                        w.name("Store_Id").value(rec.getStoreID());
+                        w.name("City").value(rec.getAddressCity());                 
+                        w.endObject(); // }
+                        w.flush();
+                    }
+                    w.endArray(); // ]
+                } catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
     };
     private static final class CustomJsonRepresentation extends WriterRepresentation {
 

@@ -3,7 +3,7 @@ package gr.ntua.ece.databases.data.model;
 import java.util.*;
 import java.sql.Time;
 
-public class Stores {
+public class Store {
     private Long storeID;
     private int size;
     private String addressCity;
@@ -77,12 +77,12 @@ public class Stores {
         this.closingHour = closingHour;
     }
 
-    public Stores() {
+    public Store() {
 
     }
 
     /*
-    public Stores(Long storeID, int size, String addressCity, String addressStreet, int addressNumber, String addressPostalCode, Time openingHour, Time closingHour) {
+    public Store(Long storeID, int size, String addressCity, String addressStreet, int addressNumber, String addressPostalCode, Time openingHour, Time closingHour) {
         this.storeID = storeID;
         this.size = size;
         this.addressCity = addressCity;

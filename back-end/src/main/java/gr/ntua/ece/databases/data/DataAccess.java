@@ -63,22 +63,46 @@ public class DataAccess {
                 User dataload = new User();
                 dataload.setCardNumber(rs.getLong(1));
                 dataload.setEmail(rs.getString(2));
-                dataload.setFirstName(rs.getString(4));
-                dataload.setLastName(rs.getString(5));
-                dataload.setDateOfBirth(rs.getDate(6));
-                dataload.setSex(rs.getString(7));
-                dataload.setAddressStreet(rs.getString(8));
-                dataload.setAddressNumber(rs.getInt(9));
-                dataload.setAddressPostalCode(rs.getString(10));
-                dataload.setAddressCity(rs.getString(11));
-                dataload.setPhoneNumber(rs.getString(12));
-                dataload.setMaritalStatus(rs.getString(13));
-                dataload.setNumberOfChildren(rs.getInt(14));
-                dataload.setPoints(rs.getInt(15));
+                dataload.setFirstName(rs.getString(3));
+                dataload.setLastName(rs.getString(4));
+                dataload.setDateOfBirth(rs.getDate(5));
+                dataload.setSex(rs.getString(6));
+                dataload.setAddressStreet(rs.getString(7));
+                dataload.setAddressNumber(rs.getInt(8));
+                dataload.setAddressPostalCode(rs.getString(9));
+                dataload.setAddressCity(rs.getString(10));
+                dataload.setPhoneNumber(rs.getString(11));
+                dataload.setMaritalStatus(rs.getString(12));
+                dataload.setNumberOfChildren(rs.getInt(13));
+                dataload.setPoints(rs.getInt(14));
                 return dataload;
             });
 
             return user;
+        } 
+        
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public List<Store> fetchStores() throws DataAccessException {
+
+        //Object[] sqlParamsForStores = new Object[]{};
+
+        String sqlQueryForStores = "select store_id,address_city from stores";
+        List<Store> results;
+
+        try {
+            results = jdbcTemplate.query(sqlQueryForStores, (ResultSet rs, int rowNum) -> {
+                Store dataload = new Store();
+                dataload.setStoreID(rs.getLong(1));
+                dataload.setAddressCity(rs.getString(2));
+                return dataload;
+            });
+
+            return results;
         } 
         
         catch (Exception e) {
