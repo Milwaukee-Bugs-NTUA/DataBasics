@@ -2,12 +2,21 @@ package gr.ntua.ece.databases.data.model;
 
 import java.util.*;
 
-public class Products {
+public class Product {
     private Long barcode;
     private String name;
     private String brandName;
     private float price;
     private OfferedInStore offeredInStore;
+    private Long categoryId;
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public OfferedInStore getOfferedInStore() {
         return offeredInStore;
@@ -49,7 +58,7 @@ public class Products {
         this.price = price;
     }
 
-    public Products(){
+    public Product(){
 
     }
 
