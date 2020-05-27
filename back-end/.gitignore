@@ -2,6 +2,16 @@
 .gradle
 # Ignore Editor specific configuration directory
 .idea
+.vscode
+
+.classpath
+.project
+.settings/
+bin/
+
+
+
+
 # Ignore Gradle build output directory
 build
 
@@ -16,3 +26,4 @@ build
 .DS_Store
 # Windows specific
 Thumbs.db*
+
