@@ -8,4 +8,5 @@ import java.util.List;
 public interface RepresentationGenerator {
     Representation generateRepresentationUserProfile(User result);
     Representation generateRepresentationStores(List<Store> result);
+    Representation generateRepresentationStoreHomepage(Store store);
 }

@@ -61,6 +61,27 @@ public enum Format implements RepresentationGenerator {
                 }
             });
         }
+
+        public Representation generateRepresentationStoreHomepage(Store store) {
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                    w.beginObject(); // {
+                    w.name("Store_Id").value(Long.toString(store.getStoreID()));
+                    w.name("Size").value(Integer.toString(store.getSize()));
+                    w.name("AddressCity").value(store.getAddressCity());
+                    w.name("AddressValue").value(Integer.toString(store.getAddressNumber()));
+                    w.name("AddressPostalCode").value(store.getAddressPostalCode());
+                    w.name("OpeningHour").value(String.valueOf(store.getClosingHour()));
+                    w.name("ClosingHour").value(String.valueOf(store.getClosingHour()));
+                    w.endObject(); // }
+                    w.flush();
+                } catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
+
+
     };
     private static final class CustomJsonRepresentation extends WriterRepresentation {
 

@@ -7,3 +7,8 @@ build
 # Editor config files
 .idea
 .vscode
+
+.classpath
+.project
+.settings/
+bin/
