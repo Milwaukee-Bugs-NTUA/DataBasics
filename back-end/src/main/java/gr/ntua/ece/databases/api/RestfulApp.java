@@ -20,7 +20,7 @@ public class RestfulApp extends Application {
         router.attach("/HealthCheck", HealthCheck.class);
         router.attach("/profile/{UserId}",UserProfile.class);
         router.attach("/stores", StoresInfo.class);
-        router.attach("/storeHomepage/{StoreId}", storeHomepage.class);
+        router.attach("/storeHomepage/{StoreId}", StoreHomepage.class);
         
         //Enable CORS for all origins (don't use this in a production service)
         CorsFilter corsFilter = new CorsFilter(getContext(), router);

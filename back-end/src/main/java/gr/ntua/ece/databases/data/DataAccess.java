@@ -109,7 +109,7 @@ public class DataAccess {
         }
     }
 
-    public User fetchStoreHomepage(Long storeId) throws DataAccessException {
+    public Store fetchStoreHomepage(Long storeId) throws DataAccessException {
 
         Object[] sqlParamsForStore = new Object[]{storeId};
 
@@ -129,7 +129,7 @@ public class DataAccess {
                 return dataload;
             });
 
-            return user;
+            return store;
         } 
         
         catch (Exception e) {
