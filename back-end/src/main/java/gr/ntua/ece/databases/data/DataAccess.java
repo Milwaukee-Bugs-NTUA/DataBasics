@@ -89,8 +89,6 @@ public class DataAccess {
 
     public List<Store> fetchStores() throws DataAccessException {
 
-        //Object[] sqlParamsForStores = new Object[]{};
-
         String sqlQueryForStores = "select store_id,address_city from stores";
         List<Store> results;
 
@@ -103,6 +101,35 @@ public class DataAccess {
             });
 
             return results;
+        } 
+        
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public User fetchStoreHomepage(Long storeId) throws DataAccessException {
+
+        Object[] sqlParamsForStore = new Object[]{storeId};
+
+        String sqlQueryForStore = "select * from stores where store_id = ?";
+
+        try {
+            Store store = jdbcTemplate.queryForObject(sqlQueryForStore, sqlParamsForStore, (ResultSet rs, int rowNum) -> {
+                Store dataload = new Store();
+                dataload.setStoreID(rs.getLong(1));
+                dataload.setSize(rs.getInt(2));
+                dataload.setAddressCity(rs.getString(3));
+                dataload.setAddressStreet(rs.getString(4));
+                dataload.setAddressNumber(rs.getInt(5));
+                dataload.setAddressPostalCode(rs.getString(6));
+                dataload.setOpeningHour(rs.getTime(7));
+                dataload.setClosingHour(rs.getTime(8));
+                return dataload;
+            });
+
+            return user;
         } 
         
         catch (Exception e) {
