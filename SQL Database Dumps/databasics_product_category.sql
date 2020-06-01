@@ -28,7 +28,7 @@ CREATE TABLE `product_category` (
   `category_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `name` enum('fresh','chilly','house_products','liquor_products','personal_treatment','pet_products') NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-27 21:03:17
+-- Dump completed on 2020-06-01 23:47:46
