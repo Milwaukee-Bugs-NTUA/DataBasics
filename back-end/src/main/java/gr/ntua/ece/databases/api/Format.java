@@ -121,6 +121,44 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
+        public Representation generateRepresentationProductResource(Product product){
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                    w.beginObject(); // {
+                    w.name("Barcode").value(Long.toString(product.getBarcode()));
+                    w.name("ProductName").value(product.getName());
+                    w.name("ProductBrandName").value(product.getBrandName());
+                    w.name("Price").value(Float.toString(product.getPrice()));
+                    w.name("CategoryId").value(Long.toString(product.getCategoryId()));
+                    w.name("CategoryName").value(product.getCategoryName());                    
+                    w.endObject(); // }
+                    w.flush();
+                } catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
+
+        public Representation generateRepresentationPriceHistoryResource(List<PriceHistory> result) {
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                    w.beginArray(); // [
+                    for(PriceHistory rec: result) {
+                        w.beginObject(); // {
+                        w.name("Barcode").value(Long.toString(rec.getBarcode()));
+                        w.name("StartingDate").value(String.valueOf(rec.getStartingDate()));
+                        w.name("EndingDate").value(String.valueOf(rec.getEndingDate()));
+                        w.name("Price").value(Float.toString(rec.getOldPrice()));                
+                        w.endObject(); // }
+                        w.flush();
+                    }
+                    w.endArray(); // ]
+                } catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
+
 
     };
     private static final class CustomJsonRepresentation extends WriterRepresentation {
