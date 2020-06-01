@@ -5,6 +5,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.List;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
@@ -174,6 +177,58 @@ public class DataAccess {
                 dataload.setName(rs.getString(2));
                 dataload.setBrandName(rs.getString(3));
                 dataload.setPrice(rs.getFloat(4));
+                return dataload;
+            });
+
+            return results;
+        } 
+        
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public Product fetchProductResource(Long barcode) throws DataAccessException {
+
+        Object[] sqlParamsForProduct = new Object[]{barcode};
+
+        String sqlQueryForProduct = "select prd.barcode, prd.name, prd.brand_name, prd.price, prd.category as category_id, c.name as category_name from products as prd, product_category as c where prd.category = c.category_id and prd.barcode = ?";
+
+        try {
+            Product product = jdbcTemplate.queryForObject(sqlQueryForProduct, sqlParamsForProduct, (ResultSet rs, int rowNum) -> {
+                Product dataload = new Product();
+                dataload.setBarcode(rs.getLong(1));
+                dataload.setName(rs.getString(2));
+                dataload.setBrandName(rs.getString(3));
+                dataload.setPrice(rs.getFloat(4));
+                dataload.setCategoryId(rs.getLong(5));
+                dataload.setCategoryName(rs.getString(6));
+                return dataload;
+            });
+
+            return product;
+        } 
+        
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public List<PriceHistory> fetchPriceHistoryResource(Long barcode) throws DataAccessException {
+
+        Object[] sqlParamsForPriceHistory = new Object[]{barcode};
+        String sqlQueryForPriceHistory = "select barcode, starting_date, ending_date, old_price from price_history where barcode = ?";
+        List<PriceHistory> results;
+
+        try {
+            results = jdbcTemplate.query(sqlQueryForPriceHistory, sqlParamsForPriceHistory, (ResultSet rs, int rowNum) -> {
+                PriceHistory dataload = new PriceHistory();
+                dataload.setBarcode(rs.getLong(1));
+                dataload.setStartingDate(rs.getTimestamp(2));
+                dataload.setEndingDate(rs.getTimestamp(3));
+                dataload.setOldPrice(rs.getFloat(4));
                 return dataload;
             });
 
