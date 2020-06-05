@@ -16,6 +16,7 @@ import java.util.function.Consumer;
 import gr.ntua.ece.databases.data.model.*;
 import gr.ntua.ece.databases.api.representation.RepresentationGenerator;
 
+
 public enum Format implements RepresentationGenerator {
     JSON {
         public Representation generateRepresentationUserProfile(User user) {
@@ -153,6 +154,51 @@ public enum Format implements RepresentationGenerator {
                         w.flush();
                     }
                     w.endArray(); // ]
+                } catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
+
+
+        public Representation generateRepresentationUserInfo(UserInfo userInfo) {
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                    w.beginObject(); // {
+                    //w.name("MeanTransactionsPW").value(Long.toString(userInfo.getMeanTransactionsPerWeek()));
+                    //w.name("MeanTransactionsPM").value(Long.toString(userInfo.getMeanTransactionsPerMonth()));
+                    w.name("CommonStores");
+                    w.beginArray(); // [
+                    for(CommonStore uinf: userInfo.getCommonStores()) {
+                        w.beginObject(); // {
+                        w.name("Store Name").value(uinf.getStoreName());
+                        w.name("StoreID").value(Long.toString(uinf.getStoreID()));
+                        w.endObject(); // }
+                        w.flush();
+                    }
+                    w.endArray(); // ]
+                    w.name("Common Products");
+                    w.beginArray(); // [
+                    for(CommonProduct uinf: userInfo.getCommonProducts()) {
+                        w.beginObject(); // {
+                        w.name("Product Name").value(uinf.getProductName());
+                        w.name("Store ID").value(Long.toString(uinf.getBarcode()));
+                        w.endObject(); // }
+                        w.flush();
+                    }
+                    w.endArray(); // ]
+                    w.name("HappyHour");
+                    w.beginArray(); // [
+                        for(HappyHour uinf: userInfo.getHappyHours()) {
+                            w.beginObject(); // {
+                            w.name("Hour").value(Integer.toString(uinf.getHour()));
+                            w.name("Count").value(Integer.toString(uinf.getCount()));
+                            w.endObject(); // }
+                            w.flush();
+                        }
+                    w.endArray(); // ]
+                    w.endObject(); // }
+                    w.flush();
                 } catch (IOException e) {
                     throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
                 }

@@ -13,4 +13,5 @@ public interface RepresentationGenerator {
     Representation generateRepresentationProductsIndex(List<Product> resut);
     Representation generateRepresentationProductResource(Product result);
     Representation generateRepresentationPriceHistoryResource(List<PriceHistory> result);
+    Representation generateRepresentationUserInfo(UserInfo result);
 }

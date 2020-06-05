@@ -13,7 +13,7 @@ import java.lang.RuntimeException;
 import java.net.http.HttpRequest;
 import java.net.URLDecoder;
 
-import gr.ntua.ece.databases.data.model.User;
+import gr.ntua.ece.databases.data.model.UserInfo;
 
 import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeParseException;
@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class UserProfile extends DatastoreResource {
+public class UserInfoResource extends DatastoreResource {
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
 
     @Override
@@ -33,8 +33,8 @@ public class UserProfile extends DatastoreResource {
         Format format = Format.valueOf("JSON");
 
         try {
-            User result = dataAccess.fetchUserProfile(userId);
-            return format.generateRepresentationUserProfile(result);
+            UserInfo result = dataAccess.fetchUserInfo(userId);
+            return format.generateRepresentationUserInfo(result);
         } 
         catch (Exception e) {
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);
