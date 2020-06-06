@@ -42,20 +42,14 @@ public class UserInfo {
     }
 
     public void setHappyHours(List<HappyHour> list) {
-        for (HappyHour happyHour: list) {
-            happyHours.add(happyHour);
-        }
+        this.happyHours = list;
     }
 
     public void setCommonStores(List<CommonStore> list) {
-        for (CommonStore commonStore: list) {
-            commonStores.add(commonStore);
-        }
+        this.commonStores = list;
     }
 
     public void setCommonProducts(List<CommonProduct> list) {
-        for (CommonProduct commonProduct: list) {
-            commonProducts.add(commonProduct);
-        }
+        this.commonProducts = list;
     } 
 }

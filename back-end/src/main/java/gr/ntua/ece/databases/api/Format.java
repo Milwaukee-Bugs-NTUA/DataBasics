@@ -167,12 +167,12 @@ public enum Format implements RepresentationGenerator {
                     w.beginObject(); // {
                     //w.name("MeanTransactionsPW").value(Long.toString(userInfo.getMeanTransactionsPerWeek()));
                     //w.name("MeanTransactionsPM").value(Long.toString(userInfo.getMeanTransactionsPerMonth()));
-                    w.name("CommonStores");
+                    w.name("Common Stores");
                     w.beginArray(); // [
                     for(CommonStore uinf: userInfo.getCommonStores()) {
                         w.beginObject(); // {
+                        w.name("Store ID").value(Long.toString(uinf.getStoreID()));
                         w.name("Store Name").value(uinf.getStoreName());
-                        w.name("StoreID").value(Long.toString(uinf.getStoreID()));
                         w.endObject(); // }
                         w.flush();
                     }
@@ -181,8 +181,8 @@ public enum Format implements RepresentationGenerator {
                     w.beginArray(); // [
                     for(CommonProduct uinf: userInfo.getCommonProducts()) {
                         w.beginObject(); // {
+                        w.name("Barcode").value(Long.toString(uinf.getBarcode()));
                         w.name("Product Name").value(uinf.getProductName());
-                        w.name("Store ID").value(Long.toString(uinf.getBarcode()));
                         w.endObject(); // }
                         w.flush();
                     }

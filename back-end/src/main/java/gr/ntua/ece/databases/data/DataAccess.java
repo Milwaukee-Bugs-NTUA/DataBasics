@@ -170,7 +170,7 @@ public class DataAccess {
         Object[] sqlParamsForUser = new Object[]{userId};
 
         String sqlQueryForCommonProducts = "select c.product_id, p.name from contains as c, products as p where c.product_id = p.barcode and c.card_number = ? group by c.product_id order by sum(c.pieces) desc limit 10";
-        String sqlQueryForCommonStores = "select distinct purchased_from as common_store from transactions where card_number = ?";
+        String sqlQueryForCommonStores = "select distinct tr.purchased_from as common_store, s.address_city as name from transactions as tr, stores as s where tr.purchased_from = s.store_id and card_number = ?";
         String sqlQueryForHappyHours = "select hour(datetime) as time_field, count(*) from transactions where card_number = ? group by time_field";
         //String sqlQueryForMeanTrsPerWeek = "select * from sth";
         //String sqlQueryForMeanTrsPerMonth = "select * from sth";
@@ -203,6 +203,7 @@ public class DataAccess {
                 dataload.setCount(rs.getInt(2));
                 return dataload;
             });
+            System.out.println("Query for happy Hours");
             userInfo.setHappyHours(happyHours);
 
             /*Long meanTrsPerWeek;
