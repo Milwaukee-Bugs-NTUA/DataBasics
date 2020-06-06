@@ -20,7 +20,7 @@ public class RestfulApp extends Application {
         router.attach("/HealthCheck", HealthCheck.class);
         router.attach("/stores", StoresInfo.class);
         router.attach("/storeHomepage/{StoreId}", StoreHomepage.class);
-        router.attach("/storeHomepage/{StoreId}/transactions/", StoreHomepage.class);
+        router.attach("/storeHomepage/{StoreId}/transactions/startingDate/{startingDate}/endingDate/{endingDate}/paymentMethod/{paymentMethod}/numPrdLow/{numPrdLow}/numPrdHigh/{numPrdHigh}", TransactionsResource.class);
         router.attach("/users", UsersIndex.class);
         router.attach("/profile/{UserId}",UserProfile.class);
         router.attach("/profile/{UserId}/userInfo",UserInfoResource.class);
