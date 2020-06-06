@@ -205,6 +205,27 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
+        public Representation generateRepresentationTransactionsResource(List<Transaction> result) {
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                    w.beginArray(); // [
+                    for(Transaction rec: result) {
+                        w.beginObject(); // {
+                        w.name("DateTime").value(String.valueOf(rec.getDatetime()));
+                        w.name("CardNumber").value(Long.toString(rec.getCardNumber()));
+                        w.name("TotalCost").value(Float.toString(rec.getTotalCost()));
+                        w.name("PaymentMethod").value(String.valueOf(rec.getPaymentMethod()));
+                        w.name("NumnerOfProducts").value(Integer.toString(rec.getNumberOfProducts()));
+                        w.endObject(); // }
+                        w.flush();
+                    }
+                    w.endArray(); // ]
+                } catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
+
 
     };
     private static final class CustomJsonRepresentation extends WriterRepresentation {
