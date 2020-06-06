@@ -4,18 +4,18 @@ import java.util.*;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-public class Contains {
+public class TransactionProduct {
     private Long productId;
     private int pieces;
     private String productName;
 
-    public Contains(Long productId, int pieces, String productName) {
+    public TransactionProduct(Long productId, int pieces, String productName) {
         this.productId = productId;
         this.pieces = pieces;
         this.productName = productName;
     }
 
-    public Contains() {
+    public TransactionProduct() {
     }
 
     public Long getProductId() {

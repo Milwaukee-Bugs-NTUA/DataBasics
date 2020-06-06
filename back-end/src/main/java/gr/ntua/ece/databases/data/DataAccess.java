@@ -79,6 +79,63 @@ public class DataAccess {
         }
     }
 
+    public List<Transaction> fetchTransactionsResource(Long storeId,String startingDate, String endingDate, String paymentMethod,String numOfProductsLow,String numOfProductsHigh) throws DataAccessException {
+
+        String sqlQueryForTransactions = "select tr.*,count(*) as count " +
+                                            "from " + 
+                                            "(select datetime,card_number, total_cost, payment_method " +
+                                                "from transactions " + 
+                                                "where purchased_from = ?) as tr, contains as c " +
+                                            "where (tr.datetime,tr.card_number) = (c.datetime,c.card_number) ";
+        
+        Object[] sqlParamsForTransactions = new Object[]{storeId};
+
+        StringJoiner joiner = new StringJoiner(" and ");
+        
+        if (!(startingDate.equals("any"))) {
+            joiner.add("tr.datetime between " + startingDate + " and " + endingDate);
+        }
+        if (!(paymentMethod.equals("any"))) {
+            joiner.add("tr.payment_method = " + paymentMethod);
+        }
+        if ((!numOfProductsLow.equals("any")) && (!numOfProductsHigh.equals("any"))) {
+            joiner.add("count between " + numOfProductsLow + " and " + numOfProductsHigh);
+        }
+        else if (!(numOfProductsLow.equals("any"))) {
+            joiner.add("count >= " + numOfProductsLow);
+        }
+        else if (!(!(numOfProductsHigh.equals("any")))) {
+            joiner.add("count <= " + numOfProductsHigh);
+        }
+        
+        if (joiner.length() > 0) {
+            sqlQueryForTransactions = sqlQueryForTransactions + " where " + joiner.toString() + 
+                                        " group by tr.datetime,tr.card_number order by count";
+        }
+        else sqlQueryForTransactions = sqlQueryForTransactions + " group by tr.datetime,tr.card_number order by count";
+
+        List<Transaction> results;
+
+        try {
+            results = jdbcTemplate.query(sqlQueryForTransactions, sqlParamsForTransactions, (ResultSet rs, int rowNum) -> {
+                Transaction dataload = new Transaction();
+                dataload.setdatetime(rs.getDate(1));
+                dataload.setCardNumber(rs.getLong(2));
+                dataload.setTotalCost(rs.getFloat(3));
+                dataload.setPaymentMethod(rs.getString(4));
+                dataload.setNumberOfProducts(rs.getInt(5));
+                return dataload;
+            });
+
+            return results;
+        } 
+        
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
     public Store fetchStoreHomepage(Long storeId) throws DataAccessException {
 
         Object[] sqlParamsForStore = new Object[]{storeId};
