@@ -7,25 +7,25 @@ public class UserInfo {
     private List<CommonProduct> commonProducts;
     private List<CommonStore> commonStores;
     private List<HappyHour> happyHours;
-    private Long meanTransactionsPerWeek;
-    private Long meanTransactionsPerMonth;
+    private Float meanTransactionsPerWeek;
+    private Float meanTransactionsPerMonth;
 
     public UserInfo () {
     }
 
-    public Long getMeanTransactionsPerWeek() {
+    public Float getMeanTransactionsPerWeek() {
         return meanTransactionsPerWeek;
     }
 
-    public void setMeanTransactionsPerWeek(Long meanTransactionsPerWeek) {
+    public void setMeanTransactionsPerWeek(Float meanTransactionsPerWeek) {
         this.meanTransactionsPerWeek = meanTransactionsPerWeek;
     }
 
-    public Long getMeanTransactionsPerMonth() {
+    public Float getMeanTransactionsPerMonth() {
         return meanTransactionsPerMonth;
     }
 
-    public void setMeanTransactionsPerMonth(Long meanTransactionsPerMonth) {
+    public void setMeanTransactionsPerMonth(Float meanTransactionsPerMonth) {
         this.meanTransactionsPerMonth = meanTransactionsPerMonth;
     }
 

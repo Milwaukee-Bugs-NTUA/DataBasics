@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.DayOfWeek;
 import java.util.List;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
@@ -168,12 +170,37 @@ public class DataAccess {
     public UserInfo fetchUserInfo(Long userId) throws DataAccessException {
 
         Object[] sqlParamsForUser = new Object[]{userId};
+        LocalDate localDate = LocalDate.now();
+        LocalDate lastDate = localDate.minusMonths(1);
+        int lastMonth = lastDate.getMonthValue();
+        int lastYear = lastDate.getYear();
+        Object[] sqlParamsForMeanTrsPerMonth = new Object[]{1, 2018, userId}; //Hard Coded for now
 
-        String sqlQueryForCommonProducts = "select c.product_id, p.name from contains as c, products as p where c.product_id = p.barcode and c.card_number = ? group by c.product_id order by sum(c.pieces) desc limit 10";
-        String sqlQueryForCommonStores = "select distinct tr.purchased_from as common_store, s.address_city as name from transactions as tr, stores as s where tr.purchased_from = s.store_id and card_number = ?";
-        String sqlQueryForHappyHours = "select hour(datetime) as time_field, count(*) from transactions where card_number = ? group by time_field";
-        //String sqlQueryForMeanTrsPerWeek = "select * from sth";
-        //String sqlQueryForMeanTrsPerMonth = "select * from sth";
+        LocalDate dateOfLastWeek = localDate.minusDays(7);
+        int dayOfLastWeek = dateOfLastWeek.getDayOfWeek().getValue();
+        String lastMonday = dateOfLastWeek.minusDays(dayOfLastWeek - 1).toString();
+        String lastSunday = dateOfLastWeek.plusDays(7 - dayOfLastWeek).toString();
+        System.out.println(lastMonday + lastSunday);
+        Object[] sqlParamsForMeanTrsPerWeek = new Object[]{"2018-01-16", "2019-06-17", userId}; //Hard Coded for now
+
+        String sqlQueryForCommonProducts = "select c.product_id, p.name from contains as c, " +
+                                            "products as p " + 
+                                            "where c.product_id = p.barcode and c.card_number = ? " +
+                                            "group by c.product_id order by sum(c.pieces) desc limit 10";
+        String sqlQueryForCommonStores = "select distinct tr.purchased_from as common_store, " +
+                                            "s.address_city as name from transactions as tr, stores as s "+
+                                            "where tr.purchased_from = s.store_id and card_number = ?";
+        String sqlQueryForHappyHours = "select hour(datetime) as time_field, count(*) " +
+                                        "from transactions where card_number = ? " +
+                                        "group by time_field";
+        String sqlQueryForMeanTrsPerWeek = "select cast(avg(total_cost) as decimal(7,2)) as mean " +
+                                            "from transactions " +
+                                            "where date(datetime) between ? and ? " +
+                                            "and card_number = ?";
+        String sqlQueryForMeanTrsPerMonth = "select cast(avg(total_cost) as decimal(7, 2)) as mean " +
+                                                "from transactions where month(datetime) = ? " + 
+                                                "and year(datetime) = ? and card_number = ? " +
+                                                "group by month(datetime)";
 
         UserInfo userInfo = new UserInfo();
 
@@ -203,16 +230,31 @@ public class DataAccess {
                 dataload.setCount(rs.getInt(2));
                 return dataload;
             });
-            System.out.println("Query for happy Hours");
             userInfo.setHappyHours(happyHours);
 
-            /*Long meanTrsPerWeek;
-            meanTrsPerWeek = jdbcTemplate.queryForObject(sqlQueryForMeanTrsPerWeek, sqlParamsForUser, Long);
-            userInfo.setMeanTransactionsPerWeek(meanTrsPerWeek);
+            Float meanTrsPerWeek;
+            meanTrsPerWeek = jdbcTemplate.queryForObject(sqlQueryForMeanTrsPerWeek, sqlParamsForMeanTrsPerWeek, (ResultSet rs, int rowNum) -> {
+                Float dataload = rs.getFloat(1);
+                return dataload;
+            });
+            if (meanTrsPerWeek == null) {
+                userInfo.setMeanTransactionsPerWeek(Float.valueOf(0));
+            }
+            else {
+                userInfo.setMeanTransactionsPerWeek(meanTrsPerWeek);
+            }
 
-            Long meanTrsPerMonth;
-            meanTrsPerMonth = jdbcTemplate.queryForObject(sqlQueryForMeanTrsPerMonth, sqlParamsForUser, Long);
-            userInfo.setMeanTransactionsPerMonth(meanTrsPerMonth);*/
+            Float meanTrsPerMonth;
+            meanTrsPerMonth = jdbcTemplate.queryForObject(sqlQueryForMeanTrsPerMonth, sqlParamsForMeanTrsPerMonth, (ResultSet rs, int rowNum) -> {
+                Float dataload = rs.getFloat(1);
+                return dataload;
+            });
+            if (meanTrsPerMonth == null) {
+                userInfo.setMeanTransactionsPerMonth(Float.valueOf(0));
+            }
+            else {
+                userInfo.setMeanTransactionsPerMonth(meanTrsPerMonth);
+            }
 
             return userInfo;
         }
@@ -250,7 +292,10 @@ public class DataAccess {
 
         Object[] sqlParamsForProduct = new Object[]{barcode};
 
-        String sqlQueryForProduct = "select prd.barcode, prd.name, prd.brand_name, prd.price, prd.category as category_id, c.name as category_name from products as prd, product_category as c where prd.category = c.category_id and prd.barcode = ?";
+        String sqlQueryForProduct = "select prd.barcode, prd.name, prd.brand_name, " + 
+                                        "prd.price, prd.category as category_id, " +
+                                        "c.name as category_name from products as prd, product_category as c " +
+                                        "where prd.category = c.category_id and prd.barcode = ?";
 
         try {
             Product product = jdbcTemplate.queryForObject(sqlQueryForProduct, sqlParamsForProduct, (ResultSet rs, int rowNum) -> {
@@ -276,7 +321,8 @@ public class DataAccess {
     public List<PriceHistory> fetchPriceHistoryResource(Long barcode) throws DataAccessException {
 
         Object[] sqlParamsForPriceHistory = new Object[]{barcode};
-        String sqlQueryForPriceHistory = "select barcode, starting_date, ending_date, old_price from price_history where barcode = ?";
+        String sqlQueryForPriceHistory = "select barcode, starting_date, ending_date, old_price " +
+                                            "from price_history where barcode = ?";
         List<PriceHistory> results;
 
         try {

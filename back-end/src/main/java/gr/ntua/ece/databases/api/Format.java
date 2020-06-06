@@ -165,8 +165,8 @@ public enum Format implements RepresentationGenerator {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                     w.beginObject(); // {
-                    //w.name("MeanTransactionsPW").value(Long.toString(userInfo.getMeanTransactionsPerWeek()));
-                    //w.name("MeanTransactionsPM").value(Long.toString(userInfo.getMeanTransactionsPerMonth()));
+                    w.name("MeanTransactionsPW").value(Float.toString(userInfo.getMeanTransactionsPerWeek()));
+                    w.name("MeanTransactionsPM").value(Float.toString(userInfo.getMeanTransactionsPerMonth()));
                     w.name("Common Stores");
                     w.beginArray(); // [
                     for(CommonStore uinf: userInfo.getCommonStores()) {
