@@ -165,6 +165,63 @@ public class DataAccess {
         }
     }
 
+    public UserInfo fetchUserInfo(Long userId) throws DataAccessException {
+
+        Object[] sqlParamsForUser = new Object[]{userId};
+
+        String sqlQueryForCommonProducts = "select c.product_id, p.name from contains as c, products as p where c.product_id = p.barcode and c.card_number = ? group by c.product_id order by sum(c.pieces) desc limit 10";
+        String sqlQueryForCommonStores = "select distinct tr.purchased_from as common_store, s.address_city as name from transactions as tr, stores as s where tr.purchased_from = s.store_id and card_number = ?";
+        String sqlQueryForHappyHours = "select hour(datetime) as time_field, count(*) from transactions where card_number = ? group by time_field";
+        //String sqlQueryForMeanTrsPerWeek = "select * from sth";
+        //String sqlQueryForMeanTrsPerMonth = "select * from sth";
+
+        UserInfo userInfo = new UserInfo();
+
+        try {
+            List<CommonProduct> commonProducts;
+            commonProducts = jdbcTemplate.query(sqlQueryForCommonProducts, sqlParamsForUser, (ResultSet rs, int rowNum) -> {
+                CommonProduct dataload = new CommonProduct();
+                dataload.setBarcode(rs.getLong(1));
+                dataload.setProductName(rs.getString(2));
+                return dataload;
+            });
+            userInfo.setCommonProducts(commonProducts);
+
+            List<CommonStore> commonStores;
+            commonStores = jdbcTemplate.query(sqlQueryForCommonStores, sqlParamsForUser, (ResultSet rs, int rowNum) -> {
+                CommonStore dataload = new CommonStore();
+                dataload.setStoreID(rs.getLong(1));
+                dataload.setStoreName(rs.getString(2));
+                return dataload;
+            });
+            userInfo.setCommonStores(commonStores);
+
+            List<HappyHour> happyHours;
+            happyHours = jdbcTemplate.query(sqlQueryForHappyHours, sqlParamsForUser, (ResultSet rs, int rowNum) -> {
+                HappyHour dataload = new HappyHour();
+                dataload.setHour(rs.getInt(1));
+                dataload.setCount(rs.getInt(2));
+                return dataload;
+            });
+            System.out.println("Query for happy Hours");
+            userInfo.setHappyHours(happyHours);
+
+            /*Long meanTrsPerWeek;
+            meanTrsPerWeek = jdbcTemplate.queryForObject(sqlQueryForMeanTrsPerWeek, sqlParamsForUser, Long);
+            userInfo.setMeanTransactionsPerWeek(meanTrsPerWeek);
+
+            Long meanTrsPerMonth;
+            meanTrsPerMonth = jdbcTemplate.queryForObject(sqlQueryForMeanTrsPerMonth, sqlParamsForUser, Long);
+            userInfo.setMeanTransactionsPerMonth(meanTrsPerMonth);*/
+
+            return userInfo;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
     public List<Product> fetchProductsIndex() throws DataAccessException {
 
         String sqlQueryForProducts = "select barcode,name,brand_name,price from products";

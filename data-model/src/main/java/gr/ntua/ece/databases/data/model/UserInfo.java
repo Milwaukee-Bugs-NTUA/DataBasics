@@ -1,70 +1,16 @@
 package gr.ntua.ece.databases.data.model;
 
 import java.util.*;
-import java.sql.Time;
 import java.sql.Timestamp;
 
 public class UserInfo {
-    private List<Long> commonProductsId;
-    private List<String> commonProductsNames;
-    private List<Long> commonStoresId;
-    private List<String> commonStoresNames;
-    private List<Time> happyHoursEntry;
-    private List<Time> happyHoursDeparture;
+    private List<CommonProduct> commonProducts;
+    private List<CommonStore> commonStores;
+    private List<HappyHour> happyHours;
     private Long meanTransactionsPerWeek;
     private Long meanTransactionsPerMonth;
 
-    private UserInfo userInfo;
-
     public UserInfo () {
-    }
-
-    public List<Long> getCommonProductsId() {
-        return commonProductsId;
-    }
-
-    public void addCommonProductId (Long commonProductId) {
-        this.commonProductsId.add(commonProductId);
-    }
-
-    public void setCommonProductsId(List<Long> commonProductsId) {
-        this.commonProductsId = commonProductsId;
-    }
-
-    public List<String> getCommonProductsNames() {
-        return commonProductsNames;
-    }
-
-    public void addCommonProductName (String commonProductName) {
-        this.commonProductsNames.add(commonProductName);
-    }
-
-    public void setCommonProductsNames(List<String> commonProductsNames) {
-        this.commonProductsNames = commonProductsNames;
-    }
-
-    public List<Long> getCommonStoresId() {
-        return commonStoresId;
-    }
-
-    public void addCommonStoreId (Long commonStoreId) {
-        this.commonStoresId.add(commonStoreId);
-    }
-
-    public void setCommonStoresId(List<Long> commonStoresId) {
-        this.commonStoresId = commonStoresId;
-    }
-
-    public List<String> getCommonStoresNames() {
-        return commonStoresNames;
-    }
-
-    public void addCommonStoreName (String commonStoreName) {
-        this.commonStoresNames.add(commonStoreName);
-    }
-
-    public void setCommonStoresNames(List<String> commonStoresNames) {
-        this.commonStoresNames = commonStoresNames;
     }
 
     public Long getMeanTransactionsPerWeek() {
@@ -83,11 +29,27 @@ public class UserInfo {
         this.meanTransactionsPerMonth = meanTransactionsPerMonth;
     }
 
-    public gr.ntua.ece.databases.data.model.UserInfo getUserInfo() {
-        return userInfo;
+    public List<HappyHour> getHappyHours() {
+        return happyHours;
     }
 
-    public void setUserInfo(gr.ntua.ece.databases.data.model.UserInfo userInfo) {
-        this.userInfo = userInfo;
+    public List<CommonStore> getCommonStores() {
+        return commonStores;
     }
+
+    public List<CommonProduct> getCommonProducts() {
+        return commonProducts;
+    }
+
+    public void setHappyHours(List<HappyHour> list) {
+        this.happyHours = list;
+    }
+
+    public void setCommonStores(List<CommonStore> list) {
+        this.commonStores = list;
+    }
+
+    public void setCommonProducts(List<CommonProduct> list) {
+        this.commonProducts = list;
+    } 
 }
