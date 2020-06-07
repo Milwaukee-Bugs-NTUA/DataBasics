@@ -227,6 +227,26 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
+        public Representation generateRepresentationTransactionProducts(List<TransactionProduct> result) {
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                    w.beginArray(); // [
+                    for(TransactionProduct rec: result) {
+                        w.beginObject(); // {
+                        w.name("Barcode").value(Long.toString(rec.getBarcode()));
+                        w.name("Product Name").value(rec.getProductName());
+                        w.name("Brand Name").value(rec.getBrandName());
+                        w.name("Pieces").value(Integer.toString(rec.getPieces()));
+                        w.endObject(); // }
+                        w.flush();
+                    }
+                    w.endArray(); // ]
+                } catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
+
 
     };
     private static final class CustomJsonRepresentation extends WriterRepresentation {

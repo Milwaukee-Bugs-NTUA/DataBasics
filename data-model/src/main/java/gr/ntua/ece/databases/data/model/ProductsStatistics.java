@@ -5,22 +5,19 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 public class ProductsStatistics {
-    private List<OfferedInStore> topProductsPlacements;
+    private List<ProductsPair> topProductsPairs;
+    private List<ProductPlacement> topProductsPlacements;
     private float[] percentageOfSuccessInEachCategory;
 
     public ProductsStatistics() {
     }
 
-    public List<OfferedInStore> getTopProductsPlacements() {
-        return topProductsPlacements;
+    public List<ProductsPair> getTopProductsPairs() {
+        return topProductsPairs;
     }
 
-    public void addTopProductPlacement(OfferedInStore topProductPlacement) {
-        this.topProductsPlacements.add(topProductPlacement);
-    }
-
-    public void setTopProductsPlacements(List<OfferedInStore> topProductsPlacements) {
-        this.topProductsPlacements = topProductsPlacements;
+    public void setTopProductsPairs(List<ProductsPair> topProductsPairs) {
+        this.topProductsPairs = topProductsPairs;
     }
 
     public float[] getPercentageOfSuccessInEachCategory() {
@@ -29,5 +26,13 @@ public class ProductsStatistics {
 
     public void setPercentageOfSuccessInEachCategory (float[] percentageOfSuccessInEachCategory) {
         this.percentageOfSuccessInEachCategory = percentageOfSuccessInEachCategory;
+    }
+
+    public List<ProductPlacement> getTopProductsPlacements() {
+        return topProductsPlacements;
+    }
+
+    public void setTopProductsPlacements(List<ProductPlacement> topProductsPlacements) {
+        this.topProductsPlacements = topProductsPlacements;
     }
 }

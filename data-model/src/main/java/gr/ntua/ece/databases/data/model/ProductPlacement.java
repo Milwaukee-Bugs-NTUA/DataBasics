@@ -2,26 +2,11 @@ package gr.ntua.ece.databases.data.model;
 
 import java.util.*;
 
-public class OfferedInStore {
-    private Long storeId;
+public class ProductPlacement {
     private String alleyNumber;
     private String selfNumber;
 
-    public OfferedInStore(Long storeId, String alleyNumber, String selfNumber) {
-        this.storeId = storeId;
-        this.alleyNumber = alleyNumber;
-        this.selfNumber = selfNumber;
-    }
-
-    public OfferedInStore() {
-    }
-
-    public Long getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(Long storeId) {
-        this.storeId = storeId;
+    public ProductPlacement() {
     }
 
     public String getAlleyNumber() {

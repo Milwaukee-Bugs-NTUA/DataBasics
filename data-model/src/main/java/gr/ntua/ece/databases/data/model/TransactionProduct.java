@@ -5,12 +5,13 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 public class TransactionProduct {
-    private Long productId;
-    private int pieces;
+    private Long barcode;
     private String productName;
+    private String brandName;
+    private int pieces;
 
-    public TransactionProduct(Long productId, int pieces, String productName) {
-        this.productId = productId;
+    public TransactionProduct(Long barcode, int pieces, String productName) {
+        this.barcode = barcode;
         this.pieces = pieces;
         this.productName = productName;
     }
@@ -18,12 +19,12 @@ public class TransactionProduct {
     public TransactionProduct() {
     }
 
-    public Long getProductId() {
-        return productId;
+    public Long getBarcode() {
+        return barcode;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setBarcode(Long barcode) {
+        this.barcode = barcode;
     }
 
     public int getPieces() {
@@ -42,4 +43,11 @@ public class TransactionProduct {
         this.productName = productName;
     }
 
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
 }

@@ -60,7 +60,7 @@ public class DataAccess {
 
     public List<Store> fetchStores() throws DataAccessException {
 
-        String sqlQueryForStores = "select store_id,address_city from stores";
+        String sqlQueryForStores = "select store_id,address_city from stores order by store_id";
         List<Store> results;
 
         try {
@@ -80,7 +80,12 @@ public class DataAccess {
         }
     }
 
-    public List<Transaction> fetchTransactions(Long storeId,Date startingDate,Date endingDate,String paymentMethod,Integer numOfProductsLow,Integer numOfProductsHigh) throws DataAccessException {
+    public List<Transaction> fetchTransactions(Long storeId,
+                                                Date startingDate,
+                                                Date endingDate,
+                                                String paymentMethod,
+                                                Integer numOfProductsLow,
+                                                Integer numOfProductsHigh) throws DataAccessException {
 
         String sqlQueryFirstPart = "select tr.*,count(*) as count " +
                                             "from " + 
@@ -144,6 +149,33 @@ public class DataAccess {
         }
     }
 
+    public List<TransactionProduct> fetchTransactionProducts(Timestamp datetime, Long cardNumber) throws DataAccessException {
+        String sqlQueryForTransactionProducts = "select p.barcode,p.name,p.brand_name,c.pieces " +
+                                                "from contains as c, products as p " +
+                                                "where c.product_id = p.barcode " +
+                                                "and c.card_number = ? " +
+                                                "and c.datetime = ? " +
+                                                "order by p.name";
+
+        Object[] sqlParamsForTransactionProducts = new Object[]{cardNumber, datetime.toString()};
+        List<TransactionProduct> results;
+        try {
+            results = jdbcTemplate.query(sqlQueryForTransactionProducts, sqlParamsForTransactionProducts, (ResultSet rs, int rowNum) -> {
+                TransactionProduct dataload = new TransactionProduct();
+                dataload.setBarcode(rs.getLong(1));
+                dataload.setProductName(rs.getString(2));
+                dataload.setBrandName(rs.getString(3));
+                dataload.setPieces(rs.getInt(4));
+                return dataload;
+            });
+            return results;
+        } 
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
     public Store fetchStorePage(Long storeId) throws DataAccessException {
 
         Object[] sqlParamsForStore = new Object[]{storeId};
@@ -175,7 +207,8 @@ public class DataAccess {
 
     public List<User> fetchUsers() throws DataAccessException {
 
-        String sqlQueryForUsers = "select card_number,first_name,last_name,email from users";
+        String sqlQueryForUsers = "select card_number,first_name,last_name,email " + 
+                                    "from users order by first_name,last_name";
         List<User> results;
 
         try {
@@ -331,7 +364,7 @@ public class DataAccess {
 
     public List<Product> fetchProducts() throws DataAccessException {
 
-        String sqlQueryForProducts = "select barcode,name,brand_name,price from products";
+        String sqlQueryForProducts = "select barcode,name,brand_name,price from products order by barcode";
         List<Product> results;
 
         try {
@@ -387,7 +420,7 @@ public class DataAccess {
 
         Object[] sqlParamsForPriceHistory = new Object[]{barcode};
         String sqlQueryForPriceHistory = "select barcode, starting_date, ending_date, old_price " +
-                                            "from price_history where barcode = ?";
+                                            "from price_history where barcode = ? order by starting_date desc";
         List<PriceHistory> results;
 
         try {
