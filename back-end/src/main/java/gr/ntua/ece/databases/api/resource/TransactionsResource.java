@@ -13,12 +13,12 @@ import java.lang.RuntimeException;
 import java.net.http.HttpRequest;
 import java.net.URLDecoder;
 
-import gr.ntua.ece.databases.data.model.UserInfo;
+import gr.ntua.ece.databases.data.model.Transaction;
 
 import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
 import java.util.List;
+import java.sql.Date;
 import java.util.Optional;
 
 public class TransactionsResource extends DatastoreResource {
@@ -28,19 +28,21 @@ public class TransactionsResource extends DatastoreResource {
     protected Representation get() throws ResourceException {
 
         // Read the mandatory URI attributes
-        Long storeId = Long.valueOf(getMandatoryAttribute("storeId", "StoreId is missing"));
-        String startingDate = getMandatoryAttribute("startingDate", "startingDate is missing");
-        String endingDate = getMandatoryAttribute("endingDate", "EndingDate is missing");
+        Long storeId = Long.valueOf(getMandatoryAttribute("StoreId", "StoreId is missing"));
+        String date1 = getMandatoryAttribute("startingDate", "Starting Date is missing");
+        System.out.println("Resource file " + date1);
+        Date startingDate = Date.valueOf(date1);
+        Date endingDate = Date.valueOf(getMandatoryAttribute("endingDate", "Ending Date is missing"));
         String paymentMethod = getMandatoryAttribute("paymentMethod", "Payment method is missing");
-        String numPrdLow = getMandatoryAttribute("numPrdLow", "NumberPrdLow is missing");
-        String numPrdHigh = getMandatoryAttribute("numPrdHigh", "NumberPrdHigh is missing");
+        Integer numPrdLow = Integer.parseInt(getMandatoryAttribute("numPrdLow", "Low Threshold is missing"));
+        Integer numPrdHigh = Integer.parseInt(getMandatoryAttribute("numPrdHigh", "High Threshold is missing"));
 
         // Our platfom supports only JSON formating
         Format format = Format.valueOf("JSON");
 
         try {
-            UserInfo result = dataAccess.fetchTransactionsResource(storeId, startingDate, endingDate, paymentMethod, numPrdLow, numPrdHigh);
-            return format.generateRepresentationTransactionsResource(result);
+            List<Transaction> result = dataAccess.fetchTransactions(storeId, startingDate, endingDate, paymentMethod, numPrdLow, numPrdHigh);
+            return format.generateRepresentationTransactions(result);
         } 
         catch (Exception e) {
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);

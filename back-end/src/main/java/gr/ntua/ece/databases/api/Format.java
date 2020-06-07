@@ -63,7 +63,7 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
-        public Representation generateRepresentationStoreHomepage(Store store) {
+        public Representation generateRepresentationStorePage(Store store) {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                     w.beginObject(); // {
@@ -82,7 +82,7 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
-        public Representation generateRepresentationUsersIndex(List<User> result) {
+        public Representation generateRepresentationUsers(List<User> result) {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                    w.beginArray(); // [
@@ -102,7 +102,7 @@ public enum Format implements RepresentationGenerator {
         }
 
 
-        public Representation generateRepresentationProductsIndex(List<Product> result) {
+        public Representation generateRepresentationProducts(List<Product> result) {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                    w.beginArray(); // [
@@ -122,7 +122,7 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
-        public Representation generateRepresentationProductResource(Product product){
+        public Representation generateRepresentationProduct(Product product){
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                     w.beginObject(); // {
@@ -140,7 +140,7 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
-        public Representation generateRepresentationPriceHistoryResource(List<PriceHistory> result) {
+        public Representation generateRepresentationPriceHistory(List<PriceHistory> result) {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                     w.beginArray(); // [
@@ -205,17 +205,18 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
-        public Representation generateRepresentationTransactionsResource(List<Transaction> result) {
+        public Representation generateRepresentationTransactions(List<Transaction> result) {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                     w.beginArray(); // [
                     for(Transaction rec: result) {
                         w.beginObject(); // {
-                        w.name("DateTime").value(String.valueOf(rec.getDatetime()));
-                        w.name("CardNumber").value(Long.toString(rec.getCardNumber()));
-                        w.name("TotalCost").value(Float.toString(rec.getTotalCost()));
-                        w.name("PaymentMethod").value(String.valueOf(rec.getPaymentMethod()));
-                        w.name("NumnerOfProducts").value(Integer.toString(rec.getNumberOfProducts()));
+                        w.name("Datetime").value(String.valueOf(rec.getDatetime()));
+                        w.name("Card Number").value(Long.toString(rec.getCardNumber()));
+                        w.name("Total Cost").value(Float.toString(rec.getTotalCost()));
+                        w.name("Payment Method").value(String.valueOf(rec.getPaymentMethod()));
+                        w.name("Purchased From").value(rec.getPurchasedFrom());
+                        w.name("Number Of Products").value(Integer.toString(rec.getNumberOfProducts()));
                         w.endObject(); // }
                         w.flush();
                     }

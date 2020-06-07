@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class UsersIndex extends DatastoreResource {
+public class UsersResource extends DatastoreResource {
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
 
     @Override
@@ -31,8 +31,8 @@ public class UsersIndex extends DatastoreResource {
         Format format = Format.valueOf("JSON");
 
         try {
-            List<User> result = dataAccess.fetchUsersIndex();
-            return format.generateRepresentationUsersIndex(result);
+            List<User> result = dataAccess.fetchUsers();
+            return format.generateRepresentationUsers(result);
         } 
         catch (Exception e) {
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);

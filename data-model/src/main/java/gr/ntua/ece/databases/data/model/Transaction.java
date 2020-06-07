@@ -5,7 +5,8 @@ import java.sql.Timestamp;
 
 enum PaymentMethod {
     cash,
-    card
+    card,
+    any // dummy value for filtering transactions
 }
 
 public class Transaction {
@@ -14,24 +15,16 @@ public class Transaction {
     private float totalCost;
     private PaymentMethod paymentMethod;
     private int numberOfProducts;
-    private List<TransactionProduct> transactionProducts;
+    private String purchasedFrom;
 
     public Transaction(){
     }
 
-    public List<TransactionProduct> getTransactionProducts() {
-        return transactionProducts;
-    }
-
-    public void setTransactionProducts(TransactionProduct transactionProducts) {
-        this.transactionProducts = transactionProducts;
-    }
-
-    public Timestamp getDateTime() {
+    public Timestamp getDatetime() {
         return datetime;
     }
 
-    public void setDateTime(Timestamp datetime) {
+    public void setDatetime(Timestamp datetime) {
         this.datetime = datetime;
     }
 
@@ -55,8 +48,8 @@ public class Transaction {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(PaymentMethod paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = PaymentMethod.valueOf(paymentMethod);
     }
 
     public void setNumberOfProducts(int numberOfProducts) {
@@ -66,4 +59,13 @@ public class Transaction {
     public int getNumberOfProducts() {
         return numberOfProducts;
     }
+
+    public String getPurchasedFrom() {
+        return purchasedFrom;
+    }
+
+    public void setPurchasedFrom(String purchasedFrom) {
+        this.purchasedFrom = purchasedFrom;
+    }
+
 }

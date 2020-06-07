@@ -33,8 +33,8 @@ public class ProductResource extends DatastoreResource {
         Format format = Format.valueOf("JSON");
 
         try {
-            Product result = dataAccess.fetchProductResource(barcode);
-            return format.generateRepresentationProductResource(result);
+            Product result = dataAccess.fetchProduct(barcode);
+            return format.generateRepresentationProduct(result);
         } 
         catch (Exception e) {
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);

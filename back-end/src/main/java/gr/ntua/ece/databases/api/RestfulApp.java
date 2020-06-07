@@ -6,6 +6,7 @@ import org.restlet.Restlet;
 import org.restlet.data.Method;
 import org.restlet.engine.application.CorsFilter;
 import org.restlet.routing.Router;
+import java.sql.Date;
 
 import java.util.Set;
 
@@ -18,13 +19,13 @@ public class RestfulApp extends Application {
 
         //Perform a heath check
         router.attach("/HealthCheck", HealthCheck.class);
-        router.attach("/stores", StoresInfo.class);
-        router.attach("/storeHomepage/{StoreId}", StoreHomepage.class);
-        router.attach("/storeHomepage/{StoreId}/transactions/startingDate/{startingDate}/endingDate/{endingDate}/paymentMethod/{paymentMethod}/numPrdLow/{numPrdLow}/numPrdHigh/{numPrdHigh}", TransactionsResource.class);
-        router.attach("/users", UsersIndex.class);
-        router.attach("/profile/{UserId}",UserProfile.class);
+        router.attach("/stores", StoresResource.class);
+        router.attach("/storePage/{StoreId}", StorePageResource.class);
+        router.attach("/storePage/{StoreId}/transactions/{startingDate}/{endingDate}/{paymentMethod}/{numPrdLow}/{numPrdHigh}", TransactionsResource.class);
+        router.attach("/users", UsersResource.class);
+        router.attach("/profile/{UserId}",UserProfileResource.class);
         router.attach("/profile/{UserId}/userInfo",UserInfoResource.class);
-        router.attach("/products",ProductsIndex.class);
+        router.attach("/products",ProductsResource.class);
         router.attach("/product/{Barcode}", ProductResource.class);
         router.attach("/product/{Barcode}/priceHistory", PriceHistoryResource.class);
         

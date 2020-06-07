@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.DayOfWeek;
 import java.util.List;
+import java.util.StringJoiner;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
 import java.security.MessageDigest;
@@ -79,51 +80,55 @@ public class DataAccess {
         }
     }
 
-    public List<Transaction> fetchTransactionsResource(Long storeId,String startingDate, String endingDate, String paymentMethod,String numOfProductsLow,String numOfProductsHigh) throws DataAccessException {
+    public List<Transaction> fetchTransactions(Long storeId,Date startingDate,Date endingDate,String paymentMethod,Integer numOfProductsLow,Integer numOfProductsHigh) throws DataAccessException {
 
-        String sqlQueryForTransactions = "select tr.*,count(*) as count " +
+        String sqlQueryFirstPart = "select tr.*,count(*) as count " +
                                             "from " + 
-                                            "(select datetime,card_number, total_cost, payment_method " +
-                                                "from transactions " + 
-                                                "where purchased_from = ?) as tr, contains as c " +
+                                            "(select datetime,card_number,total_cost,payment_method,address_city " +
+                                                "from transactions, stores " + 
+                                                "where purchased_from=store_id " +
+                                                "and purchased_from = ?) as tr, contains as c " +
                                             "where (tr.datetime,tr.card_number) = (c.datetime,c.card_number) ";
         
         Object[] sqlParamsForTransactions = new Object[]{storeId};
 
         StringJoiner joiner = new StringJoiner(" and ");
-        
-        if (!(startingDate.equals("any"))) {
-            joiner.add("tr.datetime between " + startingDate + " and " + endingDate);
+        joiner.add(sqlQueryFirstPart);
+        if (!(startingDate.equals(Date.valueOf("0000-01-01"))) && !(endingDate.equals(Date.valueOf("0000-01-01")))) {
+            joiner.add("date(tr.datetime) between \'" + startingDate.toString() + "\' and \'" + endingDate.toString() + "\'");
         }
         if (!(paymentMethod.equals("any"))) {
-            joiner.add("tr.payment_method = " + paymentMethod);
+            joiner.add("tr.payment_method = \'" + paymentMethod + "\'");
         }
-        if ((!numOfProductsLow.equals("any")) && (!numOfProductsHigh.equals("any"))) {
-            joiner.add("count between " + numOfProductsLow + " and " + numOfProductsHigh);
+
+        String sqlQueryForTransactions = joiner.toString() + 
+                                        " group by tr.datetime,tr.card_number order by tr.total_cost";
+
+        if ((!(numOfProductsLow == 0)) && (!(numOfProductsHigh == 0))) {
+            sqlQueryForTransactions = "select * from (" + sqlQueryForTransactions + ") as temp where " +
+                                        "temp.count between " + numOfProductsLow.toString() +
+                                        " and " + numOfProductsHigh.toString();
         }
-        else if (!(numOfProductsLow.equals("any"))) {
-            joiner.add("count >= " + numOfProductsLow);
+        else if (!(numOfProductsLow == 0)) {
+            sqlQueryForTransactions = "select * from (" + sqlQueryForTransactions + ") as temp where " +
+                                        "temp.count >= " + numOfProductsLow.toString();
         }
-        else if (!(!(numOfProductsHigh.equals("any")))) {
-            joiner.add("count <= " + numOfProductsHigh);
+        else if (!(numOfProductsHigh == 0)) {
+            sqlQueryForTransactions = "select * from (" + sqlQueryForTransactions + ") as temp where " +
+                                        "temp.count <= " + numOfProductsHigh.toString();
         }
         
-        if (joiner.length() > 0) {
-            sqlQueryForTransactions = sqlQueryForTransactions + " where " + joiner.toString() + 
-                                        " group by tr.datetime,tr.card_number order by count";
-        }
-        else sqlQueryForTransactions = sqlQueryForTransactions + " group by tr.datetime,tr.card_number order by count";
-
         List<Transaction> results;
 
         try {
             results = jdbcTemplate.query(sqlQueryForTransactions, sqlParamsForTransactions, (ResultSet rs, int rowNum) -> {
                 Transaction dataload = new Transaction();
-                dataload.setdatetime(rs.getDate(1));
+                dataload.setDatetime(rs.getTimestamp(1));
                 dataload.setCardNumber(rs.getLong(2));
                 dataload.setTotalCost(rs.getFloat(3));
                 dataload.setPaymentMethod(rs.getString(4));
-                dataload.setNumberOfProducts(rs.getInt(5));
+                dataload.setPurchasedFrom(rs.getString(5));
+                dataload.setNumberOfProducts(rs.getInt(6));
                 return dataload;
             });
 
@@ -136,7 +141,7 @@ public class DataAccess {
         }
     }
 
-    public Store fetchStoreHomepage(Long storeId) throws DataAccessException {
+    public Store fetchStorePage(Long storeId) throws DataAccessException {
 
         Object[] sqlParamsForStore = new Object[]{storeId};
 
@@ -165,7 +170,7 @@ public class DataAccess {
         }
     }
 
-    public List<User> fetchUsersIndex() throws DataAccessException {
+    public List<User> fetchUsers() throws DataAccessException {
 
         String sqlQueryForUsers = "select card_number,first_name,last_name,email from users";
         List<User> results;
@@ -321,7 +326,7 @@ public class DataAccess {
         }
     }
 
-    public List<Product> fetchProductsIndex() throws DataAccessException {
+    public List<Product> fetchProducts() throws DataAccessException {
 
         String sqlQueryForProducts = "select barcode,name,brand_name,price from products";
         List<Product> results;
@@ -345,7 +350,7 @@ public class DataAccess {
         }
     }
 
-    public Product fetchProductResource(Long barcode) throws DataAccessException {
+    public Product fetchProduct(Long barcode) throws DataAccessException {
 
         Object[] sqlParamsForProduct = new Object[]{barcode};
 
@@ -375,7 +380,7 @@ public class DataAccess {
         }
     }
 
-    public List<PriceHistory> fetchPriceHistoryResource(Long barcode) throws DataAccessException {
+    public List<PriceHistory> fetchPriceHistory(Long barcode) throws DataAccessException {
 
         Object[] sqlParamsForPriceHistory = new Object[]{barcode};
         String sqlQueryForPriceHistory = "select barcode, starting_date, ending_date, old_price " +

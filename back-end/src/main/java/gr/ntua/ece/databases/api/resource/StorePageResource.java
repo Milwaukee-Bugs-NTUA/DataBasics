@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class StoreHomepage extends DatastoreResource {
+public class StorePageResource extends DatastoreResource {
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
 
     @Override
@@ -32,8 +32,8 @@ public class StoreHomepage extends DatastoreResource {
         Format format = Format.valueOf("JSON");
 
         try {
-            Store result = dataAccess.fetchStoreHomepage(storeId);
-            return format.generateRepresentationStoreHomepage(result);
+            Store result = dataAccess.fetchStorePage(storeId);
+            return format.generateRepresentationStorePage(result);
         } 
         catch (Exception e) {
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);

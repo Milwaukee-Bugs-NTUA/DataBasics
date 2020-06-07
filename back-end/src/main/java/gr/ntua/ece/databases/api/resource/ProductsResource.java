@@ -13,7 +13,7 @@ import java.lang.RuntimeException;
 import java.net.http.HttpRequest;
 import java.net.URLDecoder;
 
-import gr.ntua.ece.databases.data.model.User;
+import gr.ntua.ece.databases.data.model.Product;
 
 import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeParseException;
@@ -21,20 +21,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class UserProfile extends DatastoreResource {
+public class ProductsResource extends DatastoreResource {
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
 
     @Override
     protected Representation get() throws ResourceException {
 
-        // Read the mandatory URI attributes
-        Long userId = Long.valueOf(getMandatoryAttribute("UserId", "UserId is missing"));
         // Our platfom supports only JSON formating
         Format format = Format.valueOf("JSON");
 
         try {
-            User result = dataAccess.fetchUserProfile(userId);
-            return format.generateRepresentationUserProfile(result);
+            List<Product> result = dataAccess.fetchProducts();
+            return format.generateRepresentationProducts(result);
         } 
         catch (Exception e) {
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);
