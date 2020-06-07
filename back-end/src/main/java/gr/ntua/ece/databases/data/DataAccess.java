@@ -102,21 +102,24 @@ public class DataAccess {
         }
 
         String sqlQueryForTransactions = joiner.toString() + 
-                                        " group by tr.datetime,tr.card_number order by tr.total_cost";
+                                        " group by tr.datetime,tr.card_number ";
 
         if ((!(numOfProductsLow == 0)) && (!(numOfProductsHigh == 0))) {
-            sqlQueryForTransactions = "select * from (" + sqlQueryForTransactions + ") as temp where " +
-                                        "temp.count between " + numOfProductsLow.toString() +
-                                        " and " + numOfProductsHigh.toString();
+            sqlQueryForTransactions = sqlQueryForTransactions + " having count(*) between "
+                                        + numOfProductsLow.toString() + " and "
+                                        + numOfProductsHigh.toString();
         }
         else if (!(numOfProductsLow == 0)) {
-            sqlQueryForTransactions = "select * from (" + sqlQueryForTransactions + ") as temp where " +
-                                        "temp.count >= " + numOfProductsLow.toString();
+            sqlQueryForTransactions = sqlQueryForTransactions + " having count(*) >= "
+                                        + numOfProductsLow.toString();
         }
         else if (!(numOfProductsHigh == 0)) {
-            sqlQueryForTransactions = "select * from (" + sqlQueryForTransactions + ") as temp where " +
-                                        "temp.count <= " + numOfProductsHigh.toString();
+            sqlQueryForTransactions = sqlQueryForTransactions + " having count(*) <= "
+                                        + numOfProductsHigh.toString();
+
         }
+
+        sqlQueryForTransactions = sqlQueryForTransactions + " order by tr.total_cost";
         
         List<Transaction> results;
 
