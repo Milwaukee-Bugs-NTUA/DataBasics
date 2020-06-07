@@ -29,7 +29,7 @@ public class RestfulApp extends Application {
         router.attach("/products",ProductsResource.class);
         router.attach("/product/{Barcode}", ProductResource.class);
         router.attach("/product/{Barcode}/priceHistory", PriceHistoryResource.class);
-        //router.attach("/productsStats", ProductsStatisticsResource.class);
+        router.attach("/productsStats", ProductsStatisticsResource.class);
 
         
         //Enable CORS for all origins (don't use this in a production service)

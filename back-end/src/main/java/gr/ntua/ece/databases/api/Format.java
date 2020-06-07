@@ -247,7 +247,54 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
-
+        public Representation generateRepresentationProductsStatistics(ProductsStatistics result){
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                    w.beginObject(); // {
+                    w.name("Top Products Pairs");
+                    w.beginArray();
+                    for (ProductsPair pair: result.getTopProductsPairs()) {
+                        w.beginObject();
+                        w.name("First Barcode").value(Long.toString(pair.getBarcode1()));
+                        w.name("First Product Name").value(pair.getProductName1());
+                        w.name("First Brand Name").value(pair.getBrandName1());
+                        w.name("Second Barcode").value(Long.toString(pair.getBarcode2()));
+                        w.name("Second Product Name").value(pair.getProductName2());
+                        w.name("Second Brand Name").value(pair.getBrandName2());
+                        w.endObject();
+                        w.flush();
+                    }
+                    w.endArray();
+                    w.flush();
+                    /*w.name("Top Products Placements");
+                    w.beginArray();
+                    for (ProductPlacement placement: result.getTopProductsPlacements()) {
+                        w.beginObject();
+                        w.name("Alley Number").value(placement.getAlleyNumber());
+                        w.name("Self Number").value(placement.getSelfNumber());
+                        w.endObject();
+                        w.flush();
+                    }
+                    w.endArray();
+                    w.flush();
+                    w.name("Datastore Brand Success");
+                    w.beginArray();
+                    for (PercentageOfSuccess percentage: result.getPercentageOfSuccessInEachCategory()) {
+                        w.beginObject();
+                        w.name("Category").value(percentage.getCategoryName());
+                        w.name("Percentage").value(Float.toString(percentage.getPercentage()));
+                        w.endObject();
+                        w.flush();
+                    }
+                    w.endArray();*/
+                    w.endObject(); // }
+                    w.flush();
+                }
+                catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
     };
     private static final class CustomJsonRepresentation extends WriterRepresentation {
 

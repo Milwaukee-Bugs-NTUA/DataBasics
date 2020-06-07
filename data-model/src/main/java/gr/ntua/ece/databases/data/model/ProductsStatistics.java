@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 public class ProductsStatistics {
     private List<ProductsPair> topProductsPairs;
     private List<ProductPlacement> topProductsPlacements;
-    private float[] percentageOfSuccessInEachCategory;
+    private List<PercentageOfSuccess> percentageOfSuccessInEachCategory;
 
     public ProductsStatistics() {
     }
@@ -20,11 +20,11 @@ public class ProductsStatistics {
         this.topProductsPairs = topProductsPairs;
     }
 
-    public float[] getPercentageOfSuccessInEachCategory() {
+    public List<PercentageOfSuccess> getPercentageOfSuccessInEachCategory() {
         return percentageOfSuccessInEachCategory;
     }
 
-    public void setPercentageOfSuccessInEachCategory (float[] percentageOfSuccessInEachCategory) {
+    public void setPercentageOfSuccessInEachCategory (List<PercentageOfSuccess> percentageOfSuccessInEachCategory) {
         this.percentageOfSuccessInEachCategory = percentageOfSuccessInEachCategory;
     }
 

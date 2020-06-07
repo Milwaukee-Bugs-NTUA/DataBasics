@@ -278,7 +278,6 @@ public class DataAccess {
         int dayOfLastWeek = dateOfLastWeek.getDayOfWeek().getValue();
         String lastMonday = dateOfLastWeek.minusDays(dayOfLastWeek - 1).toString();
         String lastSunday = dateOfLastWeek.plusDays(7 - dayOfLastWeek).toString();
-        System.out.println(lastMonday + lastSunday);
         Object[] sqlParamsForMeanTrsPerWeek = new Object[]{"2018-01-16", "2019-06-17", userId}; //Hard Coded for now
 
         String sqlQueryForCommonProducts = "select c.product_id, p.name from contains as c, " +
@@ -436,6 +435,46 @@ public class DataAccess {
             return results;
         } 
         
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public ProductsStatistics fetchProductsStatistics() throws DataAccessException {
+
+        String sqlQueryForTopProductsPairs =    "with cont as " +
+                                                    "(select product_id,name,brand_name,datetime,card_number " +
+                                                    "from contains as c,products as p " +
+                                                    "where c.product_id = p.barcode) " +
+                                                "select c1.product_id as b1,c1.name as name1, " +
+                                                        "c1.brand_name as brand1,c2.product_id as b2, " +
+                                                        "c2.name as name2,c2.brand_name as brand2 " +
+                                                "from cont as c1, cont as c2 " +
+                                                "where (c1.datetime,c1.card_number) = (c2.datetime,c2.card_number) " +
+                                                "and c1.product_id < c2.product_id " +
+                                                "group by b1,b2 " +
+                                                "order by count(*) desc " +
+                                                "limit 5";
+        
+        ProductsStatistics productsStatistics = new ProductsStatistics();
+
+        try {
+            List<ProductsPair> productsPairsList;
+            productsPairsList = jdbcTemplate.query(sqlQueryForTopProductsPairs, (ResultSet rs, int rowNum) -> {
+                ProductsPair dataload = new ProductsPair();
+                dataload.setBarcode1(rs.getLong(1));
+                dataload.setProductName1(rs.getString(2));
+                dataload.setBrandName1(rs.getString(3));
+                dataload.setBarcode2(rs.getLong(4));
+                dataload.setProductName2(rs.getString(5));
+                dataload.setBrandName2(rs.getString(6));
+                return dataload;
+            });
+            productsStatistics.setTopProductsPairs(productsPairsList);
+
+            return productsStatistics;
+        }
         catch (Exception e) {
             System.out.println(e.getMessage());
             throw new DataAccessException(e.getMessage(), e);
