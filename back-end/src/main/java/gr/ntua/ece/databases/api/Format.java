@@ -266,7 +266,7 @@ public enum Format implements RepresentationGenerator {
                     }
                     w.endArray();
                     w.flush();
-                    /*w.name("Top Products Placements");
+                    w.name("Top Products Placements");
                     w.beginArray();
                     for (ProductPlacement placement: result.getTopProductsPlacements()) {
                         w.beginObject();
@@ -277,7 +277,7 @@ public enum Format implements RepresentationGenerator {
                     }
                     w.endArray();
                     w.flush();
-                    w.name("Datastore Brand Success");
+                    /*w.name("Datastore Brand Success");
                     w.beginArray();
                     for (PercentageOfSuccess percentage: result.getPercentageOfSuccessInEachCategory()) {
                         w.beginObject();

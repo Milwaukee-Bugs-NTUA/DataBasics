@@ -457,6 +457,11 @@ public class DataAccess {
                                                 "order by count(*) desc " +
                                                 "limit 5";
         
+        String sqlQueryForTopPlacements = "select alley_number,shelf_number " +
+                                            "from offers " +
+                                            "group by alley_number,shelf_number " +
+                                            "order by count(*) desc limit 5";
+        
         ProductsStatistics productsStatistics = new ProductsStatistics();
 
         try {
@@ -472,6 +477,15 @@ public class DataAccess {
                 return dataload;
             });
             productsStatistics.setTopProductsPairs(productsPairsList);
+
+            List<ProductPlacement> productsPlacementsList;
+            productsPlacementsList = jdbcTemplate.query(sqlQueryForTopPlacements, (ResultSet rs, int rowNum) -> {
+                ProductPlacement dataload = new ProductPlacement();
+                dataload.setAlleyNumber(rs.getString(1));
+                dataload.setSelfNumber(rs.getString(2));
+                return dataload;
+            });
+            productsStatistics.setTopProductsPlacements(productsPlacementsList);
 
             return productsStatistics;
         }
