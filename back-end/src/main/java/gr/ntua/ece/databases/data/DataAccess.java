@@ -466,8 +466,8 @@ public class DataAccess {
                                             "(select p.barcode,p.brand_name,p.category as category_id,cat.name as category,sum(c.pieces) as pieces " +
                                             "from contains as c,products as p, product_category as cat " +
                                             "where c.product_id = p.barcode " +
-                                            "and p.category = cat.category_id) " + 
-                                            "group by p.product_id, " +
+                                            "and p.category = cat.category_id " + 
+                                            "group by p.barcode), " +
                                             "total_sales as " +
                                             "(select tsp.category_id, tsp.category,sum(tsp.pieces) as sales " +
                                             "from total_sales_per_product as tsp " +
@@ -525,7 +525,7 @@ public class DataAccess {
         }
     }
 
-    public ProductsStatistics fetchUsersStatistics() throws DataAccessException {
+    public UsersStatistics fetchUsersStatistics() throws DataAccessException {
 
         String sqlQueryForMaximumSalesHourZone =   "with r as " +
                                                     "(select hour(datetime) as hour_zone,sum(total_cost) as money_spend " +
@@ -577,18 +577,20 @@ public class DataAccess {
                                                     "left join middle as m using(hour_zone) " +
                                                     "left join elderly as e using(hour_zone)";
 
-        UsesStatistics usersStatistics = new UsersStatistics();
+        UsersStatistics usersStatistics = new UsersStatistics();
 
         try {
 
-            usersStatistics.setMaximumSalesHourZone(jdbcTemplate.query(sqlQueryForMaximumSalesHourZone, (ResultSet rs, int rowNum) -> 
-                                                        return rs.getInt(1);
-                                                    }));
+            Integer hourZoneWithMaximumSales = jdbcTemplate.queryForObject(sqlQueryForMaximumSalesHourZone, (ResultSet rs, int rowNum) -> {
+                                                Integer dataload = rs.getInt(1);
+                                                return dataload;
+                                                });
+            usersStatistics.setMaximumSalesHourZone(hourZoneWithMaximumSales);
             
             List<PercentagesPerHour> percentagesPerHourZone;
             percentagesPerHourZone = jdbcTemplate.query(sqlQueryForPercentagesPerHourZone, (ResultSet rs, int rowNum) -> {
                 PercentagesPerHour dataload = new PercentagesPerHour();
-                dataload.setHourZone(rs.getLong(1));
+                dataload.setHourZone(rs.getInt(1));
                 dataload.setPercentageofYoung(rs.getFloat(2));
                 dataload.setPercentageofMiddle(rs.getFloat(3));
                 dataload.setPercentageofElder(rs.getFloat(4));
