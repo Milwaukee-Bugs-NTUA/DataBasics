@@ -33,8 +33,8 @@ public class PriceHistoryResource extends DatastoreResource {
         Format format = Format.valueOf("JSON");
 
         try {
-            List<PriceHistory> result = dataAccess.fetchPriceHistoryResource(barcode);
-            return format.generateRepresentationPriceHistoryResource(result);
+            List<PriceHistory> result = dataAccess.fetchPriceHistory(barcode);
+            return format.generateRepresentationPriceHistory(result);
         } 
         catch (Exception e) {
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);

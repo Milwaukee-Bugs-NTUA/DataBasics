@@ -8,7 +8,10 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.DayOfWeek;
 import java.util.List;
+import java.util.StringJoiner;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
 import java.security.MessageDigest;
@@ -57,7 +60,7 @@ public class DataAccess {
 
     public List<Store> fetchStores() throws DataAccessException {
 
-        String sqlQueryForStores = "select store_id,address_city from stores";
+        String sqlQueryForStores = "select store_id,address_city from stores order by store_id";
         List<Store> results;
 
         try {
@@ -77,7 +80,103 @@ public class DataAccess {
         }
     }
 
-    public Store fetchStoreHomepage(Long storeId) throws DataAccessException {
+    public List<Transaction> fetchTransactions(Long storeId,
+                                                Date startingDate,
+                                                Date endingDate,
+                                                String paymentMethod,
+                                                Integer numOfProductsLow,
+                                                Integer numOfProductsHigh) throws DataAccessException {
+
+        String sqlQueryFirstPart = "select tr.*,count(*) as count " +
+                                            "from " + 
+                                            "(select datetime,card_number,total_cost,payment_method,address_city " +
+                                                "from transactions, stores " + 
+                                                "where purchased_from=store_id " +
+                                                "and purchased_from = ?) as tr, contains as c " +
+                                            "where (tr.datetime,tr.card_number) = (c.datetime,c.card_number) ";
+        
+        Object[] sqlParamsForTransactions = new Object[]{storeId};
+
+        StringJoiner joiner = new StringJoiner(" and ");
+        joiner.add(sqlQueryFirstPart);
+        if (!(startingDate.equals(Date.valueOf("0000-01-01"))) && !(endingDate.equals(Date.valueOf("0000-01-01")))) {
+            joiner.add("date(tr.datetime) between \'" + startingDate.toString() + "\' and \'" + endingDate.toString() + "\'");
+        }
+        if (!(paymentMethod.equals("any"))) {
+            joiner.add("tr.payment_method = \'" + paymentMethod + "\'");
+        }
+
+        String sqlQueryForTransactions = joiner.toString() + 
+                                        " group by tr.datetime,tr.card_number ";
+
+        if ((!(numOfProductsLow == 0)) && (!(numOfProductsHigh == 0))) {
+            sqlQueryForTransactions = sqlQueryForTransactions + " having count(*) between "
+                                        + numOfProductsLow.toString() + " and "
+                                        + numOfProductsHigh.toString();
+        }
+        else if (!(numOfProductsLow == 0)) {
+            sqlQueryForTransactions = sqlQueryForTransactions + " having count(*) >= "
+                                        + numOfProductsLow.toString();
+        }
+        else if (!(numOfProductsHigh == 0)) {
+            sqlQueryForTransactions = sqlQueryForTransactions + " having count(*) <= "
+                                        + numOfProductsHigh.toString();
+
+        }
+
+        sqlQueryForTransactions = sqlQueryForTransactions + " order by tr.total_cost";
+        
+        List<Transaction> results;
+
+        try {
+            results = jdbcTemplate.query(sqlQueryForTransactions, sqlParamsForTransactions, (ResultSet rs, int rowNum) -> {
+                Transaction dataload = new Transaction();
+                dataload.setDatetime(rs.getTimestamp(1));
+                dataload.setCardNumber(rs.getLong(2));
+                dataload.setTotalCost(rs.getFloat(3));
+                dataload.setPaymentMethod(rs.getString(4));
+                dataload.setPurchasedFrom(rs.getString(5));
+                dataload.setNumberOfProducts(rs.getInt(6));
+                return dataload;
+            });
+
+            return results;
+        } 
+        
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public List<TransactionProduct> fetchTransactionProducts(Timestamp datetime, Long cardNumber) throws DataAccessException {
+        String sqlQueryForTransactionProducts = "select p.barcode,p.name,p.brand_name,c.pieces " +
+                                                "from contains as c, products as p " +
+                                                "where c.product_id = p.barcode " +
+                                                "and c.card_number = ? " +
+                                                "and c.datetime = ? " +
+                                                "order by p.name";
+
+        Object[] sqlParamsForTransactionProducts = new Object[]{cardNumber, datetime.toString()};
+        List<TransactionProduct> results;
+        try {
+            results = jdbcTemplate.query(sqlQueryForTransactionProducts, sqlParamsForTransactionProducts, (ResultSet rs, int rowNum) -> {
+                TransactionProduct dataload = new TransactionProduct();
+                dataload.setBarcode(rs.getLong(1));
+                dataload.setProductName(rs.getString(2));
+                dataload.setBrandName(rs.getString(3));
+                dataload.setPieces(rs.getInt(4));
+                return dataload;
+            });
+            return results;
+        } 
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public Store fetchStorePage(Long storeId) throws DataAccessException {
 
         Object[] sqlParamsForStore = new Object[]{storeId};
 
@@ -106,9 +205,10 @@ public class DataAccess {
         }
     }
 
-    public List<User> fetchUsersIndex() throws DataAccessException {
+    public List<User> fetchUsers() throws DataAccessException {
 
-        String sqlQueryForUsers = "select card_number,first_name,last_name,email from users";
+        String sqlQueryForUsers = "select card_number,first_name,last_name,email " + 
+                                    "from users order by first_name,last_name";
         List<User> results;
 
         try {
@@ -168,12 +268,36 @@ public class DataAccess {
     public UserInfo fetchUserInfo(Long userId) throws DataAccessException {
 
         Object[] sqlParamsForUser = new Object[]{userId};
+        LocalDate localDate = LocalDate.now();
+        LocalDate lastDate = localDate.minusMonths(1);
+        int lastMonth = lastDate.getMonthValue();
+        int lastYear = lastDate.getYear();
+        Object[] sqlParamsForMeanTrsPerMonth = new Object[]{1, 2018, userId}; //Hard Coded for now
 
-        String sqlQueryForCommonProducts = "select c.product_id, p.name from contains as c, products as p where c.product_id = p.barcode and c.card_number = ? group by c.product_id order by sum(c.pieces) desc limit 10";
-        String sqlQueryForCommonStores = "select distinct tr.purchased_from as common_store, s.address_city as name from transactions as tr, stores as s where tr.purchased_from = s.store_id and card_number = ?";
-        String sqlQueryForHappyHours = "select hour(datetime) as time_field, count(*) from transactions where card_number = ? group by time_field";
-        //String sqlQueryForMeanTrsPerWeek = "select * from sth";
-        //String sqlQueryForMeanTrsPerMonth = "select * from sth";
+        LocalDate dateOfLastWeek = localDate.minusDays(7);
+        int dayOfLastWeek = dateOfLastWeek.getDayOfWeek().getValue();
+        String lastMonday = dateOfLastWeek.minusDays(dayOfLastWeek - 1).toString();
+        String lastSunday = dateOfLastWeek.plusDays(7 - dayOfLastWeek).toString();
+        Object[] sqlParamsForMeanTrsPerWeek = new Object[]{"2018-01-16", "2019-06-17", userId}; //Hard Coded for now
+
+        String sqlQueryForCommonProducts = "select c.product_id, p.name from contains as c, " +
+                                            "products as p " + 
+                                            "where c.product_id = p.barcode and c.card_number = ? " +
+                                            "group by c.product_id order by sum(c.pieces) desc limit 10";
+        String sqlQueryForCommonStores = "select distinct tr.purchased_from as common_store, " +
+                                            "s.address_city as name from transactions as tr, stores as s "+
+                                            "where tr.purchased_from = s.store_id and card_number = ?";
+        String sqlQueryForHappyHours = "select hour(datetime) as time_field, count(*) " +
+                                        "from transactions where card_number = ? " +
+                                        "group by time_field";
+        String sqlQueryForMeanTrsPerWeek = "select cast(avg(total_cost) as decimal(7,2)) as mean " +
+                                            "from transactions " +
+                                            "where date(datetime) between ? and ? " +
+                                            "and card_number = ?";
+        String sqlQueryForMeanTrsPerMonth = "select cast(avg(total_cost) as decimal(7, 2)) as mean " +
+                                                "from transactions where month(datetime) = ? " + 
+                                                "and year(datetime) = ? and card_number = ? " +
+                                                "group by month(datetime)";
 
         UserInfo userInfo = new UserInfo();
 
@@ -203,16 +327,31 @@ public class DataAccess {
                 dataload.setCount(rs.getInt(2));
                 return dataload;
             });
-            System.out.println("Query for happy Hours");
             userInfo.setHappyHours(happyHours);
 
-            /*Long meanTrsPerWeek;
-            meanTrsPerWeek = jdbcTemplate.queryForObject(sqlQueryForMeanTrsPerWeek, sqlParamsForUser, Long);
-            userInfo.setMeanTransactionsPerWeek(meanTrsPerWeek);
+            Float meanTrsPerWeek;
+            meanTrsPerWeek = jdbcTemplate.queryForObject(sqlQueryForMeanTrsPerWeek, sqlParamsForMeanTrsPerWeek, (ResultSet rs, int rowNum) -> {
+                Float dataload = rs.getFloat(1);
+                return dataload;
+            });
+            if (meanTrsPerWeek == null) {
+                userInfo.setMeanTransactionsPerWeek(Float.valueOf(0));
+            }
+            else {
+                userInfo.setMeanTransactionsPerWeek(meanTrsPerWeek);
+            }
 
-            Long meanTrsPerMonth;
-            meanTrsPerMonth = jdbcTemplate.queryForObject(sqlQueryForMeanTrsPerMonth, sqlParamsForUser, Long);
-            userInfo.setMeanTransactionsPerMonth(meanTrsPerMonth);*/
+            Float meanTrsPerMonth;
+            meanTrsPerMonth = jdbcTemplate.queryForObject(sqlQueryForMeanTrsPerMonth, sqlParamsForMeanTrsPerMonth, (ResultSet rs, int rowNum) -> {
+                Float dataload = rs.getFloat(1);
+                return dataload;
+            });
+            if (meanTrsPerMonth == null) {
+                userInfo.setMeanTransactionsPerMonth(Float.valueOf(0));
+            }
+            else {
+                userInfo.setMeanTransactionsPerMonth(meanTrsPerMonth);
+            }
 
             return userInfo;
         }
@@ -222,9 +361,9 @@ public class DataAccess {
         }
     }
 
-    public List<Product> fetchProductsIndex() throws DataAccessException {
+    public List<Product> fetchProducts() throws DataAccessException {
 
-        String sqlQueryForProducts = "select barcode,name,brand_name,price from products";
+        String sqlQueryForProducts = "select barcode,name,brand_name,price from products order by barcode";
         List<Product> results;
 
         try {
@@ -246,11 +385,14 @@ public class DataAccess {
         }
     }
 
-    public Product fetchProductResource(Long barcode) throws DataAccessException {
+    public Product fetchProduct(Long barcode) throws DataAccessException {
 
         Object[] sqlParamsForProduct = new Object[]{barcode};
 
-        String sqlQueryForProduct = "select prd.barcode, prd.name, prd.brand_name, prd.price, prd.category as category_id, c.name as category_name from products as prd, product_category as c where prd.category = c.category_id and prd.barcode = ?";
+        String sqlQueryForProduct = "select prd.barcode, prd.name, prd.brand_name, " + 
+                                        "prd.price, prd.category as category_id, " +
+                                        "c.name as category_name from products as prd, product_category as c " +
+                                        "where prd.category = c.category_id and prd.barcode = ?";
 
         try {
             Product product = jdbcTemplate.queryForObject(sqlQueryForProduct, sqlParamsForProduct, (ResultSet rs, int rowNum) -> {
@@ -273,10 +415,11 @@ public class DataAccess {
         }
     }
 
-    public List<PriceHistory> fetchPriceHistoryResource(Long barcode) throws DataAccessException {
+    public List<PriceHistory> fetchPriceHistory(Long barcode) throws DataAccessException {
 
         Object[] sqlParamsForPriceHistory = new Object[]{barcode};
-        String sqlQueryForPriceHistory = "select barcode, starting_date, ending_date, old_price from price_history where barcode = ?";
+        String sqlQueryForPriceHistory = "select barcode, starting_date, ending_date, old_price " +
+                                            "from price_history where barcode = ? order by starting_date desc";
         List<PriceHistory> results;
 
         try {
@@ -292,6 +435,171 @@ public class DataAccess {
             return results;
         } 
         
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public ProductsStatistics fetchProductsStatistics() throws DataAccessException {
+
+        String sqlQueryForTopProductsPairs =    "with cont as " +
+                                                    "(select product_id,name,brand_name,datetime,card_number " +
+                                                    "from contains as c,products as p " +
+                                                    "where c.product_id = p.barcode) " +
+                                                "select c1.product_id as b1,c1.name as name1, " +
+                                                        "c1.brand_name as brand1,c2.product_id as b2, " +
+                                                        "c2.name as name2,c2.brand_name as brand2 " +
+                                                "from cont as c1, cont as c2 " +
+                                                "where (c1.datetime,c1.card_number) = (c2.datetime,c2.card_number) " +
+                                                "and c1.product_id < c2.product_id " +
+                                                "group by b1,b2 " +
+                                                "order by count(*) desc " +
+                                                "limit 5";
+        
+        String sqlQueryForTopPlacements = "select alley_number,shelf_number " +
+                                            "from offers " +
+                                            "group by alley_number,shelf_number " +
+                                            "order by count(*) desc limit 5";
+        
+        String sqlQueryForDatastoreSales = "with total_sales_per_product as " +
+                                            "(select p.barcode,p.brand_name,p.category as category_id,cat.name as category,sum(c.pieces) as pieces " +
+                                            "from contains as c,products as p, product_category as cat " +
+                                            "where c.product_id = p.barcode " +
+                                            "and p.category = cat.category_id " + 
+                                            "group by p.barcode), " +
+                                            "total_sales as " +
+                                            "(select tsp.category_id, tsp.category,sum(tsp.pieces) as sales " +
+                                            "from total_sales_per_product as tsp " +
+                                            "group by tsp.category_id), " +
+                                            "total_sales_datastore as " +
+                                            "(select tsp.category_id,tsp.category,sum(tsp.pieces) as sales " +
+                                            "from total_sales_per_product as tsp " +
+                                            "where tsp.brand_name = \'Datastore\' " +
+                                            "group by tsp.category_id) " +
+                                            "select t.category_id,t.category,ifnull(cast((d.sales/t.sales)*100 as decimal(5,2)),0) as percentage " +
+                                            "from total_sales_datastore as d " +
+                                            "right join total_sales as t using(category_id) " +
+                                            "order by t.category_id";
+
+        ProductsStatistics productsStatistics = new ProductsStatistics();
+
+        try {
+            List<ProductsPair> productsPairsList;
+            productsPairsList = jdbcTemplate.query(sqlQueryForTopProductsPairs, (ResultSet rs, int rowNum) -> {
+                ProductsPair dataload = new ProductsPair();
+                dataload.setBarcode1(rs.getLong(1));
+                dataload.setProductName1(rs.getString(2));
+                dataload.setBrandName1(rs.getString(3));
+                dataload.setBarcode2(rs.getLong(4));
+                dataload.setProductName2(rs.getString(5));
+                dataload.setBrandName2(rs.getString(6));
+                return dataload;
+            });
+            productsStatistics.setTopProductsPairs(productsPairsList);
+
+            List<ProductPlacement> productsPlacementsList;
+            productsPlacementsList = jdbcTemplate.query(sqlQueryForTopPlacements, (ResultSet rs, int rowNum) -> {
+                ProductPlacement dataload = new ProductPlacement();
+                dataload.setAlleyNumber(rs.getString(1));
+                dataload.setSelfNumber(rs.getString(2));
+                return dataload;
+            });
+            productsStatistics.setTopProductsPlacements(productsPlacementsList);
+
+            List<PercentageOfSuccess> percentageList;
+            percentageList = jdbcTemplate.query(sqlQueryForDatastoreSales, (ResultSet rs, int rowNum) -> {
+                PercentageOfSuccess dataload = new PercentageOfSuccess();
+                dataload.setCategoryId(rs.getLong(1));
+                dataload.setCategoryName(rs.getString(2));
+                dataload.setPercentage(rs.getFloat(3));
+                return dataload;
+            });
+            productsStatistics.setPercentageOfSuccessInEachCategory(percentageList);
+
+            return productsStatistics;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public UsersStatistics fetchUsersStatistics() throws DataAccessException {
+
+        String sqlQueryForMaximumSalesHourZone =   "with r as " +
+                                                    "(select hour(datetime) as hour_zone,sum(total_cost) as money_spend " +
+                                                    "from transactions " +
+                                                    "group by hour_zone " +
+                                                    "order by money_spend) " +
+                                                    "select r.hour_zone " +
+                                                    "from r left join " +
+                                                    "(select distinct r1.hour_zone,r1.money_spend " +
+                                                    "from r as r1, r as r2 " +
+                                                    "where r1.money_spend < r2.money_spend) as s using(hour_zone) " +
+                                                    "where s.money_spend is null";
+        
+        String sqlQueryForPercentagesPerHourZone = "with r as " +
+                                                    "(select u.card_number, " +
+                                                    "timestampdiff(year,u.date_of_birth,curdate()) as age, " +
+                                                    "hour(t.datetime) as hour_zone " +
+                                                    "from users as u " +
+                                                    "join transactions as t using(card_number)), " +
+                                                    "young as " +
+                                                    "(select hour_zone, count(*) as trs " +
+                                                    "from r " +
+                                                    "where r.age between 15 and 34 " +
+                                                    "group by r.hour_zone " +
+                                                    "order by hour_zone), " +
+                                                    "middle as " +
+                                                    "(select hour_zone, count(*) as trs " +
+                                                    "from r " +
+                                                    "where r.age between 35 and 60 " +
+                                                    "group by r.hour_zone " +
+                                                    "order by hour_zone), " +
+                                                    "elderly as " +
+                                                    "(select hour_zone, count(*) as trs " +
+                                                    "from r " +
+                                                    "where r.age >= 61 " +
+                                                    "group by r.hour_zone " +
+                                                    "order by hour_zone), " +
+                                                    "total as " +
+                                                    "(select hour_zone, count(*) as trs " +
+                                                    "from r " +
+                                                    "group by r.hour_zone " +
+                                                    "order by hour_zone) " +
+                                                    "select hour_zone, " +
+                                                    "cast((ifnull(y.trs,0)/t.trs)*100 as decimal(5,2)) as young_p, " +
+                                                    "cast((ifnull(m.trs,0)/t.trs)*100 as decimal(5,2)) as middle_p, " +
+                                                    "cast((ifnull(e.trs,0)/t.trs)*100 as decimal(5,2)) as elderly_p " +
+                                                    "from total as t " +
+                                                    "left join young as y using(hour_zone) " +
+                                                    "left join middle as m using(hour_zone) " +
+                                                    "left join elderly as e using(hour_zone)";
+
+        UsersStatistics usersStatistics = new UsersStatistics();
+
+        try {
+
+            Integer hourZoneWithMaximumSales = jdbcTemplate.queryForObject(sqlQueryForMaximumSalesHourZone, (ResultSet rs, int rowNum) -> {
+                                                Integer dataload = rs.getInt(1);
+                                                return dataload;
+                                                });
+            usersStatistics.setMaximumSalesHourZone(hourZoneWithMaximumSales);
+            
+            List<PercentagesPerHour> percentagesPerHourZone;
+            percentagesPerHourZone = jdbcTemplate.query(sqlQueryForPercentagesPerHourZone, (ResultSet rs, int rowNum) -> {
+                PercentagesPerHour dataload = new PercentagesPerHour();
+                dataload.setHourZone(rs.getInt(1));
+                dataload.setPercentageofYoung(rs.getFloat(2));
+                dataload.setPercentageofMiddle(rs.getFloat(3));
+                dataload.setPercentageofElder(rs.getFloat(4));
+                return dataload;
+            });
+            usersStatistics.setPercentagesPerHour(percentagesPerHourZone);
+
+            return usersStatistics;
+        }
         catch (Exception e) {
             System.out.println(e.getMessage());
             throw new DataAccessException(e.getMessage(), e);

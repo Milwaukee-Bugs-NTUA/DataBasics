@@ -21,20 +21,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class ProductResource extends DatastoreResource {
+public class ProductsResource extends DatastoreResource {
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
 
     @Override
     protected Representation get() throws ResourceException {
 
-        // Specify barcode of product
-        Long barcode = Long.valueOf(getMandatoryAttribute("Barcode", "Barcode is missing"));
         // Our platfom supports only JSON formating
         Format format = Format.valueOf("JSON");
 
         try {
-            Product result = dataAccess.fetchProduct(barcode);
-            return format.generateRepresentationProduct(result);
+            List<Product> result = dataAccess.fetchProducts();
+            return format.generateRepresentationProducts(result);
         } 
         catch (Exception e) {
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);

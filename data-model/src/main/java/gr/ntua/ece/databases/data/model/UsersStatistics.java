@@ -4,52 +4,26 @@ import java.util.*;
 import java.sql.Time;
 
 public class UsersStatistics {
-    private Time startingHappyHour;
-    private Time endingHappyHour;
-    private float[] childrenPercentageOfConsumption;
-    private float[] adultsPercentageOfConsumption;
-    private float[] elderlyPercentageOfConsumption;
+    private Integer maximumSalesHourZone;
+    private List<PercentagesPerHour> percentagesPerHour;
 
     public UsersStatistics() {
     }
 
-    public Time getStartingHappyHour() {
-        return startingHappyHour;
+    public List<PercentagesPerHour> getPercentagesPerHour() {
+        return percentagesPerHour;
     }
 
-    public void setStartingHappyHour(Time startingHappyHour) {
-        this.startingHappyHour = startingHappyHour;
+    public void setPercentagesPerHour(List<PercentagesPerHour> ppHour) {
+        this.percentagesPerHour = ppHour;
     }
 
-    public Time getEndingHappyHour() {
-        return endingHappyHour;
+    public Integer getMaximumSalesHourZone() {
+        return maximumSalesHourZone;
     }
 
-    public void setEndingHappyHour(Time endingHappyHour) {
-        this.endingHappyHour = endingHappyHour;
+    public void setMaximumSalesHourZone(Integer hourZone) {
+        this.maximumSalesHourZone = hourZone;
     }
-
-    public float[] getChildrenPercentageOfConsumption() {
-        return childrenPercentageOfConsumption;
-    }
-
-    public void setChildrenPercentageOfConsumption(float[] childrenPercentageOfConsumption) {
-        this.childrenPercentageOfConsumption = childrenPercentageOfConsumption;
-    }
-
-    public float[] getAdultsPercentageOfConsumption() {
-        return adultsPercentageOfConsumption;
-    }
-
-    public void setAdultsPercentageOfConsumption(float[] adultsPercentageOfConsumption) {
-        this.adultsPercentageOfConsumption = adultsPercentageOfConsumption;
-    }
-
-    public float[] getElderlyPercentageOfConsumption() {
-        return elderlyPercentageOfConsumption;
-    }
-
-    public void setElderlyPercentageOfConsumption(float[] elderlyPercentageOfConsumption) {
-        this.elderlyPercentageOfConsumption = elderlyPercentageOfConsumption;
-    }
+    
 }

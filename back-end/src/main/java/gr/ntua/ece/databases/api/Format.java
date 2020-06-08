@@ -63,7 +63,7 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
-        public Representation generateRepresentationStoreHomepage(Store store) {
+        public Representation generateRepresentationStorePage(Store store) {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                     w.beginObject(); // {
@@ -82,7 +82,7 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
-        public Representation generateRepresentationUsersIndex(List<User> result) {
+        public Representation generateRepresentationUsers(List<User> result) {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                    w.beginArray(); // [
@@ -102,7 +102,7 @@ public enum Format implements RepresentationGenerator {
         }
 
 
-        public Representation generateRepresentationProductsIndex(List<Product> result) {
+        public Representation generateRepresentationProducts(List<Product> result) {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                    w.beginArray(); // [
@@ -122,7 +122,7 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
-        public Representation generateRepresentationProductResource(Product product){
+        public Representation generateRepresentationProduct(Product product){
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                     w.beginObject(); // {
@@ -140,7 +140,7 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
-        public Representation generateRepresentationPriceHistoryResource(List<PriceHistory> result) {
+        public Representation generateRepresentationPriceHistory(List<PriceHistory> result) {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                     w.beginArray(); // [
@@ -165,8 +165,8 @@ public enum Format implements RepresentationGenerator {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                     w.beginObject(); // {
-                    //w.name("MeanTransactionsPW").value(Long.toString(userInfo.getMeanTransactionsPerWeek()));
-                    //w.name("MeanTransactionsPM").value(Long.toString(userInfo.getMeanTransactionsPerMonth()));
+                    w.name("MeanTransactionsPW").value(Float.toString(userInfo.getMeanTransactionsPerWeek()));
+                    w.name("MeanTransactionsPM").value(Float.toString(userInfo.getMeanTransactionsPerMonth()));
                     w.name("Common Stores");
                     w.beginArray(); // [
                     for(CommonStore uinf: userInfo.getCommonStores()) {
@@ -205,7 +205,127 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
+        public Representation generateRepresentationTransactions(List<Transaction> result) {
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                    w.beginArray(); // [
+                    for(Transaction rec: result) {
+                        w.beginObject(); // {
+                        w.name("Datetime").value(String.valueOf(rec.getDatetime()));
+                        w.name("Card Number").value(Long.toString(rec.getCardNumber()));
+                        w.name("Total Cost").value(Float.toString(rec.getTotalCost()));
+                        w.name("Payment Method").value(String.valueOf(rec.getPaymentMethod()));
+                        w.name("Purchased From").value(rec.getPurchasedFrom());
+                        w.name("Number Of Products").value(Integer.toString(rec.getNumberOfProducts()));
+                        w.endObject(); // }
+                        w.flush();
+                    }
+                    w.endArray(); // ]
+                } catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
 
+        public Representation generateRepresentationTransactionProducts(List<TransactionProduct> result) {
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                    w.beginArray(); // [
+                    for(TransactionProduct rec: result) {
+                        w.beginObject(); // {
+                        w.name("Barcode").value(Long.toString(rec.getBarcode()));
+                        w.name("Product Name").value(rec.getProductName());
+                        w.name("Brand Name").value(rec.getBrandName());
+                        w.name("Pieces").value(Integer.toString(rec.getPieces()));
+                        w.endObject(); // }
+                        w.flush();
+                    }
+                    w.endArray(); // ]
+                } catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
+
+        public Representation generateRepresentationProductsStatistics(ProductsStatistics result){
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                    w.beginObject(); // {
+                    w.name("Top Products Pairs");
+                    w.beginArray();
+                    for (ProductsPair pair: result.getTopProductsPairs()) {
+                        w.beginObject();
+                        w.name("First Barcode").value(Long.toString(pair.getBarcode1()));
+                        w.name("First Product Name").value(pair.getProductName1());
+                        w.name("First Brand Name").value(pair.getBrandName1());
+                        w.name("Second Barcode").value(Long.toString(pair.getBarcode2()));
+                        w.name("Second Product Name").value(pair.getProductName2());
+                        w.name("Second Brand Name").value(pair.getBrandName2());
+                        w.endObject();
+                        w.flush();
+                    }
+                    w.endArray();
+                    w.flush();
+                    w.name("Top Products Placements");
+                    w.beginArray();
+                    for (ProductPlacement placement: result.getTopProductsPlacements()) {
+                        w.beginObject();
+                        w.name("Alley Number").value(placement.getAlleyNumber());
+                        w.name("Self Number").value(placement.getSelfNumber());
+                        w.endObject();
+                        w.flush();
+                    }
+                    w.endArray();
+                    w.flush();
+                    w.name("Datastore Brand Success");
+                    w.beginArray();
+                    for (PercentageOfSuccess percentage: result.getPercentageOfSuccessInEachCategory()) {
+                        w.beginObject();
+                        w.name("Category Id").value(Long.toString(percentage.getCategoryId()));
+                        w.name("Category Name").value(percentage.getCategoryName());
+                        w.name("Percentage").value(Float.toString(percentage.getPercentage()));
+                        w.endObject();
+                        w.flush();
+                    }
+                    w.endArray();
+                    w.endObject(); // }
+                    w.flush();
+                }
+                catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
+
+        public Representation generateRepresentationUsersStatistics(UsersStatistics result){
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                    w.beginObject(); // {
+                    w.name("Hour Zone with maximum sales").value(Integer.toString(result.getMaximumSalesHourZone()));
+                    w.name("Percentages per Age and Hour Zone");
+                    w.beginArray();
+                    for(PercentagesPerHour pph: result.getPercentagesPerHour()){
+                        w.beginObject();
+                        w.name("Hour Zone").value(Integer.toString(pph.getHourZone()));
+                        w.name("Young Percentages").value(Float.toString(pph.getPercentageOfYoung()));
+                        w.name("Middle Percentages").value(Float.toString(pph.getPercentageOfMiddle()));
+                        w.name("Elder Percentages").value(Float.toString(pph.getPercentageOfElder()));
+                        w.endObject();
+                        w.flush();
+                    }
+                    w.endArray();
+                    w.endObject(); // }
+                    w.flush();
+                }
+                catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
+
+        
+
+        
     };
     private static final class CustomJsonRepresentation extends WriterRepresentation {
 

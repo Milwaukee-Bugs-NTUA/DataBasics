@@ -8,10 +8,14 @@ import java.util.List;
 public interface RepresentationGenerator {
     Representation generateRepresentationUserProfile(User result);
     Representation generateRepresentationStores(List<Store> result);
-    Representation generateRepresentationStoreHomepage(Store result);
-    Representation generateRepresentationUsersIndex(List<User> result);
-    Representation generateRepresentationProductsIndex(List<Product> resut);
-    Representation generateRepresentationProductResource(Product result);
-    Representation generateRepresentationPriceHistoryResource(List<PriceHistory> result);
+    Representation generateRepresentationStorePage(Store result);
+    Representation generateRepresentationUsers(List<User> result);
+    Representation generateRepresentationProducts(List<Product> resut);
+    Representation generateRepresentationProduct(Product result);
+    Representation generateRepresentationPriceHistory(List<PriceHistory> result);
     Representation generateRepresentationUserInfo(UserInfo result);
+    Representation generateRepresentationTransactions(List<Transaction> result);
+    Representation generateRepresentationTransactionProducts(List<TransactionProduct> result);
+    Representation generateRepresentationProductsStatistics(ProductsStatistics result);
+    Representation generateRepresentationUsersStatistics(UsersStatistics result);
 }

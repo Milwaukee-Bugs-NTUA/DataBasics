@@ -13,26 +13,34 @@ import java.lang.RuntimeException;
 import java.net.http.HttpRequest;
 import java.net.URLDecoder;
 
-import gr.ntua.ece.databases.data.model.Store;
+import gr.ntua.ece.databases.data.model.Transaction;
 
 import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
 import java.util.List;
+import java.sql.Date;
 import java.util.Optional;
 
-public class StoresInfo extends DatastoreResource {
+public class TransactionsResource extends DatastoreResource {
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
 
     @Override
     protected Representation get() throws ResourceException {
 
+        // Read the mandatory URI attributes
+        Long storeId = Long.valueOf(getMandatoryAttribute("StoreId", "StoreId is missing"));
+        Date startingDate = Date.valueOf(getMandatoryAttribute("startingDate", "Starting Date is missing"));
+        Date endingDate = Date.valueOf(getMandatoryAttribute("endingDate", "Ending Date is missing"));
+        String paymentMethod = getMandatoryAttribute("paymentMethod", "Payment method is missing");
+        Integer numPrdLow = Integer.parseInt(getMandatoryAttribute("numPrdLow", "Low Threshold is missing"));
+        Integer numPrdHigh = Integer.parseInt(getMandatoryAttribute("numPrdHigh", "High Threshold is missing"));
+
         // Our platfom supports only JSON formating
         Format format = Format.valueOf("JSON");
 
         try {
-            List<Store> result = dataAccess.fetchStores();
-            return format.generateRepresentationStores(result);
+            List<Transaction> result = dataAccess.fetchTransactions(storeId, startingDate, endingDate, paymentMethod, numPrdLow, numPrdHigh);
+            return format.generateRepresentationTransactions(result);
         } 
         catch (Exception e) {
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);
