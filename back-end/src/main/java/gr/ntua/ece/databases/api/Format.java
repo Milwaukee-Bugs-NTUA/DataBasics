@@ -296,6 +296,36 @@ public enum Format implements RepresentationGenerator {
                 }
             });
         }
+
+        public Representation generateRepresentationUsersStatistics(UsersStatistics result){
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                    w.beginObject(); // {
+                    w.name("Hour Zone with maximum sales").value(Integer.toString(result.getMaximumSalesHourZone()));
+                    w.name("Percentages per Age and Hour Zone");
+                    w.beginArray();
+                    for(PercentagesPerHour pph: result.getPercentagesPerHour()){
+                        w.beginObject();
+                        w.name("Hour Zone").value(Integer.toString(pph.getHourZone()));
+                        w.name("Young Percentages").value(Float.toString(pph.getPercentageOfYoung()));
+                        w.name("Middle Percentages").value(Float.toString(pph.getPercentageOfMiddle()));
+                        w.name("Elder Percentages").value(Float.toString(pph.getPercentageOfElder()));
+                        w.endObject();
+                        w.flush();
+                    }
+                    w.endArray();
+                    w.endObject(); // }
+                    w.flush();
+                }
+                catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
+
+        
+
+        
     };
     private static final class CustomJsonRepresentation extends WriterRepresentation {
 
