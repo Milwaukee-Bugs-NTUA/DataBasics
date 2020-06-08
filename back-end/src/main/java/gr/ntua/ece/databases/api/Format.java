@@ -277,16 +277,17 @@ public enum Format implements RepresentationGenerator {
                     }
                     w.endArray();
                     w.flush();
-                    /*w.name("Datastore Brand Success");
+                    w.name("Datastore Brand Success");
                     w.beginArray();
                     for (PercentageOfSuccess percentage: result.getPercentageOfSuccessInEachCategory()) {
                         w.beginObject();
-                        w.name("Category").value(percentage.getCategoryName());
+                        w.name("Category Id").value(Long.toString(percentage.getCategoryId()));
+                        w.name("Category Name").value(percentage.getCategoryName());
                         w.name("Percentage").value(Float.toString(percentage.getPercentage()));
                         w.endObject();
                         w.flush();
                     }
-                    w.endArray();*/
+                    w.endArray();
                     w.endObject(); // }
                     w.flush();
                 }

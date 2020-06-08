@@ -462,6 +462,25 @@ public class DataAccess {
                                             "group by alley_number,shelf_number " +
                                             "order by count(*) desc limit 5";
         
+        String sqlQueryForDatastoreSales = "with total_sales_per_product as " +
+                                            "(select p.barcode,p.brand_name,p.category as category_id,cat.name as category,c.pieces " +
+                                            "from contains as c,products as p, product_category as cat " +
+                                            "where c.product_id = p.barcode " +
+                                            "and p.category = cat.category_id), " +
+                                            "total_sales as " +
+                                            "(select tsp.category_id, tsp.category,sum(tsp.pieces) as sales " +
+                                            "from total_sales_per_product as tsp " +
+                                            "group by tsp.category_id), " +
+                                            "total_sales_datastore as " +
+                                            "(select tsp.category_id,tsp.category,sum(tsp.pieces) as sales " +
+                                            "from total_sales_per_product as tsp " +
+                                            "where tsp.brand_name = \'Datastore\' " +
+                                            "group by tsp.category_id) " +
+                                            "select t.category_id,t.category,ifnull(cast((d.sales/t.sales)*100 as decimal(5,2)),0) as percentage " +
+                                            "from total_sales_datastore as d " +
+                                            "right join total_sales as t using(category_id) " +
+                                            "order by t.category_id";
+
         ProductsStatistics productsStatistics = new ProductsStatistics();
 
         try {
@@ -486,6 +505,16 @@ public class DataAccess {
                 return dataload;
             });
             productsStatistics.setTopProductsPlacements(productsPlacementsList);
+
+            List<PercentageOfSuccess> percentageList;
+            percentageList = jdbcTemplate.query(sqlQueryForDatastoreSales, (ResultSet rs, int rowNum) -> {
+                PercentageOfSuccess dataload = new PercentageOfSuccess();
+                dataload.setCategoryId(rs.getLong(1));
+                dataload.setCategoryName(rs.getString(2));
+                dataload.setPercentage(rs.getFloat(3));
+                return dataload;
+            });
+            productsStatistics.setPercentageOfSuccessInEachCategory(percentageList);
 
             return productsStatistics;
         }
