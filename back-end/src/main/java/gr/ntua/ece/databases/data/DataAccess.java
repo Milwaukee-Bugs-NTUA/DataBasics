@@ -463,10 +463,11 @@ public class DataAccess {
                                             "order by count(*) desc limit 5";
         
         String sqlQueryForDatastoreSales = "with total_sales_per_product as " +
-                                            "(select p.barcode,p.brand_name,p.category as category_id,cat.name as category,c.pieces " +
+                                            "(select p.barcode,p.brand_name,p.category as category_id,cat.name as category,sum(c.pieces) as pieces " +
                                             "from contains as c,products as p, product_category as cat " +
                                             "where c.product_id = p.barcode " +
-                                            "and p.category = cat.category_id), " +
+                                            "and p.category = cat.category_id) " + 
+                                            "group by p.product_id, " +
                                             "total_sales as " +
                                             "(select tsp.category_id, tsp.category,sum(tsp.pieces) as sales " +
                                             "from total_sales_per_product as tsp " +
