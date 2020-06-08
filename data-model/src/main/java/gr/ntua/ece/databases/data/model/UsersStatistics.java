@@ -5,11 +5,17 @@ import java.sql.Time;
 
 public class UsersStatistics {
     private Integer maximumSalesHourZone;
-    private Float[] childrenPercentageOfConsumption;
-    private Float[] adultsPercentageOfConsumption;
-    private Float[] elderlyPercentageOfConsumption;
+    private List<PercentagesPerHour> percentagesPerHour;
 
     public UsersStatistics() {
+    }
+
+    public List<PercentagesPerHour> getPercentagesPerHour() {
+        return percentagesPerHour;
+    }
+
+    public void setPercentagesPerHour(List<PercentagesPerHour> ppHour) {
+        this.percentagesPerHour = ppHour;
     }
 
     public Integer getMaximumSalesHourZone() {
