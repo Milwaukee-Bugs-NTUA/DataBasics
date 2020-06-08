@@ -524,4 +524,83 @@ public class DataAccess {
             throw new DataAccessException(e.getMessage(), e);
         }
     }
+
+    public ProductsStatistics fetchUsersStatistics() throws DataAccessException {
+
+        String sqlQueryForMaximumSalesHourZone =   "with r as " +
+                                                    "(select hour(datetime) as hour_zone,sum(total_cost) as money_spend " +
+                                                    "from transactions " +
+                                                    "group by hour_zone " +
+                                                    "order by money_spend) " +
+                                                    "select r.hour_zone " +
+                                                    "from r left join " +
+                                                    "(select distinct r1.hour_zone,r1.money_spend " +
+                                                    "from r as r1, r as r2 " +
+                                                    "where r1.money_spend < r2.money_spend) as s using(hour_zone) " +
+                                                    "where s.money_spend is null";
+        
+        String sqlQueryForPercentagesPerHourZone = "with r as " +
+                                                    "(select u.card_number, " +
+                                                    "timestampdiff(year,u.date_of_birth,curdate()) as age, " +
+                                                    "hour(t.datetime) as hour_zone " +
+                                                    "from users as u " +
+                                                    "join transactions as t using(card_number)), " +
+                                                    "young as " +
+                                                    "(select hour_zone, count(*) as trs " +
+                                                    "from r " +
+                                                    "where r.age between 15 and 34 " +
+                                                    "group by r.hour_zone " +
+                                                    "order by hour_zone), " +
+                                                    "middle as " +
+                                                    "(select hour_zone, count(*) as trs " +
+                                                    "from r " +
+                                                    "where r.age between 35 and 60 " +
+                                                    "group by r.hour_zone " +
+                                                    "order by hour_zone), " +
+                                                    "elderly as " +
+                                                    "(select hour_zone, count(*) as trs " +
+                                                    "from r " +
+                                                    "where r.age >= 61 " +
+                                                    "group by r.hour_zone " +
+                                                    "order by hour_zone), " +
+                                                    "total as " +
+                                                    "(select hour_zone, count(*) as trs " +
+                                                    "from r " +
+                                                    "group by r.hour_zone " +
+                                                    "order by hour_zone) " +
+                                                    "select hour_zone, " +
+                                                    "cast((ifnull(y.trs,0)/t.trs)*100 as decimal(5,2)) as young_p, " +
+                                                    "cast((ifnull(m.trs,0)/t.trs)*100 as decimal(5,2)) as middle_p, " +
+                                                    "cast((ifnull(e.trs,0)/t.trs)*100 as decimal(5,2)) as elderly_p " +
+                                                    "from total as t " +
+                                                    "left join young as y using(hour_zone) " +
+                                                    "left join middle as m using(hour_zone) " +
+                                                    "left join elderly as e using(hour_zone)";
+
+        UsesStatistics usersStatistics = new UsersStatistics();
+
+        try {
+
+            usersStatistics.setMaximumSalesHourZone(jdbcTemplate.query(sqlQueryForMaximumSalesHourZone, (ResultSet rs, int rowNum) -> 
+                                                        return rs.getInt(1);
+                                                    }));
+            
+            List<PercentagesPerHour> percentagesPerHourZone;
+            percentagesPerHourZone = jdbcTemplate.query(sqlQueryForPercentagesPerHourZone, (ResultSet rs, int rowNum) -> {
+                PercentagesPerHour dataload = new PercentagesPerHour();
+                dataload.setHourZone(rs.getLong(1));
+                dataload.setPercentageofYoung(rs.getFloat(2));
+                dataload.setPercentageofMiddle(rs.getFloat(3));
+                dataload.setPercentageofElder(rs.getFloat(4));
+                return dataload;
+            });
+            usersStatistics.setPercentagesPerHour(percentagesPerHourZone);
+
+            return usersStatistics;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
 }
