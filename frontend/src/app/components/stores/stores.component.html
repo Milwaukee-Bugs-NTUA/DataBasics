@@ -1,0 +1,13 @@
+<div style="padding: 13px;">
+    <mat-spinner *ngIf="stores.length === 0"></mat-spinner>
+
+    <mat-card *ngFor="let store of stores" style="margin-top:10px;">
+        <mat-card-header>
+            <mat-card-title>{{store.City}}</mat-card-title>
+            <mat-card-subtitle>Store Id: {{store.StoreId}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+            <button mat-raised-button color="primary">Visit store</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
