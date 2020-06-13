@@ -27,6 +27,5 @@ public class HealthCheck extends ServerResource {
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL, "Data access exception: " + e.getMessage(), e);
         }
 
-
     }
 }

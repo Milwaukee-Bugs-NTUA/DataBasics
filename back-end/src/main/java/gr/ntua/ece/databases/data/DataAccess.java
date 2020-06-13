@@ -605,4 +605,41 @@ public class DataAccess {
             throw new DataAccessException(e.getMessage(), e);
         }
     }
+
+    public int addStore(
+                            Integer size, 
+                            String addressCity,
+                            String addressStreet,
+                            Integer addressNumber,
+                            String addressPostalCode,
+                            Time openingHour,
+                            Time closingHour
+                        ) throws DataAccessException {
+
+        Object[] sqlParamsForStore = new Object[]   {
+                                                        size,
+                                                        addressCity,
+                                                        addressStreet,
+                                                        addressNumber,
+                                                        addressPostalCode,
+                                                        openingHour.toString(),
+                                                        closingHour.toString()
+                                                    };
+
+        String sqlQueryForStore = "insert into stores " +
+                                    "(size,address_city,address_street,address_number, " + 
+                                    "address_postalcode,opening_hour,closing_hour) " + 
+                                    " values " + 
+                                    "(?,?,?,?,?,?,?)";
+
+        try {
+            int rows = jdbcTemplate.update(sqlQueryForStore, sqlParamsForStore);
+            return rows;
+        } 
+        
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
 }
