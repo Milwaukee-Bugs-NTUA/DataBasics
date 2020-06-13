@@ -70,7 +70,7 @@ public enum Format implements RepresentationGenerator {
                     w.name("StoreId").value(Long.toString(store.getStoreID()));
                     w.name("Size").value(Integer.toString(store.getSize()));
                     w.name("AddressCity").value(store.getAddressCity());
-                    w.name("AddressStreet").value(Integer.toString(store.getAddressStreet()));
+                    w.name("AddressStreet").value(store.getAddressStreet());
                     w.name("AddressNumber").value(Integer.toString(store.getAddressNumber()));
                     w.name("AddressPostalCode").value(store.getAddressPostalCode());
                     w.name("OpeningHour").value(String.valueOf(store.getOpeningHour()));
