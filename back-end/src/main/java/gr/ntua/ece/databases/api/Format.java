@@ -89,6 +89,7 @@ public enum Format implements RepresentationGenerator {
                    w.beginArray(); // [
                     for(User rec: result) {
                         w.beginObject(); // {
+                        w.name("CardNumber").value(Long.toString(rec.getCardNumber()));
                         w.name("FirstName").value(rec.getFirstName());
                         w.name("LastName").value(rec.getLastName());
                         w.name("Email").value(rec.getEmail());                

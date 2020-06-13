@@ -1,0 +1,14 @@
+<div style="padding: 13px;">
+    <mat-spinner *ngIf="products.length === 0"></mat-spinner>
+
+    <mat-card *ngFor="let product of products" style="margin-top:10px;">
+        <mat-card-header>
+            <mat-card-title>{{product.ProductName}} {{product.ProductBrandName}}</mat-card-title>
+            <mat-card-subtitle>Barcode: {{product.Barcode}}</mat-card-subtitle>
+            <mat-card-subtitle>Price: {{product.Price}} €</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+            <button mat-raised-button color="primary">Product Details</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
