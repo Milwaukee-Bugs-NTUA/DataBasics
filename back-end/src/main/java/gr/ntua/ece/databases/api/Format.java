@@ -51,7 +51,7 @@ public enum Format implements RepresentationGenerator {
                    w.beginArray(); // [
                     for(Store rec: result) {
                         w.beginObject(); // {
-                        w.name("Store_Id").value(rec.getStoreID());
+                        w.name("StoreId").value(rec.getStoreID());
                         w.name("City").value(rec.getAddressCity());                 
                         w.endObject(); // }
                         w.flush();
@@ -67,10 +67,11 @@ public enum Format implements RepresentationGenerator {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                     w.beginObject(); // {
-                    w.name("Store_Id").value(Long.toString(store.getStoreID()));
+                    w.name("StoreId").value(Long.toString(store.getStoreID()));
                     w.name("Size").value(Integer.toString(store.getSize()));
                     w.name("AddressCity").value(store.getAddressCity());
-                    w.name("AddressValue").value(Integer.toString(store.getAddressNumber()));
+                    w.name("AddressStreet").value(store.getAddressStreet());
+                    w.name("AddressNumber").value(Integer.toString(store.getAddressNumber()));
                     w.name("AddressPostalCode").value(store.getAddressPostalCode());
                     w.name("OpeningHour").value(String.valueOf(store.getClosingHour()));
                     w.name("ClosingHour").value(String.valueOf(store.getClosingHour()));

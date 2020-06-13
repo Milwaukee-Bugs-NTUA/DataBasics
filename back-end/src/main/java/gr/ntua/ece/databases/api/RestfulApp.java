@@ -25,6 +25,7 @@ public class RestfulApp extends Application {
         router.attach("/storePage/{StoreId}/transactions/{startingDate}/{endingDate}/{paymentMethod}/{numPrdLow}/{numPrdHigh}", TransactionsResource.class);
         router.attach("/transactionProducts/{date}/{time}/{cardNumber}", TransactionProductsResource.class);
         router.attach("/users", UsersResource.class);
+        router.attach("/users/insert", UsersResource.class);
         router.attach("/profile/{UserId}",UserProfileResource.class);
         router.attach("/profile/{UserId}/userInfo",UserInfoResource.class);
         router.attach("/products",ProductsResource.class);

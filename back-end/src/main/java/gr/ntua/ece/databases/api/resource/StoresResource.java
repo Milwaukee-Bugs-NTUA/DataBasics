@@ -22,6 +22,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
 public class StoresResource extends DatastoreResource {
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
@@ -45,36 +46,26 @@ public class StoresResource extends DatastoreResource {
     @Override
     protected Representation post(Representation entity) throws ResourceException {
 
-        Format format = Format.valueOf("JSON");
         Form form = new Form(entity);
-        String s = form.getFirstValue("Size");
-        Integer size = Integer.valueOf(s);
-        String city = form.getFirstValue("Address City");
-        String street = form.getFirstValue("Address Street");
-        Integer streetNumber = Integer.valueOf(form.getFirstValue("Address Number"));
-        String postalCode = form.getFirstValue("Address PostalCode");
-        Time openingHour = Time.valueOf(form.getFirstValue("Opening Time"));
-        Time closingHour = Time.valueOf(form.getFirstValue("Closing Time"));
+        Integer size = Integer.valueOf(form.getFirstValue("Size"));
+        String city = form.getFirstValue("AddressCity");
+        String street = form.getFirstValue("AddressStreet");
+        Integer streetNumber = Integer.valueOf(form.getFirstValue("AddressNumber"));
+        String postalCode = form.getFirstValue("AddressPostalCode");
+        Time openingHour = Time.valueOf(form.getFirstValue("OpeningHour"));
+        Time closingHour = Time.valueOf(form.getFirstValue("ClosingHour"));
 
         try {
-            int result = dataAccess.addStore(
-                                                size,
-                                                city,
-                                                street,
-                                                streetNumber,
-                                                postalCode,
-                                                openingHour,
-                                                closingHour
-                                            );
-            Store newStore = new Store();
-            newStore.setSize(size);
-            newStore.setAddressCity(city);
-            newStore.setAddressStreet(street);
-            newStore.setAddressNumber(streetNumber);
-            newStore.setAddressPostalCode(postalCode);
-            newStore.setOpeningHour(openingHour);
-            newStore.setClosingHour(closingHour);
-            return format.generateRepresentationStorePage(newStore);
+            dataAccess.addStore(
+                                size,
+                                city,
+                                street,
+                                streetNumber,
+                                postalCode,
+                                openingHour,
+                                closingHour
+                                );
+            return new JsonMapRepresentation(Map.of("status", "OK"));
         } 
         catch (Exception e) {
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);

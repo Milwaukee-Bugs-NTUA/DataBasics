@@ -606,7 +606,7 @@ public class DataAccess {
         }
     }
 
-    public int addStore(
+    public void addStore(
                             Integer size, 
                             String addressCity,
                             String addressStreet,
@@ -633,10 +633,55 @@ public class DataAccess {
                                     "(?,?,?,?,?,?,?)";
 
         try {
-            int rows = jdbcTemplate.update(sqlQueryForStore, sqlParamsForStore);
-            return rows;
-        } 
-        
+            jdbcTemplate.update(sqlQueryForStore, sqlParamsForStore);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public void addUser(
+                            String email,
+                            String firstName,
+                            String lastName,    
+                            Date dateOfBirth,
+                            String sex,
+                            String city,
+                            String street,
+                            Integer streetNumber,
+                            String postalCode,
+                            String phone,
+                            String maritalStatus,
+                            Integer numberOfChildren,
+                            Integer points
+                        ) throws DataAccessException {
+
+        Object[] sqlParamsForUser = new Object[]   {
+                                                        email,
+                                                        firstName,
+                                                        lastName,    
+                                                        dateOfBirth.toString(),
+                                                        sex,
+                                                        city,
+                                                        street,
+                                                        streetNumber,
+                                                        postalCode,
+                                                        phone,
+                                                        maritalStatus,
+                                                        Integer.toString(numberOfChildren),
+                                                        Integer.toString(points)
+                                                    };
+
+        String sqlQueryForUser = "insert into users " +
+                                    "(email,first_name,last_name,date_of_birth,sex,address_city,address_street,address_number, " + 
+                                    "address_postal_code,phone_number,marital_status,number_of_children,points) " + 
+                                    " values " + 
+                                    "(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        try {
+            jdbcTemplate.update(sqlQueryForUser, sqlParamsForUser);
+        }
         catch (Exception e) {
             System.out.println(e.getMessage());
             throw new DataAccessException(e.getMessage(), e);
