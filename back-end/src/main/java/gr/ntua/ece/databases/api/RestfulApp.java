@@ -20,10 +20,12 @@ public class RestfulApp extends Application {
         //Perform a heath check
         router.attach("/HealthCheck", HealthCheck.class);
         router.attach("/stores", StoresResource.class);
+        router.attach("/stores/insert", StoresResource.class);
         router.attach("/storePage/{StoreId}", StorePageResource.class);
         router.attach("/storePage/{StoreId}/transactions/{startingDate}/{endingDate}/{paymentMethod}/{numPrdLow}/{numPrdHigh}", TransactionsResource.class);
         router.attach("/transactionProducts/{date}/{time}/{cardNumber}", TransactionProductsResource.class);
         router.attach("/users", UsersResource.class);
+        router.attach("/users/insert", UsersResource.class);
         router.attach("/profile/{UserId}",UserProfileResource.class);
         router.attach("/profile/{UserId}/userInfo",UserInfoResource.class);
         router.attach("/products",ProductsResource.class);
