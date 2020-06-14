@@ -687,4 +687,69 @@ public class DataAccess {
             throw new DataAccessException(e.getMessage(), e);
         }
     }
+
+    public void addProduct(
+                            String name,
+                            String brand,
+                            Float price,
+                            Long categoryId,
+                            Long offeredInStore,
+                            String alleyNumber,
+                            String shelfNumber
+                        ) throws DataAccessException {
+
+        Object[] sqlParamsForProduct = new Object[] {
+            name,
+            brand,    
+            price.toString(),
+            categoryId
+        };
+
+        String sqlQueryForProduct = "insert into products " +
+                                    "(name,brand_name,price,category) " + 
+                                    " values " + 
+                                    "(?,?,?,?)";
+
+        try {
+            jdbcTemplate.update(sqlQueryForProduct, sqlParamsForProduct);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+
+        String sqlQueryForBarcode = "select barcode from products " +
+                                    "where name = ? and brand_name = ?";
+        Object[] sqlParamsForBarcode = new Object[] {name,brand};
+        Long barcode;
+
+        try {
+            barcode = jdbcTemplate.queryForObject(sqlQueryForBarcode,sqlParamsForBarcode, (ResultSet rs, int rowNum) -> {
+                return rs.getLong(1);
+            });
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+
+        String sqlQueryForAvailability = "insert into offers " +
+                                            "(product_id,store_id,alley_number,shelf_number) " +
+                                            " values " +
+                                            "(?,?,?,?)";
+        Object[] sqlParamsForAvailability = new Object[] {
+            barcode,
+            offeredInStore,
+            alleyNumber,
+            shelfNumber
+        };
+
+        try {
+            jdbcTemplate.update(sqlQueryForAvailability, sqlParamsForAvailability);   
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
 }

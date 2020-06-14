@@ -11,6 +11,7 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 import java.lang.RuntimeException;
 import java.net.http.HttpRequest;
+import org.restlet.data.Form;
 import java.net.URLDecoder;
 
 import gr.ntua.ece.databases.data.model.Product;
@@ -20,6 +21,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
 public class ProductsResource extends DatastoreResource {
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
@@ -38,6 +40,35 @@ public class ProductsResource extends DatastoreResource {
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);
         }
 
+    }
+
+    @Override
+    protected Representation post(Representation entity) throws ResourceException {
+        
+        Form form = new Form(entity);
+        String name = form.getFirstValue("Name");
+        String brand = form.getFirstValue("Brand");
+        Float  price = Float.valueOf(form.getFirstValue("Price"));
+        Long categoryId = Long.valueOf(form.getFirstValue("CategoryId"));
+        Long offeredInStore = Long.valueOf(form.getFirstValue("OfferedInStore"));
+        String alleyNumber = form.getFirstValue("AlleyNumber");;
+        String shelfNumber = form.getFirstValue("ShelfNumber");;
+        
+        try {
+            dataAccess.addProduct(
+                                    name,
+                                    brand,
+                                    price,
+                                    categoryId,
+                                    offeredInStore,
+                                    alleyNumber,
+                                    shelfNumber
+                                    );
+            return new JsonMapRepresentation(Map.of("status", "OK"));
+        }
+        catch (Exception e) {
+            throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);
+        }
     }
 
 }
