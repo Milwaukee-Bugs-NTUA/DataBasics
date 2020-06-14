@@ -9,6 +9,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.DayOfWeek;
 import java.util.List;
 import java.util.StringJoiner;
@@ -16,6 +17,8 @@ import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.lang.Math;
+import java.util.Random;
 
 import gr.ntua.ece.databases.data.model.*;
 
@@ -746,6 +749,50 @@ public class DataAccess {
 
         try {
             jdbcTemplate.update(sqlQueryForAvailability, sqlParamsForAvailability);   
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public void generatePriceHistoryDataFrom() throws DataAccessException {
+
+        String sqlQueryForProducts = "select barcode,price,starting_sale_date from products";
+        String sqlQueryForUpdate = "insert into price_history "+
+                                    "(starting_date,barcode,ending_date,old_price) "+
+                                    "values " +
+                                    "(?,?,?,?)";
+        List<Product> currentProducts;
+
+        try {
+            // Fetch current prices
+            currentProducts = jdbcTemplate.query(sqlQueryForProducts, (ResultSet rs, int rowNum) -> {
+                Product dataload = new Product();
+                dataload.setBarcode(rs.getLong(1));
+                dataload.setPrice(rs.getFloat(2));
+                dataload.setStartingSaleDatetime(rs.getTimestamp(3));
+                return dataload;
+            });
+            // Update priceHistory Table for each product
+            for (Product pr: currentProducts) {
+                Long barcode = pr.getBarcode();
+                LocalDateTime end = pr.getStartingSaleDatetime().toLocalDateTime();
+                Float currentPrice = pr.getPrice();
+                // Insert 100 records
+                for (int i = 0; i < 10; i++) {
+                    Float oldPrice = currentPrice + ((float) Math.random()*2)*((new Random()).nextBoolean() ? -1 : 1);
+                    LocalDateTime start = end.minusDays(7);
+                    Object[] sqlParamsForUpdate = new Object[] {
+                        (Timestamp.valueOf(start)).toString(),
+                        barcode,
+                        (Timestamp.valueOf(end)).toString(),
+                        oldPrice.toString()
+                    };
+                    jdbcTemplate.update(sqlQueryForUpdate, sqlParamsForUpdate);
+                    end = start;                     
+                }
+            }
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

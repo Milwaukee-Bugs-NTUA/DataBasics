@@ -1,6 +1,7 @@
 package gr.ntua.ece.databases.data.model;
 
 import java.util.*;
+import java.sql.Timestamp;
 
 public class Product {
     private Long barcode;
@@ -10,6 +11,7 @@ public class Product {
     private OfferedInStore offeredInStore;
     private Long categoryId;
     private String categoryName;
+    private Timestamp startingSaleDatetime;
 
     public Long getCategoryId() {
         return categoryId;
@@ -71,14 +73,11 @@ public class Product {
 
     }
 
-    /*
-    public Products(Long barcode, String name, String brandName, float price, OfferedInStore offeredInStore) {
-        this.barcode = barcode;
-        this.name = name;
-        this.brandName = brandName;
-        this.price = price;
-        this.offeredInStore = offeredInStore;
+    public Timestamp getStartingSaleDatetime() {
+        return startingSaleDatetime;
     }
 
-     */
+    public void setStartingSaleDatetime(Timestamp timestamp) {
+        this.startingSaleDatetime = timestamp;
+    }
 }
