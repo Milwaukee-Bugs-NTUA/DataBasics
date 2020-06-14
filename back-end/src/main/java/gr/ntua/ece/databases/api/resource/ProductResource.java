@@ -11,6 +11,7 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 import java.lang.RuntimeException;
 import java.net.http.HttpRequest;
+import org.restlet.data.Form;
 import java.net.URLDecoder;
 
 import gr.ntua.ece.databases.data.model.Product;
@@ -37,6 +38,26 @@ public class ProductResource extends DatastoreResource {
             Product result = dataAccess.fetchProduct(barcode);
             return format.generateRepresentationProduct(result);
         } 
+        catch (Exception e) {
+            throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);
+        }
+
+    }
+
+    @Override
+    protected Representation put(Representation entity) throws ResourceException {
+
+        // Specify barcode of product
+        Form form = new Form(entity);
+        Long barcode = Long.valueOf(getMandatoryAttribute("Barcode", "Barcode is missing"));
+        String name = form.getFirstValue("Name");
+        String brand = form.getFirstValue("Brand");
+        Long categoryId = Long.valueOf(form.getFirstValue("Category"));
+
+        try {
+            dataAccess.updateProduct(barcode,name,brand,categoryId);
+            return new JsonMapRepresentation(Map.of("status", "OK"));
+        }
         catch (Exception e) {
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);
         }

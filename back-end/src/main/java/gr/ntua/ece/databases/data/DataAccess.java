@@ -756,6 +756,22 @@ public class DataAccess {
         }
     }
 
+    public void updateProduct(Long barcode,String name,String brandName,Long categoryId) throws DataAccessException {
+
+        Object[] sqlParamsForProduct = new Object[] {name,brandName,categoryId,barcode};
+
+        String sqlQueryForProduct = "update products " + 
+                                    "set name = ?,brand_name = ?,category = ? " +
+                                    "where barcode = ?";
+
+        try {
+            jdbcTemplate.update(sqlQueryForProduct, sqlParamsForProduct);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
 
     public void deleteUser(Long userId) throws DataAccessException {
 
