@@ -20,6 +20,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
 public class ProductResource extends DatastoreResource {
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
@@ -35,6 +36,22 @@ public class ProductResource extends DatastoreResource {
         try {
             Product result = dataAccess.fetchProduct(barcode);
             return format.generateRepresentationProduct(result);
+        } 
+        catch (Exception e) {
+            throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);
+        }
+
+    }
+
+    @Override
+    protected Representation delete() throws ResourceException {
+
+        // Read the mandatory URI attributes
+        Long barcode = Long.valueOf(getMandatoryAttribute("Barcode", "Barcode is missing"));
+
+        try {
+            dataAccess.deleteProduct(barcode);
+            return new JsonMapRepresentation(Map.of("status", "OK"));
         } 
         catch (Exception e) {
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);

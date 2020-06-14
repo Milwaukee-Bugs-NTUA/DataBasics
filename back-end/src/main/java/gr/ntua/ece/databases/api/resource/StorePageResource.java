@@ -20,6 +20,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
 public class StorePageResource extends DatastoreResource {
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
@@ -41,4 +42,19 @@ public class StorePageResource extends DatastoreResource {
 
     }
 
+    @Override
+    protected Representation delete() throws ResourceException {
+
+        // Read the mandatory URI attributes
+        Long storeId = Long.valueOf(getMandatoryAttribute("StoreId", "StoreId is missing"));
+
+        try {
+            dataAccess.deleteStore(storeId);
+            return new JsonMapRepresentation(Map.of("status", "OK"));
+        } 
+        catch (Exception e) {
+            throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);
+        }
+
+    }
 }

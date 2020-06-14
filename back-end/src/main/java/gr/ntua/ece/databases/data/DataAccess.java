@@ -756,6 +756,52 @@ public class DataAccess {
         }
     }
 
+
+    public void deleteUser(Long userId) throws DataAccessException {
+
+        Object[] sqlParamsForUser = new Object[] {userId};
+
+        String sqlQueryForUser = "delete from users where card_number = ?";
+
+        try {
+            jdbcTemplate.update(sqlQueryForUser, sqlParamsForUser);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public void deleteStore(Long storeId) throws DataAccessException {
+
+        Object[] sqlParamsForStore = new Object[] {storeId};
+
+        String sqlQueryForStore = "delete from stores where store_id = ?";
+
+        try {
+            jdbcTemplate.update(sqlQueryForStore, sqlParamsForStore);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public void deleteProduct(Long barcode) throws DataAccessException {
+
+        Object[] sqlParamsForProduct = new Object[] {barcode};
+
+        String sqlQueryForProduct = "delete from products where barcode = ?";
+
+        try {
+            jdbcTemplate.update(sqlQueryForProduct, sqlParamsForProduct);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
     public void generatePriceHistoryDataFrom() throws DataAccessException {
 
         String sqlQueryForProducts = "select barcode,price,starting_sale_date from products";

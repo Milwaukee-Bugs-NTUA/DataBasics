@@ -20,6 +20,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
 public class UserProfileResource extends DatastoreResource {
     private final DataAccess dataAccess = Configuration.getInstance().getDataAccess();
@@ -42,4 +43,19 @@ public class UserProfileResource extends DatastoreResource {
 
     }
 
+    @Override
+    protected Representation delete() throws ResourceException {
+
+        // Read the mandatory URI attributes
+        Long userId = Long.valueOf(getMandatoryAttribute("UserId", "UserId is missing"));
+
+        try {
+            dataAccess.deleteUser(userId);
+            return new JsonMapRepresentation(Map.of("status", "OK"));
+        } 
+        catch (Exception e) {
+            throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);
+        }
+
+    }
 }
