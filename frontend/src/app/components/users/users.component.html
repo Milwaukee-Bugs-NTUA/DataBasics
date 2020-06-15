@@ -1,5 +1,5 @@
 <div style="padding: 13px;">
-    <mat-spinner *ngIf="users.length === 0"></mat-spinner>
+    <mat-spinner *ngIf="users === null"></mat-spinner>
 
     <mat-card *ngFor="let user of users" style="margin-top:10px;">
         <mat-card-header>

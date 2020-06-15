@@ -8,7 +8,7 @@ import { Data } from '@angular/router';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  users = [];
+  users = null;
 
   constructor(private dataService: DataService) { }
 

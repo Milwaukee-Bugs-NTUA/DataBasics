@@ -7,7 +7,7 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-  products = [];
+  products = null;
 
   constructor(private dataService: DataService) { }
 

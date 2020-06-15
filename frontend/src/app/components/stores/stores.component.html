@@ -1,5 +1,5 @@
 <div style="padding: 13px;">
-    <mat-spinner *ngIf="stores.length === 0"></mat-spinner>
+    <mat-spinner *ngIf="stores === null"></mat-spinner>
 
     <mat-card *ngFor="let store of stores" style="margin-top:10px;">
         <mat-card-header>

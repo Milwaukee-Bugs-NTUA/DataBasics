@@ -1,5 +1,5 @@
 <div style="padding: 13px;">
-    <mat-spinner *ngIf="products.length === 0"></mat-spinner>
+    <mat-spinner *ngIf="products === null"></mat-spinner>
 
     <mat-card *ngFor="let product of products" style="margin-top:10px;">
         <mat-card-header>
