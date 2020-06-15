@@ -1,4 +1,4 @@
-<div style="padding: 13px;">
+<!-- <div style="padding: 13px;">
     <mat-spinner *ngIf="products === null"></mat-spinner>
 
     <mat-card *ngFor="let product of products" style="margin-top:10px;">
@@ -11,4 +11,22 @@
             <button mat-raised-button color="primary">Product Details</button>
         </mat-card-actions>
     </mat-card>
+</div> -->
+
+<div style= "padding: 13px;">
+<mat-grid-list cols="4" rowHeight="160px" gutterSize="20px" >
+    <mat-grid-tile *ngFor="let product of products"
+    [colspan]=1
+    [rowspan]=1
+    [style.border] = "'3px double #7c51c8'">
+    <mat-grid-tile-header [style.background]= "'#7c51c8'">
+        <h1>{{product.ProductName}} {{product.ProductBrandName}}</h1>
+    </mat-grid-tile-header>
+    <h2>Price: {{product.Price}} €</h2>
+    <mat-grid-tile-footer>
+        <h2>Barcode: {{product.Barcode}}</h2>
+    </mat-grid-tile-footer>
+    </mat-grid-tile>
+</mat-grid-list>
 </div>
+
