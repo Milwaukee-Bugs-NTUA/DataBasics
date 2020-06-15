@@ -19,20 +19,33 @@ public class RestfulApp extends Application {
 
         //Perform a heath check
         router.attach("/HealthCheck", HealthCheck.class);
+        // Stores related requests
         router.attach("/stores", StoresResource.class);
         router.attach("/stores/insert", StoresResource.class);
         router.attach("/storePage/{StoreId}", StorePageResource.class);
+        router.attach("/storePage/{StoreId}/update", StorePageResource.class);
+        router.attach("/storePage/{StoreId}/delete", StorePageResource.class);
         router.attach("/storePage/{StoreId}/transactions/{startingDate}/{endingDate}/{paymentMethod}/{numPrdLow}/{numPrdHigh}", TransactionsResource.class);
         router.attach("/transactionProducts/{date}/{time}/{cardNumber}", TransactionProductsResource.class);
+        // Users related requests
         router.attach("/users", UsersResource.class);
         router.attach("/users/insert", UsersResource.class);
         router.attach("/profile/{UserId}",UserProfileResource.class);
+        router.attach("/profile/{UserId}/update", UserProfileResource.class);
+        router.attach("/profile/{UserId}/delete", UserProfileResource.class);
         router.attach("/profile/{UserId}/userInfo",UserInfoResource.class);
+        // Products related requests
         router.attach("/products",ProductsResource.class);
+        router.attach("/products/insert",ProductsResource.class);
         router.attach("/product/{Barcode}", ProductResource.class);
+        router.attach("/product/{Barcode}/update", ProductResource.class);
+        router.attach("/product/{Barcode}/updatePrice", ProductResource.class);
+        router.attach("/product/{Barcode}/delete", ProductResource.class);
         router.attach("/product/{Barcode}/priceHistory", PriceHistoryResource.class);
+        // Statistics
         router.attach("/productsStats", ProductsStatisticsResource.class);
         router.attach("/usersStats", UsersStatisticsResource.class);
+        router.attach("/generatePriceHistoryData", GeneratePriceHistoryDataResource.class);
 
         
         //Enable CORS for all origins (don't use this in a production service)
