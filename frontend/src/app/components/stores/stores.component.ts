@@ -18,4 +18,8 @@ export class StoresComponent implements OnInit {
       });
   }
 
+  onClickMe() : void {
+      console.log("Hello");
+  }
+
 }
