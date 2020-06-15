@@ -23,6 +23,7 @@ public class RestfulApp extends Application {
         router.attach("/stores", StoresResource.class);
         router.attach("/stores/insert", StoresResource.class);
         router.attach("/storePage/{StoreId}", StorePageResource.class);
+        router.attach("/storePage/{StoreId}/update", StorePageResource.class);
         router.attach("/storePage/{StoreId}/delete", StorePageResource.class);
         router.attach("/storePage/{StoreId}/transactions/{startingDate}/{endingDate}/{paymentMethod}/{numPrdLow}/{numPrdHigh}", TransactionsResource.class);
         router.attach("/transactionProducts/{date}/{time}/{cardNumber}", TransactionProductsResource.class);
@@ -30,6 +31,7 @@ public class RestfulApp extends Application {
         router.attach("/users", UsersResource.class);
         router.attach("/users/insert", UsersResource.class);
         router.attach("/profile/{UserId}",UserProfileResource.class);
+        router.attach("/profile/{UserId}/update", UserProfileResource.class);
         router.attach("/profile/{UserId}/delete", UserProfileResource.class);
         router.attach("/profile/{UserId}/userInfo",UserInfoResource.class);
         // Products related requests

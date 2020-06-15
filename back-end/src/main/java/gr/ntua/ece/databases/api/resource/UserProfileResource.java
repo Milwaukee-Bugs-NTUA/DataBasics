@@ -49,6 +49,7 @@ public class UserProfileResource extends DatastoreResource {
     @Override
     protected Representation put(Representation entity) throws ResourceException {
 
+        Long userId = Long.valueOf(getMandatoryAttribute("UserId", "UserId is missing"));
         // Specify barcode of product
         Form form = new Form(entity);
         String email = form.getFirstValue("E-mail");
@@ -67,7 +68,22 @@ public class UserProfileResource extends DatastoreResource {
 
 
         try {
-            dataAccess.updateUserProfile(email,firstName,lastName,dateOfBirth,sex,addressCity,addressStreet,addressNumber,addressPostalCode,phoneNumber,maritalStatus,numberOfChildren,points);
+            dataAccess.updateUserProfile(
+                                            userId,
+                                            email,
+                                            firstName,
+                                            lastName,
+                                            dateOfBirth,
+                                            sex,
+                                            addressCity,
+                                            addressStreet,
+                                            addressNumber,
+                                            addressPostalCode,
+                                            phoneNumber,
+                                            maritalStatus,
+                                            numberOfChildren,
+                                            points
+                                        );
             return new JsonMapRepresentation(Map.of("status", "OK"));
         }
         catch (Exception e) {

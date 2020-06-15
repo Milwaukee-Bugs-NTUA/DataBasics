@@ -49,6 +49,7 @@ public class StorePageResource extends DatastoreResource {
     @Override
     protected Representation put(Representation entity) throws ResourceException {
 
+        Long storeId = Long.valueOf(getMandatoryAttribute("StoreId", "StoreId is missing"));
         // Specify barcode of product
         Form form = new Form(entity);
         Integer size = Integer.valueOf(form.getFirstValue("Size"));
@@ -60,7 +61,16 @@ public class StorePageResource extends DatastoreResource {
         Time closingHour = Time.valueOf(form.getFirstValue("Closing Hour"));
 
         try {
-            dataAccess.updateStore(size,addressCity,addressStreet,addressNumnber,addressPostalCode,openingHour,closingHour);
+            dataAccess.updateStore(
+                                    storeId,
+                                    size,
+                                    addressCity,
+                                    addressStreet,
+                                    addressNumnber,
+                                    addressPostalCode,
+                                    openingHour,
+                                    closingHour
+                                );
             return new JsonMapRepresentation(Map.of("status", "OK"));
         }
         catch (Exception e) {

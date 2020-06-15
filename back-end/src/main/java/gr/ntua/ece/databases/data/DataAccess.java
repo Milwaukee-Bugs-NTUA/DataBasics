@@ -773,6 +773,106 @@ public class DataAccess {
         }
     }
 
+    public void updateUserProfile(
+                                    Long cardNumber,
+                                    String email,
+                                    String firstName,
+                                    String lastName,
+                                    Date dateOfBirth,
+                                    String sex,
+                                    String addressCity,
+                                    String addressStreet,
+                                    Integer addressNumber,
+                                    String addressPostalCode,
+                                    String phoneNumber,
+                                    String maritalStatus,
+                                    Integer numberOfChildren,
+                                    Integer points
+                                ) throws DataAccessException {
+
+        Object[] sqlParamsForUser = new Object[] {
+            email,
+            firstName,
+            lastName,
+            dateOfBirth.toString(),
+            sex,
+            addressCity,
+            addressStreet,
+            addressNumber,
+            addressPostalCode,
+            phoneNumber,
+            maritalStatus,
+            numberOfChildren,
+            points,
+            cardNumber
+        };
+
+        String sqlQueryForUser = "update users " + 
+                                    "set email = ?, " +
+                                    "first_name = ?, " +
+                                    "last_name = ?, " +
+                                    "date_of_birth = ?, " +
+                                    "sex = ?, " +
+                                    "address_city = ?, " +
+                                    "address_street = ?, " +
+                                    "address_number = ?, " +
+                                    "address_postal_code = ?, " +
+                                    "phone_number = ?, " +
+                                    "marital_status = ?, " +
+                                    "number_of_children = ?, " +
+                                    "points = ? " +
+                                    "where card_number = ?";
+
+        try {
+            jdbcTemplate.update(sqlQueryForUser, sqlParamsForUser);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public void updateStore(
+                                Long storeId,
+                                Integer size,
+                                String addressCity,
+                                String addressStreet,
+                                Integer addressNumber,
+                                String addressPostalCode,
+                                Time openingHour,
+                                Time closingHour
+                            ) throws DataAccessException {
+
+        Object[] sqlParamsForStore = new Object[] {
+            size,
+            addressCity,
+            addressStreet,
+            addressNumber,
+            addressPostalCode,
+            openingHour.toString(),
+            closingHour.toString(),
+            storeId
+        };
+
+        String sqlQueryForStore = "update stores " + 
+                                    "set size = ?, " +
+                                    "address_city = ?, " +
+                                    "address_street = ?, " +
+                                    "address_number = ?, " +
+                                    "address_postalcode = ?, " +
+                                    "opening_hour = ?, " +
+                                    "closing_hour = ? " +
+                                    "where store_id = ?";
+
+        try {
+            jdbcTemplate.update(sqlQueryForStore, sqlParamsForStore);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
     public void updateProductPrice(Long barcode,Float price) throws DataAccessException {
 
         Object[] sqlParamsForProduct = new Object[] {barcode};
