@@ -37,6 +37,7 @@ public class RestfulApp extends Application {
         router.attach("/products/insert",ProductsResource.class);
         router.attach("/product/{Barcode}", ProductResource.class);
         router.attach("/product/{Barcode}/update", ProductResource.class);
+        router.attach("/product/{Barcode}/updatePrice", ProductResource.class);
         router.attach("/product/{Barcode}/delete", ProductResource.class);
         router.attach("/product/{Barcode}/priceHistory", PriceHistoryResource.class);
         // Statistics

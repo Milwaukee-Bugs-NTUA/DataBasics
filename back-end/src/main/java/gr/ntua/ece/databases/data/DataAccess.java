@@ -773,6 +773,69 @@ public class DataAccess {
         }
     }
 
+    public void updateProductPrice(Long barcode,Float price) throws DataAccessException {
+
+        Object[] sqlParamsForProduct = new Object[] {barcode};
+
+        String sqlQueryForProduct = "select starting_sale_date,price from products " +
+                                    "where barcode = ?";
+
+        LocalDateTime currentTimestamp = LocalDateTime.now();
+        PriceHistory priceHistory;
+
+        try {
+            priceHistory = jdbcTemplate.queryForObject(sqlQueryForProduct, sqlParamsForProduct, (ResultSet rs, int rowNum) -> {
+                PriceHistory dataload = new PriceHistory();
+                dataload.setBarcode(barcode);
+                dataload.setStartingDate(rs.getTimestamp(1));
+                dataload.setOldPrice(rs.getFloat(2));
+                dataload.setEndingDate(Timestamp.valueOf(currentTimestamp));
+                return dataload;
+            });
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+
+        Object[] sqlParamsForPriceHistory = new Object[] { 
+            priceHistory.getStartingDate().toString(),
+            priceHistory.getBarcode(),
+            priceHistory.getEndingDate().toString(),
+            String.valueOf(priceHistory.getOldPrice())
+        };
+        String sqlQueryForPriceHistory = "insert into price_history " +
+                                            "(starting_date,barcode,ending_date,old_price) " +
+                                            "values " +
+                                            "(?,?,?,?)";
+
+        try {
+            jdbcTemplate.update(sqlQueryForPriceHistory, sqlParamsForPriceHistory);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+
+        Object[] sqlParamsForNewPrice = new Object[] {
+            price,
+            currentTimestamp.toString(),
+            barcode
+        };
+        String sqlQueryForNewPrice = "update products " +
+                                        "set price = ?,starting_sale_date = ? " +
+                                        "where barcode = ?";
+
+        try {
+            jdbcTemplate.update(sqlQueryForNewPrice, sqlParamsForNewPrice);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+
+    }
+
     public void deleteUser(Long userId) throws DataAccessException {
 
         Object[] sqlParamsForUser = new Object[] {userId};

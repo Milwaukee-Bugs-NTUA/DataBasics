@@ -65,6 +65,24 @@ public class ProductResource extends DatastoreResource {
     }
 
     @Override
+    protected Representation post(Representation entity) throws ResourceException {
+
+        // Specify barcode of product
+        Form form = new Form(entity);
+        Long barcode = Long.valueOf(getMandatoryAttribute("Barcode", "Barcode is missing"));
+        Float price = Float.valueOf(form.getFirstValue("Price"));
+
+        try {
+            dataAccess.updateProductPrice(barcode,price);
+            return new JsonMapRepresentation(Map.of("status", "OK"));
+        }
+        catch (Exception e) {
+            throw new ResourceException(Status.SERVER_ERROR_INTERNAL, e.getMessage(), e);
+        }
+
+    }
+
+    @Override
     protected Representation delete() throws ResourceException {
 
         // Read the mandatory URI attributes
