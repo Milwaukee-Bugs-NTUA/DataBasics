@@ -18,9 +18,4 @@ export class StoresComponent implements OnInit {
       });
   }
 
-//   onClickMe(pageName:string) : void {
-//       console.log("Hello");
-//       this.route.navigate([`${pageName}`]);
-//   }
-
 }
