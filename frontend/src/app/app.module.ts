@@ -18,11 +18,12 @@ import { MatGridListModule } from '@angular/material/grid-list';
 
 
 import { StoresComponent } from './components/stores/stores.component';
+import { StorepageComponent } from './components/storepage/storepage.component';
 import { UsersComponent } from './components/users/users.component';
 import { ProductsComponent } from './components/products/products.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, StoresComponent, UsersComponent, ProductsComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, StoresComponent, UsersComponent, ProductsComponent, StorepageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,7 +34,7 @@ import { ProductsComponent } from './components/products/products.component';
     MatButtonModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    MatGridListModule
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
