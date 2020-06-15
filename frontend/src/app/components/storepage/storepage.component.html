@@ -2,10 +2,10 @@
     <mat-card >
         <mat-card-header>
             <mat-card-title><h1>{{storepage.AddressCity}}</h1></mat-card-title>
-            <mat-card-title>Address: {{storepage.AddressStreet}} {{storepage.AddressNumber}}</mat-card-title>
-            <mat-card-title>Postal code: {{storepage.AddressPostalCode}}</mat-card-title>
-            <mat-card-title>Size: {{storepage.Size}} square meters</mat-card-title>
-            <mat-card-title>Working Hours: M-F / {{storepage.OpeningHour}} - {{storepage.ClosingHour}}</mat-card-title>
+            <mat-card-subtitle>Address: {{storepage.AddressStreet}} {{storepage.AddressNumber}}, {{storepage.AddressCity}}</mat-card-subtitle>
+            <mat-card-subtitle>Postal code: {{storepage.AddressPostalCode}}</mat-card-subtitle>
+            <mat-card-subtitle>Size: {{storepage.Size}} square meters</mat-card-subtitle>
+            <mat-card-subtitle>Working Hours: Monday-Friday / {{storepage.OpeningHour}} - {{storepage.ClosingHour}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions>
         </mat-card-actions>

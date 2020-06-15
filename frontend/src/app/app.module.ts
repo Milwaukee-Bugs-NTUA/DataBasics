@@ -10,6 +10,7 @@ import { AboutComponent } from './components/about/about.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,6 +31,7 @@ import { ProductsComponent } from './components/products/products.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatToolbarModule,
+    MatSidenavModule,
     MatIconModule,
     MatButtonModule,
     MatCardModule,
