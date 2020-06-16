@@ -14,12 +14,12 @@ export class TransactionsComponent implements OnInit {
     // Filter Values
     paymentMethods = ['any', 'cash', 'card'];
     paymentMethod = 'any';
-    low = 0;
-    high = 0;
-    startingDate = '0000-01-01';
-    endingDate = '0000-01-01';
+    low:number;
+    high:number;
+    startingDate:string;
+    endingDate:string;
     // url for back-end GET request
-    url = "/transactions/0000-01-01/0000-01-01/any/0/0";
+    url = "/transactions/null/null/any/null/null";
 
     constructor(private dataService: DataService, private route: ActivatedRoute,) { }
 
@@ -38,32 +38,14 @@ export class TransactionsComponent implements OnInit {
         this.sendRequest();
     }
 
-    setLow(newvalue: string): void {
-        this.low = Number(newvalue);
-        console.log("Low threshold changed: " + this.low);
-        this.sendRequest();
-    }
-
-    setHigh(newvalue: string): void {
-        this.high = Number(newvalue);
-        console.log("High threshold changed: " + this.high);
-        this.sendRequest();
-    }
-
     startingDateChange(newdate: string): void {
-        if (newdate === null) {
-            this.startingDate = "0000-01-01"
-        }
-        else this.startingDate = moment(newdate).format('yyyy-MM-DD');
+        this.startingDate = moment(newdate).format('yyyy-MM-DD');
         console.log("Starting Change changed: " + this.startingDate);
         this.sendRequest();
     }
 
     endingDateChange(newdate: string): void {
-        if (newdate === null) {
-            this.endingDate = "0000-01-01"
-        }
-        else this.endingDate = moment(newdate).format('yyyy-MM-DD');
+        this.endingDate = moment(newdate).format('yyyy-MM-DD');
         console.log("Ending Change changed: " + this.endingDate);
         this.sendRequest();
     }

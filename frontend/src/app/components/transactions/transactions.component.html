@@ -24,12 +24,12 @@
 
 <mat-form-field>
     <mat-label>Lowest Products' Threshold</mat-label>
-    <input matInput type="number" min="0" #boxl (change)="setLow(boxl.value)" oninput="validity.valid||(value='');">
+    <input matInput [(ngModel)]="low" type="number" min="0" (change)="sendRequest()" oninput="validity.valid||(value='');">
 </mat-form-field>
 
 <mat-form-field>
     <mat-label>Highest Products' Threshold</mat-label>
-    <input matInput type="number" min="0" #boxh (change)="setHigh(boxh.value)" oninput="validity.valid||(value='');">
+    <input matInput [(ngModel)]="high" type="number" min="0" (change)="sendRequest()" oninput="validity.valid||(value='');">
 </mat-form-field>
 </div>
 
