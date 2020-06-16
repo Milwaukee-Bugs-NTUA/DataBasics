@@ -19,10 +19,13 @@
     [colspan]=1
     [rowspan]=1
     [style.border] = "'3px solid #7c51c8'">
-    <mat-grid-tile-header [style.background]= "'white'">
+    <mat-grid-tile-header [style.background]= "'white'" class="mat-grid-header">
         <h1 style="color:'#7c51c8'">{{product.ProductName}} {{product.ProductBrandName}}</h1>
     </mat-grid-tile-header>
     <h2>Price: {{product.Price}} €</h2>
+    <!-- <mat-card-content class="mat-card-content">
+        <img src="assets/img/toothbrush.png" />
+    </mat-card-content> -->
     <mat-grid-tile-footer [style.background]= "'black'">
         <h2>Barcode: {{product.Barcode}}</h2>
     </mat-grid-tile-footer>
