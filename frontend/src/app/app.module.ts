@@ -22,9 +22,10 @@ import { StoresComponent } from './components/stores/stores.component';
 import { StorepageComponent } from './components/storepage/storepage.component';
 import { UsersComponent } from './components/users/users.component';
 import { ProductsComponent } from './components/products/products.component';
+import { ProductComponent } from './components/product/product.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, StoresComponent, UsersComponent, ProductsComponent, StorepageComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, StoresComponent, UsersComponent, ProductsComponent, StorepageComponent, ProductComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
