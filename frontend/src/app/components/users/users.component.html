@@ -8,7 +8,7 @@
             <mat-card-subtitle>{{user.Email}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions>
-            <button mat-raised-button color="primary">View User Details</button>
+            <button [routerLink]="['profile', user.CardNumber]" mat-raised-button color="primary">View User Profile</button>
         </mat-card-actions>
     </mat-card>
 </div>
