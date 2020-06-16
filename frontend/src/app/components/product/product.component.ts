@@ -8,14 +8,15 @@ import { DataService } from './../../services/data.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-    product = { 
-                "Barcode": "", 
-                "ProductName": "", 
-                "ProductBrandName": "", 
-                "Price": "", 
-                "CategoryId": "", 
-                "CategoryName": "" 
-                };
+    productDummy = { 
+                    "Barcode": "", 
+                    "ProductName": "", 
+                    "ProductBrandName": "", 
+                    "Price": "", 
+                    "CategoryId": "", 
+                    "CategoryName": "" 
+                    };
+    product = this.productDummy;
 
   constructor(private dataService: DataService,private route: ActivatedRoute) { }
 

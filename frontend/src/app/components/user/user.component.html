@@ -1,5 +1,6 @@
 <div style="padding: 13px;">
-    <mat-card>
+    <mat-spinner *ngIf="user === userDummy"></mat-spinner>
+    <mat-card *ngIf="user !== userDummy">
         <mat-card-header>
             <mat-card-title>
                 <h1>{{user.FirstName}} {{user.LastName}}</h1>

@@ -8,22 +8,23 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-    user = { 
-                "CardNumber": "", 
-                "Email": "", 
-                "FirstName": "", 
-                "LastName": "", 
-                "DateOfBirth": "", 
-                "Sex": "", 
-                "AddressStreet": "", 
-                "AddressNumber": "", 
-                "AddressPostalCode": "", 
-                "AddressCity": "", 
-                "PhoneNumber": "", 
-                "MaritalStatus": "", 
-                "NumberOfChildren": "", 
-                "Points": "" 
-            };
+    userDummy = { 
+                    "CardNumber": "", 
+                    "Email": "", 
+                    "FirstName": "", 
+                    "LastName": "", 
+                    "DateOfBirth": "", 
+                    "Sex": "", 
+                    "AddressStreet": "", 
+                    "AddressNumber": "", 
+                    "AddressPostalCode": "", 
+                    "AddressCity": "", 
+                    "PhoneNumber": "", 
+                    "MaritalStatus": "", 
+                    "NumberOfChildren": "", 
+                    "Points": "" 
+                };
+    user = this.userDummy;
     constructor(private dataService: DataService,private route: ActivatedRoute,) { }
 
   ngOnInit(): void {

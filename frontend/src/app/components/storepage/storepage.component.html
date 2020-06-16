@@ -1,5 +1,6 @@
 <div style="padding: 13px;">
-    <mat-card >
+    <mat-spinner *ngIf="storepage === storepageDummy"></mat-spinner>
+    <mat-card *ngIf="storepage !== storepageDummy">
         <mat-card-header>
             <mat-card-title><h1>{{storepage.AddressCity}}</h1></mat-card-title>
             <mat-card-subtitle>Address: {{storepage.AddressStreet}} {{storepage.AddressNumber}}, {{storepage.AddressCity}}</mat-card-subtitle>
