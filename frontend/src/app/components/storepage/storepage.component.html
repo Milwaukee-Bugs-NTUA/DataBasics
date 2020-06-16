@@ -8,38 +8,10 @@
             <mat-card-subtitle>Working Hours: Monday-Friday / {{storepage.OpeningHour}} - {{storepage.ClosingHour}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions>
+            <button mat-stroked-button color="primary" (click)="onClickMe()" *ngIf="show_transactions === false">
+                Fetch Transactions
+            </button>
         </mat-card-actions>
     </mat-card>
 </div>
-<mat-form-field color="accent">
-    <mat-label>Starting Date</mat-label>
-    <input matInput [matDatepicker]="picker1" (dateChange)="startingDateChange($event.value)">
-    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-    <mat-datepicker #picker1></mat-datepicker>
-</mat-form-field>
-
-<mat-form-field color="accent">
-    <mat-label>Ending Date</mat-label>
-    <input matInput [matDatepicker]="endDate" (dateChange)="endingDateChange($event.value)">
-    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-    <mat-datepicker #endDate></mat-datepicker>
-</mat-form-field>
-
-<mat-form-field>
-    <mat-label>Payment Method</mat-label>
-    <mat-select [(value)]="paymentMethod" (selectionChange)="paymentMethodChange()">
-        <mat-option *ngFor="let pm of payment" [value]="pm">
-            {{pm}}
-        </mat-option>
-    </mat-select>
-</mat-form-field>
-
-<mat-form-field>
-    <mat-label>Lowest Products' Threshold</mat-label>
-    <input matInput type="number" min="0" max="100" #boxl (change)="setLow(boxl.value)" (keyup)="setLow(boxl.value)">
-</mat-form-field>
-
-<mat-form-field>
-    <mat-label>Highest Products' Threshold</mat-label>
-    <input matInput type="number" min="0" max="100" #boxh (change)="setHigh(boxh.value)" (keyup)="setHigh(boxh.value)">
-</mat-form-field>
+<app-transactions *ngIf="show_transactions === true"></app-transactions>

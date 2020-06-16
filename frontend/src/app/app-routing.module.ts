@@ -9,6 +9,7 @@ import { ProductsComponent } from './../app/components/products/products.compone
 import { ProductComponent} from './../app/components/product/product.component';
 import { StatisticsComponent } from './../app/components/statistics/statistics.component';
 import { UserComponent } from './../app/components/user/user.component';
+import { TransactionsComponent } from './../app/components/transactions/transactions.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
     { path: 'stores/storepage/:storeId', component: StorepageComponent },
     { path: 'products/product/:barcode', component: ProductComponent },
     { path: 'users/profile/:cardNumber', component: UserComponent },
+    { path: 'stores/storepage/:storeId/transactions', component: TransactionsComponent },
 ];
 
 @NgModule({
