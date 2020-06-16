@@ -10,18 +10,24 @@ import * as moment from 'moment';
 })
 export class TransactionsComponent implements OnInit {
     transactions = null;
+    minDate:Date;
+    maxDate: Date;
     storeId:string;
     // Filter Values
     paymentMethods = ['any', 'cash', 'card'];
-    paymentMethod = 'any';
-    low:number;
-    high:number;
-    startingDate:string;
-    endingDate:string;
+    paymentMethod:string = null;
+    low:number = null;
+    high:number = null;
+    startingDate:string = null;
+    endingDate:string = null;
     // url for back-end GET request
     url = "/transactions/null/null/any/null/null";
 
-    constructor(private dataService: DataService, private route: ActivatedRoute,) { }
+    constructor(private dataService: DataService, private route: ActivatedRoute,) {
+        const currentYear = new Date();
+        this.minDate = new Date(currentYear.getFullYear() - 23, 0, 0);
+        this.maxDate = new Date(currentYear);
+     }
 
     ngOnInit(): void {
         this.route.paramMap.subscribe(params => {
@@ -33,6 +39,10 @@ export class TransactionsComponent implements OnInit {
         });
     }
 
+    returnAny(p:string):string {
+        if (p === null) return 'any';
+        else return p;
+    }
     paymentMethodChange(): void {
         console.log("Payment method changed: " + this.paymentMethod);
         this.sendRequest();
@@ -54,7 +64,7 @@ export class TransactionsComponent implements OnInit {
         this.url =  "/transactions/" + 
                     this.startingDate + "/" + 
                     this.endingDate + "/" + 
-                    this.paymentMethod + "/" + 
+                    this.returnAny(this.paymentMethod) + "/" + 
                     this.low + "/" + 
                     this.high;
         this.dataService.sendGetRequest("storePage/" + this.storeId + this.url).subscribe((data: any) => {
