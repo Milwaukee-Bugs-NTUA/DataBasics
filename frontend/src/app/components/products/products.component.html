@@ -18,7 +18,8 @@
     <mat-grid-tile *ngFor="let product of products"
     [colspan]=1
     [rowspan]=1
-    [style.border] = "'3px solid #7c51c8'">
+    [style.border] = "'3px solid #7c51c8'"
+    [routerLink] = "['product', product.Barcode]">
     <mat-grid-tile-header [style.background]= "'white'" class="mat-grid-header">
         <h1 style="color:'#7c51c8'">{{product.ProductName}} {{product.ProductBrandName}}</h1>
     </mat-grid-tile-header>

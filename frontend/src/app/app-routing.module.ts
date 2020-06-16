@@ -6,6 +6,7 @@ import { StorepageComponent } from './../app/components/storepage/storepage.comp
 import { AboutComponent } from './../app/components/about/about.component';
 import { UsersComponent } from './../app/components/users/users.component';
 import { ProductsComponent } from './../app/components/products/products.component';
+import { ProductComponent} from './../app/components/product/product.component';
 
 import { UserComponent } from './../app/components/user/user.component';
 
@@ -18,7 +19,7 @@ const routes: Routes = [
     { path: 'about', component: AboutComponent },
     { path: 'stores', component: StoresComponent },
     { path: 'stores/storepage/:storeId', component: StorepageComponent },
-
+    { path: 'products/product/:barcode', component: ProductComponent },
     { path: 'users/profile/:cardNumber', component: UserComponent },
 ];
 
