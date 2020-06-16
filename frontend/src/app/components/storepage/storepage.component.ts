@@ -8,7 +8,18 @@ import { DataService } from './../../services/data.service';
   styleUrls: ['./storepage.component.css']
 })
 export class StorepageComponent implements OnInit {
-    storepage = null;
+    storepage = {   
+                    "StoreId": "", 
+                    "Size": "", 
+                    "AddressCity": "", 
+                    "AddressStreet": "", 
+                    "AddressNumber": "", 
+                    "AddressPostalCode": "", 
+                    "OpeningHour": "", 
+                    "ClosingHour": "" 
+                };
+    payment = ['any','cash','card'];
+    paymentMethod = 'any';
 
     constructor(private dataService: DataService,private route: ActivatedRoute,) { }
 
@@ -19,6 +30,10 @@ export class StorepageComponent implements OnInit {
               this.storepage = data;
           });
       });
+  }
+
+  paymentMethodChange():void {
+      console.log("Payment method changed: " + this.paymentMethod);
   }
 
 }

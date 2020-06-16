@@ -11,3 +11,11 @@
         </mat-card-actions>
     </mat-card>
 </div>
+<mat-form-field>
+    <mat-label>Payment Method</mat-label>
+    <mat-select [(value)]="paymentMethod" (selectionChange)="paymentMethodChange()">
+        <mat-option *ngFor="let pm of payment" [value]="pm">
+            {{pm}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
