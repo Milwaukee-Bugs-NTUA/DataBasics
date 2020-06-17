@@ -43,10 +43,6 @@ export class TransactionsComponent implements OnInit {
         if (p === null) return 'any';
         else return p;
     }
-    paymentMethodChange(): void {
-        console.log("Payment method changed: " + this.paymentMethod);
-        this.sendRequest();
-    }
 
     startingDateChange(newdate: string): void {
         this.startingDate = moment(newdate).format('yyyy-MM-DD');
@@ -67,6 +63,7 @@ export class TransactionsComponent implements OnInit {
                     this.returnAny(this.paymentMethod) + "/" + 
                     this.low + "/" + 
                     this.high;
+        this.transactions = null;
         this.dataService.sendGetRequest("storePage/" + this.storeId + this.url).subscribe((data: any) => {
             console.log(data);
             this.transactions = data;

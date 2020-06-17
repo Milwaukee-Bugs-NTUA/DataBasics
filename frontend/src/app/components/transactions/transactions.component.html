@@ -15,7 +15,7 @@
 
 <mat-form-field>
     <mat-label>Payment Method</mat-label>
-    <mat-select [(value)]="paymentMethod" (selectionChange)="paymentMethodChange()">
+    <mat-select [(value)]="paymentMethod" (selectionChange)="sendRequest()">
         <mat-option *ngFor="let pm of paymentMethods" [value]="pm">
             {{pm}}
         </mat-option>
