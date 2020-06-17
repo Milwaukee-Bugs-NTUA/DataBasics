@@ -22,9 +22,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
-import {MatTabsModule} from '@angular/material/tabs'; 
-import {MatTableModule} from '@angular/material/table';
-
+import { MatTabsModule } from '@angular/material/tabs'; 
+import { MatTableModule } from '@angular/material/table';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
 
 import { StoresComponent } from './components/stores/stores.component';
 import { StorepageComponent } from './components/storepage/storepage.component';
@@ -61,6 +62,8 @@ import { TransactionComponent } from './components/transaction/transaction.compo
     MatGridListModule,
     MatTabsModule,
     MatTableModule,
+    MatListModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

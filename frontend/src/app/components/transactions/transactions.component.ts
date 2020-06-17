@@ -45,13 +45,15 @@ export class TransactionsComponent implements OnInit {
     }
 
     startingDateChange(newdate: string): void {
-        this.startingDate = moment(newdate).format('yyyy-MM-DD');
+        if (newdate === null) this.startingDate = null;
+        else this.startingDate = moment(newdate).format('yyyy-MM-DD');
         console.log("Starting Change changed: " + this.startingDate);
         this.sendRequest();
     }
 
     endingDateChange(newdate: string): void {
-        this.endingDate = moment(newdate).format('yyyy-MM-DD');
+        if (newdate === null) this.endingDate = null;
+        else this.endingDate = moment(newdate).format('yyyy-MM-DD');
         console.log("Ending Change changed: " + this.endingDate);
         this.sendRequest();
     }

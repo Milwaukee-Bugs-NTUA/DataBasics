@@ -12,6 +12,7 @@ export class TransactionComponent implements OnInit {
     date:string=null;
     time:string=null;
     products=null;
+    displayedColumns: string[] = ['Barcode', 'Product', 'Pieces'];
 
     constructor(private dataService: DataService, private route: ActivatedRoute,) { }
 
