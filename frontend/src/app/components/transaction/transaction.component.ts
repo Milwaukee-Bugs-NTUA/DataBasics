@@ -11,7 +11,7 @@ export class TransactionComponent implements OnInit {
     cardNumber:number=null;
     date:string=null;
     time:string=null;
-    transactionsProducts=null;
+    products=null;
 
     constructor(private dataService: DataService, private route: ActivatedRoute,) { }
 
@@ -21,10 +21,10 @@ export class TransactionComponent implements OnInit {
             this.date = params.get('date');
             this.time = params.get('time');
         });
-        // this.dataService.sendGetRequest("transactionsProducts/" + this.date + "/" + this.time + "/" + this.cardNumber).subscribe((data: any) => {
-        //     console.log(data);
-        //     this.transactionsProducts = data;
-        // });
+        this.dataService.sendGetRequest("transactionProducts/" + this.date + "/" + this.time + "/" + this.cardNumber).subscribe((data: any) => {
+            console.log(data);
+            this.products = data;
+        });
     }
 
 }

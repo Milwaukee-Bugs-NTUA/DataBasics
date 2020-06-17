@@ -1,1 +1,18 @@
-<p>Transaction works! {{date}} {{time}} {{cardNumber}}</p>
+<div style="padding: 13px;">
+    <mat-spinner *ngIf="products === null"></mat-spinner>
+    <mat-card *ngIf="products !== null">
+        <mat-card-header>
+            <mat-card-title>
+                Transcation
+            </mat-card-title>
+            <mat-card-subtitle>
+                <h3>Card Number: {{cardNumber}} / Datetime: {{date}}, {{time}}</h3>
+            </mat-card-subtitle>
+            <ul>
+                <li *ngFor="let p of products">
+                    Hello
+                </li>
+            </ul>
+        </mat-card-header>
+    </mat-card>
+</div>
