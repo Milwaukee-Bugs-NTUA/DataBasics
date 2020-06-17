@@ -12,6 +12,7 @@ import { ProductsstatisticsComponent } from './../app/components/productsstatist
 import { UsersstatisticsComponent } from './../app/components/usersstatistics/usersstatistics.component'; 
 import { UserComponent } from './../app/components/user/user.component';
 import { TransactionsComponent } from './../app/components/transactions/transactions.component';
+import { TransactionComponent } from './../app/components/transaction/transaction.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -25,6 +26,7 @@ const routes: Routes = [
     { path: 'products/product/:barcode', component: ProductComponent },
     { path: 'users/profile/:cardNumber', component: UserComponent },
     { path: 'stores/storepage/:storeId/transactions', component: TransactionsComponent },
+    { path: 'transaction/:date/:time/:cardNumber', component: TransactionComponent },
     { path: 'statistics/productsStatistics', component: ProductsstatisticsComponent },
     { path: 'statistics/usersStatistics', component: UsersstatisticsComponent }
 

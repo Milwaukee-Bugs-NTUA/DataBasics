@@ -34,9 +34,10 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { ProductsstatisticsComponent } from './components/productsstatistics/productsstatistics.component';
 import { UsersstatisticsComponent } from './components/usersstatistics/usersstatistics.component';
+import { TransactionComponent } from './components/transaction/transaction.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, StoresComponent, UsersComponent, ProductsComponent, StorepageComponent, ProductComponent,UserComponent, StatisticsComponent, TransactionsComponent, ProductsstatisticsComponent, UsersstatisticsComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, StoresComponent, UsersComponent, ProductsComponent, StorepageComponent, ProductComponent,UserComponent, StatisticsComponent, TransactionsComponent, ProductsstatisticsComponent, UsersstatisticsComponent, TransactionComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

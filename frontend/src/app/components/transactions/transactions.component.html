@@ -48,7 +48,10 @@
             </ul>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="accent">Transactions Details</button>
+            <button mat-raised-button color="accent" 
+            [routerLink]="['/transaction',tr.Datetime.split(' ')[0],tr.Datetime.split(' ')[1],tr.CardNumber]">
+                Transaction's Details
+            </button>
         </mat-card-actions>
     </mat-card>
 </div>
