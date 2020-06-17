@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-productsstatistics',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./productsstatistics.component.css']
 })
 export class ProductsstatisticsComponent implements OnInit {
+  prodStats = null;
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.dataService.sendGetRequest("productsStatistics").subscribe((data: any) => {
+      console.log(data);
+      this.prodStats = data;
+    })
   }
 
 }
