@@ -8,6 +8,8 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class UsersstatisticsComponent implements OnInit {
   userStats = null;
+  nexthour = 0;
+  displayedColumns: string[] = ['Hour','Young','Middle','Elder'];
 
   constructor(private dataService: DataService) { }
 
@@ -15,7 +17,9 @@ export class UsersstatisticsComponent implements OnInit {
     this.dataService.sendGetRequest("usersStats").subscribe((data: any) => {
       console.log(data);
       this.userStats = data;
+      this.nexthour = Number(this.userStats.HourZonewithmaximumsales) + 1;
     })
+    
   }
 
 }
