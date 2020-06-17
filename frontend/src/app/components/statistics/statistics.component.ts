@@ -10,18 +10,18 @@ import { ActivatedRoute } from '@angular/router';
 export class StatisticsComponent implements OnInit {
   statistics = null;
 
-  show_prod_stats = false;
-  show_user_stats = false;
+  show_prods_stats = true;
+  show_users_stats = false;
 
   constructor(private dataService: DataService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.dataService.sendGetRequest("statistics").subscribe((data: any) => {
-        console.log(data);
-        this.statistics = data;
-      });
-    });
+
+  }
+
+  changeFocus():void {
+    this.show_prods_stats = !this.show_prods_stats;
+    this.show_users_stats = !this.show_users_stats;
   }
 
 }

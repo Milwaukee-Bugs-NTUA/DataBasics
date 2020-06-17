@@ -1,11 +1,12 @@
 <div style="padding: 13px;">
-    <mat-tab-group mat-align-tabs="center">
+    <mat-tab-group mat-align-tabs="center" dynamicHeight (focusChange)="changeFocus()">
         <mat-tab label="Products Statistics">
         <h1>Some tab content</h1>
-        <app-productsstatistics></app-productsstatistics>
+        <app-productsstatistics *ngIf="show_prods_stats === true"></app-productsstatistics>
         </mat-tab>
         <mat-tab label="Users Statistics">
         <h1>more tab content</h1>
+        <app-usersstatistics *ngIf="show_users_stats === true"></app-usersstatistics>
         <p>...</p>
         </mat-tab>
     </mat-tab-group>

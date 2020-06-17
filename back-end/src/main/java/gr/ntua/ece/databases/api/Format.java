@@ -258,11 +258,11 @@ public enum Format implements RepresentationGenerator {
                     for (ProductsPair pair: result.getTopProductsPairs()) {
                         w.beginObject();
                         w.name("FirstBarcode").value(Long.toString(pair.getBarcode1()));
-                        w.name("FirstProduct Name").value(pair.getProductName1());
-                        w.name("FirstBrand Name").value(pair.getBrandName1());
+                        w.name("FirstProductName").value(pair.getProductName1());
+                        w.name("FirstBrandName").value(pair.getBrandName1());
                         w.name("SecondBarcode").value(Long.toString(pair.getBarcode2()));
-                        w.name("SecondProduct Name").value(pair.getProductName2());
-                        w.name("SecondBrand Name").value(pair.getBrandName2());
+                        w.name("SecondProductName").value(pair.getProductName2());
+                        w.name("SecondBrandName").value(pair.getBrandName2());
                         w.endObject();
                         w.flush();
                     }
