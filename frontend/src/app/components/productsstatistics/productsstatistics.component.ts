@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 
-export interface TopProdPair {
-  Barcode1: number;
-  Name1: string;
-  Barcode2: number;
-  Name2: string;
-}
+// export interface TopProdPair {
+//   Barcode1: number;
+//   Name1: string;
+//   Barcode2: number;
+//   Name2: string;
+// }
+
 
 @Component({
   selector: 'app-productsstatistics',
@@ -16,6 +17,8 @@ export interface TopProdPair {
 export class ProductsstatisticsComponent implements OnInit {
   prodStats = null;
   displayedColumnsT1: string[] = ['Barcode1', 'Name1', 'Barcode2', 'Name2'];
+  displayedColumnsT2: string[] = ['Alley','Shelf'];
+  displayedColumnsT3: string[] = ['CatID','CatName','Percent'];
 
   constructor(private dataService: DataService) { }
 
