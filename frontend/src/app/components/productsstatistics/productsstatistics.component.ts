@@ -15,9 +15,7 @@ export interface TopProdPair {
 })
 export class ProductsstatisticsComponent implements OnInit {
   prodStats = null;
-  displayedColumns: string[] = ['Barcode1', 'Name1', 'Barcode2', 'Name2'];
-  dataSource = null;
-  
+  displayedColumnsT1: string[] = ['Barcode1', 'Name1', 'Barcode2', 'Name2'];
 
   constructor(private dataService: DataService) { }
 
@@ -25,7 +23,6 @@ export class ProductsstatisticsComponent implements OnInit {
     this.dataService.sendGetRequest("productsStats").subscribe((data: any) => {
       console.log(data);
       this.prodStats = data;
-      this.dataSource = this.prodStats;
     })
   }
 

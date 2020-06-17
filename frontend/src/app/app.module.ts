@@ -23,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatTabsModule} from '@angular/material/tabs'; 
+import {MatTableModule} from '@angular/material/table';
 
 
 import { StoresComponent } from './components/stores/stores.component';
@@ -59,6 +60,7 @@ import { TransactionComponent } from './components/transaction/transaction.compo
     MatProgressSpinnerModule,
     MatGridListModule,
     MatTabsModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
