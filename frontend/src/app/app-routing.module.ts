@@ -8,6 +8,8 @@ import { UsersComponent } from './../app/components/users/users.component';
 import { ProductsComponent } from './../app/components/products/products.component';
 import { ProductComponent} from './../app/components/product/product.component';
 import { StatisticsComponent } from './../app/components/statistics/statistics.component';
+import { ProductsstatisticsComponent } from './../app/components/productsstatistics/productsstatistics.component';
+import { UsersstatisticsComponent } from './../app/components/usersstatistics/usersstatistics.component'; 
 import { UserComponent } from './../app/components/user/user.component';
 import { TransactionsComponent } from './../app/components/transactions/transactions.component';
 
@@ -23,6 +25,9 @@ const routes: Routes = [
     { path: 'products/product/:barcode', component: ProductComponent },
     { path: 'users/profile/:cardNumber', component: UserComponent },
     { path: 'stores/storepage/:storeId/transactions', component: TransactionsComponent },
+    { path: 'statistics/productsStatistics', component: ProductsstatisticsComponent },
+    { path: 'statistics/usersStatistics', component: UsersstatisticsComponent }
+
 ];
 
 @NgModule({
