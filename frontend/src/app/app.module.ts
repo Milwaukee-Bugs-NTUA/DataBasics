@@ -21,7 +21,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatGridListModule } from '@angular/material/grid-list'; 
+import { MatGridListModule } from '@angular/material/grid-list';
+import {MatTabsModule} from '@angular/material/tabs'; 
 
 
 import { StoresComponent } from './components/stores/stores.component';
@@ -56,6 +57,7 @@ import { UsersstatisticsComponent } from './components/usersstatistics/usersstat
     MatCardModule,
     MatProgressSpinnerModule,
     MatGridListModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
