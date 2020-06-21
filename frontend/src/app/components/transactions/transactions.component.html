@@ -35,6 +35,9 @@
 
 <div style="padding: 13px;">
     <mat-spinner *ngIf="transactions === null"></mat-spinner>
+    <span *ngIf="transactions !== null && transactions.length === 0">
+        <h1 style="text-align:center;margin-top:100px;">No transactions were found :(</h1>
+    </span>
     <mat-card *ngFor="let tr of transactions" style="margin-top:10px;">
         <mat-card-header>
             <mat-card-title>Card Number: {{tr.CardNumber}} / Datetime: {{tr.Datetime}}</mat-card-title>
