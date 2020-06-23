@@ -37,10 +37,14 @@ public class TransactionsResource extends DatastoreResource {
         Date endingDate;
         try {
             startingDate = Date.valueOf(getMandatoryAttribute("startingDate", "Starting Date is missing"));
-            endingDate = Date.valueOf(getMandatoryAttribute("endingDate", "Ending Date is missing"));
         }
         catch (IllegalArgumentException e) {
             startingDate = null;
+        }
+        try {
+            endingDate = Date.valueOf(getMandatoryAttribute("endingDate", "Ending Date is missing"));
+        }
+        catch (IllegalArgumentException e) {
             endingDate = null;
         }
         

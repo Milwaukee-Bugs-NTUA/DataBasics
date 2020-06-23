@@ -105,6 +105,12 @@ public class DataAccess {
         if (!(startingDate == null) && !(endingDate == null)) {
             joiner.add("date(tr.datetime) between \'" + startingDate.toString() + "\' and \'" + endingDate.toString() + "\'");
         }
+        else if (startingDate != null) {
+            joiner.add("date(tr.datetime) >= \'" + startingDate.toString() + "\'");
+        }
+        else if (endingDate != null) {
+            joiner.add("date(tr.datetime) <= \'" + endingDate.toString() + "\'");
+        }
         if (!(paymentMethod.equals("any"))) {
             joiner.add("tr.payment_method = \'" + paymentMethod + "\'");
         }
