@@ -1,0 +1,13 @@
+<div style="padding: 13px;">
+    <mat-spinner *ngIf="product === productDummy"></mat-spinner>
+    <mat-card *ngIf="product !== productDummy">
+        <mat-card-header>
+            <mat-card-title><h1>{{product.ProductName}} {{product.ProductBrandName}}</h1></mat-card-title>
+            <mat-card-subtitle>Barcode: {{product.Barcode}}</mat-card-subtitle>
+            <mat-card-subtitle>Price: {{product.Price}} €</mat-card-subtitle>
+            <mat-card-subtitle>Category {{product.CategoryId}}: {{product.CategoryName}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+        </mat-card-actions>
+    </mat-card>
+</div>

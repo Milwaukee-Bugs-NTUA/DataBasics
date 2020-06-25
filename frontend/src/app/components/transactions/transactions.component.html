@@ -1,0 +1,60 @@
+<div>
+<mat-form-field color="accent">
+    <mat-label>Starting Date</mat-label>
+    <input matInput [matDatepicker]="picker1" [min]="minDate" [max]="maxDate" (dateChange)="startingDateChange($event.value)">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field color="accent">
+    <mat-label>Ending Date</mat-label>
+    <input matInput [matDatepicker]="endDate" [min]="minDate" [max]="maxDate" (dateChange)="endingDateChange($event.value)">
+    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+    <mat-datepicker #endDate></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field>
+    <mat-label>Payment Method</mat-label>
+    <mat-select [(value)]="paymentMethod" (selectionChange)="sendRequest()">
+        <mat-option *ngFor="let pm of paymentMethods" [value]="pm">
+            {{pm}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+    <mat-label>Lowest Products' Threshold</mat-label>
+    <input matInput [(ngModel)]="low" type="number" min="0" (change)="sendRequest()" oninput="validity.valid||(value='');">
+</mat-form-field>
+
+<mat-form-field>
+    <mat-label>Highest Products' Threshold</mat-label>
+    <input matInput [(ngModel)]="high" type="number" min="0" (change)="sendRequest()" oninput="validity.valid||(value='');">
+</mat-form-field>
+</div>
+
+<div style="padding: 13px;">
+    <mat-spinner *ngIf="transactions === null"></mat-spinner>
+    <span *ngIf="transactions !== null && transactions.length === 0">
+        <h1 style="text-align:center;margin-top:100px;">No transactions were found :(</h1>
+    </span>
+    <mat-card *ngFor="let tr of transactions" style="margin-top:10px;">
+        <mat-card-header>
+            <mat-card-title>Card Number: {{tr.CardNumber}} / Datetime: {{tr.Datetime}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <ul>
+                <li>Total Cost: {{tr.TotalCost}} €</li>
+                <li>Payment Method: {{tr.PaymentMethod}}</li>
+                <li>Purchased From: {{tr.PurchasedFrom}}</li>
+                <li>Number Of Products: {{tr.NumberOfProducts}}</li>
+            </ul>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="accent" 
+            [routerLink]="['/transaction',tr.Datetime.split(' ')[0],tr.Datetime.split(' ')[1],tr.CardNumber]">
+                Transaction's Details
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

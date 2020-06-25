@@ -102,8 +102,14 @@ public class DataAccess {
 
         StringJoiner joiner = new StringJoiner(" and ");
         joiner.add(sqlQueryFirstPart);
-        if (!(startingDate.equals(Date.valueOf("0000-01-01"))) && !(endingDate.equals(Date.valueOf("0000-01-01")))) {
+        if (!(startingDate == null) && !(endingDate == null)) {
             joiner.add("date(tr.datetime) between \'" + startingDate.toString() + "\' and \'" + endingDate.toString() + "\'");
+        }
+        else if (startingDate != null) {
+            joiner.add("date(tr.datetime) >= \'" + startingDate.toString() + "\'");
+        }
+        else if (endingDate != null) {
+            joiner.add("date(tr.datetime) <= \'" + endingDate.toString() + "\'");
         }
         if (!(paymentMethod.equals("any"))) {
             joiner.add("tr.payment_method = \'" + paymentMethod + "\'");
@@ -112,16 +118,16 @@ public class DataAccess {
         String sqlQueryForTransactions = joiner.toString() + 
                                         " group by tr.datetime,tr.card_number ";
 
-        if ((!(numOfProductsLow == 0)) && (!(numOfProductsHigh == 0))) {
+        if ((!(numOfProductsLow == null)) && (!(numOfProductsHigh == null))) {
             sqlQueryForTransactions = sqlQueryForTransactions + " having count(*) between "
                                         + numOfProductsLow.toString() + " and "
                                         + numOfProductsHigh.toString();
         }
-        else if (!(numOfProductsLow == 0)) {
+        else if (!(numOfProductsLow == null)) {
             sqlQueryForTransactions = sqlQueryForTransactions + " having count(*) >= "
                                         + numOfProductsLow.toString();
         }
-        else if (!(numOfProductsHigh == 0)) {
+        else if (!(numOfProductsHigh == null)) {
             sqlQueryForTransactions = sqlQueryForTransactions + " having count(*) <= "
                                         + numOfProductsHigh.toString();
 

@@ -17,6 +17,8 @@ import gr.ntua.ece.databases.data.model.Transaction;
 
 import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeParseException;
+import java.lang.NumberFormatException;
+import java.lang.IllegalArgumentException;
 import java.util.List;
 import java.sql.Date;
 import java.util.Optional;
@@ -29,12 +31,39 @@ public class TransactionsResource extends DatastoreResource {
 
         // Read the mandatory URI attributes
         Long storeId = Long.valueOf(getMandatoryAttribute("StoreId", "StoreId is missing"));
-        Date startingDate = Date.valueOf(getMandatoryAttribute("startingDate", "Starting Date is missing"));
-        Date endingDate = Date.valueOf(getMandatoryAttribute("endingDate", "Ending Date is missing"));
         String paymentMethod = getMandatoryAttribute("paymentMethod", "Payment method is missing");
-        Integer numPrdLow = Integer.parseInt(getMandatoryAttribute("numPrdLow", "Low Threshold is missing"));
-        Integer numPrdHigh = Integer.parseInt(getMandatoryAttribute("numPrdHigh", "High Threshold is missing"));
 
+        Date startingDate;
+        Date endingDate;
+        try {
+            startingDate = Date.valueOf(getMandatoryAttribute("startingDate", "Starting Date is missing"));
+        }
+        catch (IllegalArgumentException e) {
+            startingDate = null;
+        }
+        try {
+            endingDate = Date.valueOf(getMandatoryAttribute("endingDate", "Ending Date is missing"));
+        }
+        catch (IllegalArgumentException e) {
+            endingDate = null;
+        }
+        
+        Integer numPrdLow;
+        Integer numPrdHigh;
+        try {
+            numPrdLow = Integer.parseInt(getMandatoryAttribute("numPrdLow", "Low Threshold is missing"));
+        }
+        catch (NumberFormatException e) {
+            // Do nothing
+            numPrdLow = null;
+        }
+        try {
+            numPrdHigh = Integer.parseInt(getMandatoryAttribute("numPrdHigh", "High Threshold is missing"));
+        }
+        catch (NumberFormatException e) {
+            // Do nothing
+            numPrdHigh = null;
+        }
         // Our platfom supports only JSON formating
         Format format = Format.valueOf("JSON");
 

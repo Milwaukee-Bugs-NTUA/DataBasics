@@ -1,14 +1,31 @@
 <div style="padding: 13px;">
+    <div>
+        <h1 class="my-title">Our Users</h1>
+        <p class="my-subtitle">Datastore. Where privacy is everything</p>
+    </div>
+
     <mat-spinner *ngIf="users === null"></mat-spinner>
 
-    <mat-card *ngFor="let user of users" style="margin-top:10px;">
+    <div fxLayout="row wrap" fxLayoutGap="13px" fxLayoutAlign="flex-start" class="cardList">
+        <mat-card *ngFor="let user of users" class="cardListItem">
+            <mat-card-header>
+                <mat-card-title>{{user.FirstName}} {{user.LastName}}</mat-card-title>
+                <mat-card-subtitle>User ID: {{user.CardNumber}}</mat-card-subtitle>
+                <mat-card-subtitle>{{user.Email}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions>
+                <button [routerLink]="['profile', user.CardNumber]" mat-raised-button color="primary">View User Profile</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+    <!-- <mat-card *ngFor="let user of users" style="margin-top:10px;">
         <mat-card-header>
             <mat-card-title>{{user.FirstName}} {{user.LastName}}</mat-card-title>
             <mat-card-subtitle>User ID: {{user.CardNumber}}</mat-card-subtitle>
             <mat-card-subtitle>{{user.Email}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions>
-            <button mat-raised-button color="primary">View User Details</button>
+            <button [routerLink]="['profile', user.CardNumber]" mat-raised-button color="primary">View User Profile</button>
         </mat-card-actions>
-    </mat-card>
+    </mat-card> -->
 </div>

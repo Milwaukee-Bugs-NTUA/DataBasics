@@ -1,0 +1,18 @@
+<div style="padding: 13px;">
+    <mat-spinner *ngIf="storepage === storepageDummy"></mat-spinner>
+    <mat-card *ngIf="storepage !== storepageDummy">
+        <mat-card-header>
+            <mat-card-title><h1>{{storepage.AddressCity}}</h1></mat-card-title>
+            <mat-card-subtitle>Address: {{storepage.AddressStreet}} {{storepage.AddressNumber}}, {{storepage.AddressCity}}</mat-card-subtitle>
+            <mat-card-subtitle>Postal code: {{storepage.AddressPostalCode}}</mat-card-subtitle>
+            <mat-card-subtitle>Size: {{storepage.Size}} square meters</mat-card-subtitle>
+            <mat-card-subtitle>Working Hours: Monday-Friday / {{storepage.OpeningHour}} - {{storepage.ClosingHour}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+            <button mat-stroked-button color="primary" (click)="onClickMe()" *ngIf="show_transactions === false">
+                Fetch Transactions
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+<app-transactions *ngIf="show_transactions === true"></app-transactions>

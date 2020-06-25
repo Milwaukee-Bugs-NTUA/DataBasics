@@ -169,22 +169,22 @@ public enum Format implements RepresentationGenerator {
                     w.beginObject(); // {
                     w.name("MeanTransactionsPW").value(Float.toString(userInfo.getMeanTransactionsPerWeek()));
                     w.name("MeanTransactionsPM").value(Float.toString(userInfo.getMeanTransactionsPerMonth()));
-                    w.name("Common Stores");
+                    w.name("CommonStores");
                     w.beginArray(); // [
                     for(CommonStore uinf: userInfo.getCommonStores()) {
                         w.beginObject(); // {
-                        w.name("Store ID").value(Long.toString(uinf.getStoreID()));
-                        w.name("Store Name").value(uinf.getStoreName());
+                        w.name("StoreId").value(Long.toString(uinf.getStoreID()));
+                        w.name("StoreName").value(uinf.getStoreName());
                         w.endObject(); // }
                         w.flush();
                     }
                     w.endArray(); // ]
-                    w.name("Common Products");
+                    w.name("CommonProducts");
                     w.beginArray(); // [
                     for(CommonProduct uinf: userInfo.getCommonProducts()) {
                         w.beginObject(); // {
                         w.name("Barcode").value(Long.toString(uinf.getBarcode()));
-                        w.name("Product Name").value(uinf.getProductName());
+                        w.name("ProductName").value(uinf.getProductName());
                         w.endObject(); // }
                         w.flush();
                     }
@@ -214,11 +214,11 @@ public enum Format implements RepresentationGenerator {
                     for(Transaction rec: result) {
                         w.beginObject(); // {
                         w.name("Datetime").value(String.valueOf(rec.getDatetime()));
-                        w.name("Card Number").value(Long.toString(rec.getCardNumber()));
-                        w.name("Total Cost").value(Float.toString(rec.getTotalCost()));
-                        w.name("Payment Method").value(String.valueOf(rec.getPaymentMethod()));
-                        w.name("Purchased From").value(rec.getPurchasedFrom());
-                        w.name("Number Of Products").value(Integer.toString(rec.getNumberOfProducts()));
+                        w.name("CardNumber").value(Long.toString(rec.getCardNumber()));
+                        w.name("TotalCost").value(Float.toString(rec.getTotalCost()));
+                        w.name("PaymentMethod").value(String.valueOf(rec.getPaymentMethod()));
+                        w.name("PurchasedFrom").value(rec.getPurchasedFrom());
+                        w.name("NumberOfProducts").value(Integer.toString(rec.getNumberOfProducts()));
                         w.endObject(); // }
                         w.flush();
                     }
@@ -236,8 +236,8 @@ public enum Format implements RepresentationGenerator {
                     for(TransactionProduct rec: result) {
                         w.beginObject(); // {
                         w.name("Barcode").value(Long.toString(rec.getBarcode()));
-                        w.name("Product Name").value(rec.getProductName());
-                        w.name("Brand Name").value(rec.getBrandName());
+                        w.name("ProductName").value(rec.getProductName());
+                        w.name("BrandName").value(rec.getBrandName());
                         w.name("Pieces").value(Integer.toString(rec.getPieces()));
                         w.endObject(); // }
                         w.flush();
@@ -253,38 +253,38 @@ public enum Format implements RepresentationGenerator {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                     w.beginObject(); // {
-                    w.name("Top Products Pairs");
+                    w.name("TopProductsPairs");
                     w.beginArray();
                     for (ProductsPair pair: result.getTopProductsPairs()) {
                         w.beginObject();
-                        w.name("First Barcode").value(Long.toString(pair.getBarcode1()));
-                        w.name("First Product Name").value(pair.getProductName1());
-                        w.name("First Brand Name").value(pair.getBrandName1());
-                        w.name("Second Barcode").value(Long.toString(pair.getBarcode2()));
-                        w.name("Second Product Name").value(pair.getProductName2());
-                        w.name("Second Brand Name").value(pair.getBrandName2());
+                        w.name("FirstBarcode").value(Long.toString(pair.getBarcode1()));
+                        w.name("FirstProductName").value(pair.getProductName1());
+                        w.name("FirstBrandName").value(pair.getBrandName1());
+                        w.name("SecondBarcode").value(Long.toString(pair.getBarcode2()));
+                        w.name("SecondProductName").value(pair.getProductName2());
+                        w.name("SecondBrandName").value(pair.getBrandName2());
                         w.endObject();
                         w.flush();
                     }
                     w.endArray();
                     w.flush();
-                    w.name("Top Products Placements");
+                    w.name("TopProductsPlacements");
                     w.beginArray();
                     for (ProductPlacement placement: result.getTopProductsPlacements()) {
                         w.beginObject();
-                        w.name("Alley Number").value(placement.getAlleyNumber());
-                        w.name("Self Number").value(placement.getSelfNumber());
+                        w.name("AlleyNumber").value(placement.getAlleyNumber());
+                        w.name("SelfNumber").value(placement.getSelfNumber());
                         w.endObject();
                         w.flush();
                     }
                     w.endArray();
                     w.flush();
-                    w.name("Datastore Brand Success");
+                    w.name("DatastoreBrandSuccess");
                     w.beginArray();
                     for (PercentageOfSuccess percentage: result.getPercentageOfSuccessInEachCategory()) {
                         w.beginObject();
-                        w.name("Category Id").value(Long.toString(percentage.getCategoryId()));
-                        w.name("Category Name").value(percentage.getCategoryName());
+                        w.name("CategoryId").value(Long.toString(percentage.getCategoryId()));
+                        w.name("CategoryName").value(percentage.getCategoryName());
                         w.name("Percentage").value(Float.toString(percentage.getPercentage()));
                         w.endObject();
                         w.flush();
@@ -303,15 +303,15 @@ public enum Format implements RepresentationGenerator {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
                     w.beginObject(); // {
-                    w.name("Hour Zone with maximum sales").value(Integer.toString(result.getMaximumSalesHourZone()));
-                    w.name("Percentages per Age and Hour Zone");
+                    w.name("HourZonewithmaximumsales").value(Integer.toString(result.getMaximumSalesHourZone()));
+                    w.name("PercentagesperAgeandHourZone");
                     w.beginArray();
                     for(PercentagesPerHour pph: result.getPercentagesPerHour()){
                         w.beginObject();
-                        w.name("Hour Zone").value(Integer.toString(pph.getHourZone()));
-                        w.name("Young Percentages").value(Float.toString(pph.getPercentageOfYoung()));
-                        w.name("Middle Percentages").value(Float.toString(pph.getPercentageOfMiddle()));
-                        w.name("Elder Percentages").value(Float.toString(pph.getPercentageOfElder()));
+                        w.name("HourZone").value(Integer.toString(pph.getHourZone()));
+                        w.name("YoungPercentages").value(Float.toString(pph.getPercentageOfYoung()));
+                        w.name("MiddlePercentages").value(Float.toString(pph.getPercentageOfMiddle()));
+                        w.name("ElderPercentages").value(Float.toString(pph.getPercentageOfElder()));
                         w.endObject();
                         w.flush();
                     }

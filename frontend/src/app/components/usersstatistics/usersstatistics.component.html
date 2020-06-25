@@ -1,0 +1,35 @@
+<h2 style="text-align:center;">Top Products Pairs</h2>
+
+<div style="margin:25px;">
+    <h2 style="text-align:left;">Hour zone with maximus sales: {{userStats.HourZonewithmaximumsales}}:00 - {{nexthour}}:00</h2>
+</div>
+
+<div style="margin:25px;">
+<table mat-table [dataSource]="userStats.PercentagesperAgeandHourZone" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="Hour">
+      <th mat-header-cell *matHeaderCellDef> Hour Zone </th>
+      <td mat-cell *matCellDef="let element"> {{element.HourZone}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Young">
+      <th mat-header-cell *matHeaderCellDef> Young Percentages</th>
+      <td mat-cell *matCellDef="let element"> {{element.YoungPercentages}} % </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="Middle">
+      <th mat-header-cell *matHeaderCellDef> Middle Percentages </th>
+      <td mat-cell *matCellDef="let element"> {{element.MiddlePercentages}} % </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Elder">
+      <th mat-header-cell *matHeaderCellDef> Elder Percentages </th>
+      <td mat-cell *matCellDef="let element"> {{element.ElderPercentages}} % </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+</div>
+
+

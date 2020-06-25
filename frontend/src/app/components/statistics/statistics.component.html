@@ -1,0 +1,22 @@
+<div style="padding: 13px;">
+    <div>
+        <h1 class="my-title">Statistics</h1>
+        <p class="my-subtitle">Cause we keep track of everything</p>
+    </div>
+
+    <mat-tab-group mat-align-tabs="center" dynamicHeight (focusChange)="changeFocus()">
+        <mat-tab label="Products Statistics">
+        <!-- <h1 class="my-title">Products' Statistics</h1> -->
+            <div style="margin: 13px;">
+                <app-productsstatistics *ngIf="show_prods_stats === true"></app-productsstatistics>
+            </div>
+        </mat-tab>
+        <mat-tab label="Users Statistics">
+        <!-- <h1 class="my-title">Users' Statistics</h1> -->
+            <div style="margin: 13px;">
+                <app-usersstatistics *ngIf="show_users_stats === true"></app-usersstatistics>
+            </div>
+        <p>...</p>
+        </mat-tab>
+    </mat-tab-group>
+</div>

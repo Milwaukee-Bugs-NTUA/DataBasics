@@ -1,0 +1,32 @@
+<div style="padding: 13px;">
+    <mat-spinner *ngIf="user === userDummy"></mat-spinner>
+    <mat-card *ngIf="user !== userDummy">
+        <mat-card-header>
+            <mat-card-title>
+                {{user.FirstName}} {{user.LastName}}
+            </mat-card-title>
+            <mat-card-subtitle>Card Number: {{user.CardNumber}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-list>
+                <mat-divider></mat-divider>
+                <mat-list-item>e-mail: {{user.Email}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>Date of Birth: {{user.DateOfBirth}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>Sex: {{user.Sex}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>Address: {{user.AddressStreet}} {{user.AddressNumber}}, {{user.AddressCity}} {{user.AddressPostalCode}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>Phone: {{user.PhoneNumber}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>Marital Status: {{user.MaritalStatus}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>Points: {{user.Points}}</mat-list-item>
+                <mat-divider></mat-divider>
+              </mat-list>
+        </mat-card-content>
+        <mat-card-actions>
+        </mat-card-actions>
+    </mat-card>
+</div>
