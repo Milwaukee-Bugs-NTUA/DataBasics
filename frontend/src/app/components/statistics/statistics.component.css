@@ -1,3 +1,15 @@
-.my-title {
+/* .my-title {
     color:#7c51c8;
+} */
+.my-title {
+    margin-top:50px;
+    text-align:center;
+    font-size: 60px;
+    color: #673AB7;
+}
+.my-subtitle {
+    margin-bottom:62px;
+    font-size: 25px;
+    text-align:center;
+    color:#9E9E9E;
 }

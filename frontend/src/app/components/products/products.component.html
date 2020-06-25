@@ -1,6 +1,13 @@
 <div style= "padding: 13px;">
+    <div>
+        <h1 class="my-title">Our Products</h1>
+        <p class="my-subtitle">Chosen with care</p>
+    </div>
     <mat-spinner *ngIf="products === null"></mat-spinner>
-    <mat-grid-list cols="4" rowHeight="160px" gutterSize="20px">
+    <mat-grid-list 
+        cols="4" 
+        rowHeight="160px" 
+        gutterSize="20px">
         <mat-grid-tile *ngFor="let product of products"
         [colspan]=1
         [rowspan]=1

@@ -11,7 +11,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,8 +23,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs'; 
 import { MatTableModule } from '@angular/material/table';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatListModule} from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 
 import { StoresComponent } from './components/stores/stores.component';
 import { StorepageComponent } from './components/storepage/storepage.component';
@@ -47,7 +46,6 @@ import { TransactionComponent } from './components/transaction/transaction.compo
     HttpClientModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatExpansionModule,
     MatFormFieldModule,
     MatSelectModule,
     MatDatepickerModule,

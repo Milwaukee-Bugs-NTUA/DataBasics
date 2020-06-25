@@ -1,0 +1,30 @@
+.my-title {
+    margin-top:50px;
+    text-align:center;
+    font-size: 60px;
+    color: #673AB7;
+}
+.my-subtitle {
+    margin-bottom:62px;
+    font-size: 25px;
+    text-align:center;
+    color: #9E9E9E;
+}
+.cardList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+/* Column Gap */
+.cardList > * {
+    box-sizing: border-box;
+}
+.cardList > *:not(:last-child) {
+    margin-right: 13px;
+}
+/* Item sizing */
+.cardListItem {
+    margin-top:13px;
+    flex: 0 1 calc(33.3% - 13px);
+}

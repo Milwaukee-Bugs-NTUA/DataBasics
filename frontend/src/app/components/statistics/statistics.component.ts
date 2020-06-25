@@ -20,8 +20,8 @@ export class StatisticsComponent implements OnInit {
   }
 
   changeFocus():void {
-    this.show_prods_stats = !this.show_prods_stats;
-    this.show_users_stats = !this.show_users_stats;
+    this.show_prods_stats = true;//!this.show_prods_stats;
+    this.show_users_stats = true;//!this.show_users_stats;
   }
 
 }
