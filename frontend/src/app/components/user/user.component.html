@@ -2,29 +2,43 @@
     <mat-spinner *ngIf="user === null"></mat-spinner>
     <mat-card *ngIf="user !== null">
         <mat-card-header>
+            <div mat-card-avatar>
+                <mat-icon class="avatar">account_circle</mat-icon> 
+            </div>
             <mat-card-title>
                 {{user.FirstName}} {{user.LastName}}
             </mat-card-title>
             <mat-card-subtitle>Card Number: {{user.CardNumber}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            <mat-list>
-                <mat-divider></mat-divider>
-                <mat-list-item>e-mail: {{user.Email}}</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Date of Birth: {{user.DateOfBirth}}</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Sex: {{user.Sex}}</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Address: {{user.AddressStreet}} {{user.AddressNumber}}, {{user.AddressCity}} {{user.AddressPostalCode}}</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Phone: {{user.PhoneNumber}}</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Marital Status: {{user.MaritalStatus}}</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Points: {{user.Points}}</mat-list-item>
-                <mat-divider></mat-divider>
-              </mat-list>
+              <mat-chip-list #chipList [disabled]="true">
+                <mat-chip>
+                    <mat-icon>calendar_today</mat-icon> 
+                    <div style="margin-left:5px;">{{user.DateOfBirth}}</div>
+                </mat-chip>
+                <mat-chip>{{user.Sex}}</mat-chip>
+                <mat-chip>
+                    <mat-icon>home</mat-icon> 
+                    <div style="margin-left:5px;">{{user.AddressStreet}} {{user.AddressNumber}}, {{user.AddressCity}} {{user.AddressPostalCode}}</div>
+                </mat-chip>
+                <mat-chip>
+                    <mat-icon>mail_outline</mat-icon> 
+                    <div style="margin-left:5px;">{{user.Email}}</div>
+                </mat-chip>
+                <mat-chip>
+                    <mat-icon>phone</mat-icon>
+                    <div style="margin-left:5px;">{{user.PhoneNumber}}</div>
+                </mat-chip>
+                <mat-chip>{{user.MaritalStatus}}</mat-chip>
+                <mat-chip>
+                    <mat-icon>child_friendly</mat-icon>
+                    <div style="margin-left:5px;">{{user.NumberOfChildren}}</div>
+                </mat-chip>
+                <mat-chip>
+                    <mat-icon>star</mat-icon>
+                    <div style="margin-left:5px;">{{user.Points}}</div>
+                </mat-chip>
+              </mat-chip-list>
         </mat-card-content>
         <mat-card-actions>
             <div class="button-row">

@@ -9,25 +9,30 @@
     <div fxLayout="row wrap" fxLayoutGap="13px" fxLayoutAlign="flex-start" class="cardList">
         <mat-card *ngFor="let user of users" class="cardListItem">
             <mat-card-header>
+                <div mat-card-avatar>
+                    <mat-icon class="avatar">account_circle</mat-icon> 
+                </div>
                 <mat-card-title>{{user.FirstName}} {{user.LastName}}</mat-card-title>
-                <mat-card-subtitle>User ID: {{user.CardNumber}}</mat-card-subtitle>
-                <mat-card-subtitle>{{user.Email}}</mat-card-subtitle>
             </mat-card-header>
+
+            <mat-card-content style="margin-top:15px;">
+                <mat-chip-list  class="mat-chip-list-stacked" [disabled]="true">
+                    <mat-chip>
+                        <mat-icon>fingerprint</mat-icon> 
+                        <div style="margin-left:5px;">Card Number: {{user.CardNumber}}</div>
+                    </mat-chip>
+                    <mat-chip>
+                        <mat-icon>mail_outline</mat-icon> 
+                        <div style="margin-left:5px;">{{user.Email}}</div>
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-card-content>
+
             <mat-card-actions>
                 <button [routerLink]="['profile', user.CardNumber]" mat-raised-button color="primary">View User Profile</button>
             </mat-card-actions>
         </mat-card>
     </div>
-    <!-- <mat-card *ngFor="let user of users" style="margin-top:10px;">
-        <mat-card-header>
-            <mat-card-title>{{user.FirstName}} {{user.LastName}}</mat-card-title>
-            <mat-card-subtitle>User ID: {{user.CardNumber}}</mat-card-subtitle>
-            <mat-card-subtitle>{{user.Email}}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-actions>
-            <button [routerLink]="['profile', user.CardNumber]" mat-raised-button color="primary">View User Profile</button>
-        </mat-card-actions>
-    </mat-card> -->
     <button mat-fab color="matblack">
         <mat-icon>add</mat-icon>
     </button>

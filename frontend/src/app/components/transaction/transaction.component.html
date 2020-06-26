@@ -2,11 +2,23 @@
     <mat-spinner *ngIf="products === null"></mat-spinner>
     <mat-card *ngIf="products !== null">
         <mat-card-header>
+            <div mat-card-avatar>
+                <mat-icon class="avatar">receipt_long</mat-icon> 
+            </div>
             <mat-card-title>
                 Transcation
             </mat-card-title>
             <mat-card-subtitle>
-                <h3>Card Number: {{cardNumber}} / Datetime: {{date}}, {{time}}</h3>
+                <mat-chip-list #chipList [disabled]="true">
+                    <mat-chip>
+                        <mat-icon>fingerprint</mat-icon> 
+                        <div style="margin-left:5px;">Card Number: {{cardNumber}}</div>
+                    </mat-chip>
+                    <mat-chip>
+                        <mat-icon>calendar_today</mat-icon> 
+                        <div style="margin-left:5px;">{{date}} {{time}}</div>
+                    </mat-chip>
+                  </mat-chip-list>
             </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>

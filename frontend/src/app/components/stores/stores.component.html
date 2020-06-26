@@ -9,8 +9,16 @@
     <div fxLayout="row wrap" fxLayoutGap="13px" fxLayoutAlign="flex-start" class="cardList">
         <mat-card *ngFor="let store of stores" class="cardListItem">
             <mat-card-header>
+                <div mat-card-avatar>
+                    <mat-icon class="avatar">local_grocery_store</mat-icon> 
+                </div>
                 <mat-card-title><h1>{{store.City}}</h1></mat-card-title>
-                <mat-card-subtitle>Store Id: {{store.StoreId}}</mat-card-subtitle>
+                    <mat-chip-list #chipList [disabled]="true">
+                        <mat-chip [disabled]="true">
+                            <mat-icon>label</mat-icon>
+                            <div style="font-size:16px;margin-left:5px">Store Id: {{store.StoreId}}</div>
+                        </mat-chip>
+                    </mat-chip-list>
             </mat-card-header>
             <mat-card-actions>
                 <button [routerLink]="['storepage', store.StoreId]" mat-raised-button color="primary">Visit store</button>

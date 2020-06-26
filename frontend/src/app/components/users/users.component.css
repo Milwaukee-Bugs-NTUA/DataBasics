@@ -37,3 +37,9 @@
     left: auto;
     position: fixed;
 }
+
+.avatar {
+    transform: scale(2.5);
+    margin-left:5px;
+    margin-top:5px;
+  }

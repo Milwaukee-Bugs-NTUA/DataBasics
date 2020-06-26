@@ -2,12 +2,28 @@
     <mat-spinner *ngIf="storepage === null"></mat-spinner>
     <mat-card *ngIf="storepage !== null">
         <mat-card-header>
+            <div mat-card-avatar>
+                <mat-icon class="avatar">local_grocery_store</mat-icon> 
+            </div>
             <mat-card-title><h1>{{storepage.AddressCity}}</h1></mat-card-title>
-            <mat-card-subtitle>Address: {{storepage.AddressStreet}} {{storepage.AddressNumber}}, {{storepage.AddressCity}}</mat-card-subtitle>
-            <mat-card-subtitle>Postal code: {{storepage.AddressPostalCode}}</mat-card-subtitle>
-            <mat-card-subtitle>Size: {{storepage.Size}} square meters</mat-card-subtitle>
-            <mat-card-subtitle>Working Hours: Monday-Friday / {{storepage.OpeningHour}} - {{storepage.ClosingHour}}</mat-card-subtitle>
         </mat-card-header>
+
+        <mat-card-content style="margin-top:15px">
+            <mat-chip-list #chipList [disabled]="true">
+                <mat-chip>
+                    <mat-icon>room</mat-icon> 
+                    <div style="margin-left:5px;">{{storepage.AddressStreet}} {{storepage.AddressNumber}}, {{storepage.AddressCity}}</div>
+                </mat-chip>
+                <mat-chip>ZIP: {{storepage.AddressPostalCode}}</mat-chip>
+                <mat-chip>
+                    {{storepage.Size}} square meters
+                </mat-chip>
+                <mat-chip>
+                    <mat-icon>query_builder</mat-icon> 
+                    <div style="margin-left:5px;">Monday-Friday / {{storepage.OpeningHour}} - {{storepage.ClosingHour}}</div>
+                </mat-chip>
+              </mat-chip-list>
+        </mat-card-content>
         <mat-card-actions>
             <div class="button-row">
                 <span *ngIf="show_transactions===false">

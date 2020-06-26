@@ -2,11 +2,29 @@
     <mat-spinner *ngIf="product === null"></mat-spinner>
     <mat-card *ngIf="product !== null">
         <mat-card-header>
+            <div mat-card-avatar>
+                <mat-icon class="avatar">local_mall</mat-icon> 
+            </div>
             <mat-card-title><h1>{{product.ProductName}} {{product.ProductBrandName}}</h1></mat-card-title>
-            <mat-card-subtitle>Barcode: {{product.Barcode}}</mat-card-subtitle>
-            <mat-card-subtitle>Price: {{product.Price}} €</mat-card-subtitle>
-            <mat-card-subtitle>Category {{product.CategoryId}}: {{product.CategoryName}}</mat-card-subtitle>
         </mat-card-header>
+
+        <mat-card-content style="margin-top:15px">
+            <mat-chip-list #chipList [disabled]="true">
+                <mat-chip>
+                    <mat-icon>qr_code</mat-icon> 
+                    <div style="margin-left:5px;">{{product.Barcode}}</div>
+                </mat-chip>
+                <mat-chip>
+                    <mat-icon>local_offer</mat-icon> 
+                    <div style="margin-left:5px;">{{product.Price}} €</div>
+                    </mat-chip>
+                <mat-chip>
+                    <mat-icon>category</mat-icon> 
+                    <div style="margin-left:5px;">{{product.CategoryName}} ({{product.CategoryId}})</div>
+                </mat-chip>
+            </mat-chip-list>
+        </mat-card-content>
+      
         <mat-card-actions>
             <div class="button-row">
                 <span *ngIf="show_price_history===false">
