@@ -8,17 +8,7 @@ import { DataService } from './../../services/data.service';
   styleUrls: ['./storepage.component.css']
 })
 export class StorepageComponent implements OnInit {
-    storepageDummy = {   
-                        "StoreId": "", 
-                        "Size": "", 
-                        "AddressCity": "", 
-                        "AddressStreet": "", 
-                        "AddressNumber": "", 
-                        "AddressPostalCode": "", 
-                        "OpeningHour": "", 
-                        "ClosingHour": "" 
-                    };
-    storepage = this.storepageDummy;
+    storepage = null;
 
     show_transactions = false;
     
