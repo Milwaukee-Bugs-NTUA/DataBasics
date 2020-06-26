@@ -8,15 +8,8 @@ import { DataService } from './../../services/data.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-    productDummy = { 
-                    "Barcode": "", 
-                    "ProductName": "", 
-                    "ProductBrandName": "", 
-                    "Price": "", 
-                    "CategoryId": "", 
-                    "CategoryName": "" 
-                    };
-    product = this.productDummy;
+    product = null;
+    show_price_history = false;
 
   constructor(private dataService: DataService,private route: ActivatedRoute) { }
 
@@ -27,6 +20,10 @@ export class ProductComponent implements OnInit {
         this.product = data;
       });
     });
+  }
+
+  onClickMe():void {
+    this.show_price_history = true;
   }
 
 }

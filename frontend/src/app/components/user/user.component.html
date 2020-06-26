@@ -1,6 +1,6 @@
 <div style="padding: 13px;">
-    <mat-spinner *ngIf="user === userDummy"></mat-spinner>
-    <mat-card *ngIf="user !== userDummy">
+    <mat-spinner *ngIf="user === null"></mat-spinner>
+    <mat-card *ngIf="user !== null">
         <mat-card-header>
             <mat-card-title>
                 {{user.FirstName}} {{user.LastName}}
@@ -27,6 +27,22 @@
               </mat-list>
         </mat-card-content>
         <mat-card-actions>
+            <div class="button-row">
+                <span *ngIf="show_user_info===false">
+                    <button mat-raised-button (click)="onClickMe()">
+                        <div style="color:#673AB7">User Info</div>
+                    </button>
+                </span>
+                <span *ngIf="show_user_info===true">
+                    <button mat-raised-button disabled>User Info</button>
+                </span>
+                <button mat-mini-fab color="primary">
+                    <mat-icon>create</mat-icon>
+                </button>
+                <button mat-mini-fab color="matblack">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
         </mat-card-actions>
     </mat-card>
 </div>

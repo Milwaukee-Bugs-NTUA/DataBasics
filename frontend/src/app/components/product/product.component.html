@@ -1,6 +1,6 @@
 <div style="padding: 13px;">
-    <mat-spinner *ngIf="product === productDummy"></mat-spinner>
-    <mat-card *ngIf="product !== productDummy">
+    <mat-spinner *ngIf="product === null"></mat-spinner>
+    <mat-card *ngIf="product !== null">
         <mat-card-header>
             <mat-card-title><h1>{{product.ProductName}} {{product.ProductBrandName}}</h1></mat-card-title>
             <mat-card-subtitle>Barcode: {{product.Barcode}}</mat-card-subtitle>
@@ -8,6 +8,22 @@
             <mat-card-subtitle>Category {{product.CategoryId}}: {{product.CategoryName}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions>
+            <div class="button-row">
+                <span *ngIf="show_price_history===false">
+                    <button mat-raised-button (click)="onClickMe()">
+                        <div style="color:#673AB7">Show Price History</div>
+                    </button>
+                </span>
+                <span *ngIf="show_price_history===true">
+                    <button mat-raised-button disabled>Show Price History</button>
+                </span>
+                <button mat-mini-fab color="primary">
+                    <mat-icon>create</mat-icon>
+                </button>
+                <button mat-mini-fab color="matblack">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
         </mat-card-actions>
     </mat-card>
 </div>

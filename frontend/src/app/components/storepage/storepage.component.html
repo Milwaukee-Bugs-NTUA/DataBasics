@@ -9,9 +9,22 @@
             <mat-card-subtitle>Working Hours: Monday-Friday / {{storepage.OpeningHour}} - {{storepage.ClosingHour}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions>
-            <button mat-stroked-button color="primary" (click)="onClickMe()" *ngIf="show_transactions === false">
-                Fetch Transactions
-            </button>
+            <div class="button-row">
+                <span *ngIf="show_transactions===false">
+                    <button mat-raised-button (click)="onClickMe()">
+                        <div style="color:#673AB7">Fetch Transactions</div>
+                    </button>
+                </span>
+                <span *ngIf="show_transactions===true">
+                    <button mat-raised-button disabled>Fetch Transactions</button>
+                </span>
+                <button mat-mini-fab color="primary">
+                    <mat-icon>create</mat-icon>
+                </button>
+                <button mat-mini-fab color="matblack">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
         </mat-card-actions>
     </mat-card>
 </div>

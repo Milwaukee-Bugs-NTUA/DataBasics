@@ -8,23 +8,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-    userDummy = { 
-                    "CardNumber": "", 
-                    "Email": "", 
-                    "FirstName": "", 
-                    "LastName": "", 
-                    "DateOfBirth": "", 
-                    "Sex": "", 
-                    "AddressStreet": "", 
-                    "AddressNumber": "", 
-                    "AddressPostalCode": "", 
-                    "AddressCity": "", 
-                    "PhoneNumber": "", 
-                    "MaritalStatus": "", 
-                    "NumberOfChildren": "", 
-                    "Points": "" 
-                };
-    user = this.userDummy;
+    user = null;
+    show_user_info=false;
     constructor(private dataService: DataService,private route: ActivatedRoute,) { }
 
   ngOnInit(): void {
@@ -35,5 +20,8 @@ export class UserComponent implements OnInit {
           });
       });
   }
-
+  
+  onClickMe():void {
+    this.show_user_info = true;
+  }
 }
