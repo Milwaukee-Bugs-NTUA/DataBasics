@@ -289,7 +289,7 @@ public class DataAccess {
         String lastSunday = dateOfLastWeek.plusDays(7 - dayOfLastWeek).toString();
         Object[] sqlParamsForMeanTrsPerWeek = new Object[]{"2018-01-16", "2019-06-17", userId}; //Hard Coded for now
 
-        String sqlQueryForCommonProducts = "select c.product_id, p.name from contains as c, " +
+        String sqlQueryForCommonProducts = "select c.product_id, p.name, p.brand_name from contains as c, " +
                                             "products as p " + 
                                             "where c.product_id = p.barcode and c.card_number = ? " +
                                             "group by c.product_id order by sum(c.pieces) desc limit 10";
@@ -316,6 +316,7 @@ public class DataAccess {
                 CommonProduct dataload = new CommonProduct();
                 dataload.setBarcode(rs.getLong(1));
                 dataload.setProductName(rs.getString(2));
+                dataload.setBrandName(rs.getString(3));
                 return dataload;
             });
             userInfo.setCommonProducts(commonProducts);

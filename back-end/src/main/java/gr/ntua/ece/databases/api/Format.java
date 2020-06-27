@@ -185,6 +185,7 @@ public enum Format implements RepresentationGenerator {
                         w.beginObject(); // {
                         w.name("Barcode").value(Long.toString(uinf.getBarcode()));
                         w.name("ProductName").value(uinf.getProductName());
+                        w.name("BrandName").value(uinf.getBrandName());
                         w.endObject(); // }
                         w.flush();
                     }
