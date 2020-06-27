@@ -63,7 +63,8 @@
             </mat-card-content>
             <mat-card-actions>
                 <button mat-raised-button color="accent" 
-                [routerLink]="['/transaction',tr.Datetime.split(' ')[0],tr.Datetime.split(' ')[1],tr.CardNumber]">
+                [routerLink]="['/transaction',tr.Datetime.split(' ')[0],tr.Datetime.split(' ')[1],tr.CardNumber]"
+                class="zoom">
                     Transaction's Details
                 </button>
             </mat-card-actions>

@@ -27,17 +27,17 @@
         <mat-card-actions>
             <div class="button-row">
                 <span *ngIf="show_transactions===false">
-                    <button mat-raised-button (click)="onClickMe()">
+                    <button mat-raised-button (click)="onClickMe()" class="zoom">
                         <div style="color:#673AB7">Fetch Transactions</div>
                     </button>
                 </span>
                 <span *ngIf="show_transactions===true">
                     <button mat-raised-button disabled>Fetch Transactions</button>
                 </span>
-                <button mat-mini-fab color="primary">
+                <button mat-mini-fab color="primary" class="zoom">
                     <mat-icon>create</mat-icon>
                 </button>
-                <button mat-mini-fab color="matblack">
+                <button mat-mini-fab color="matblack" class="zoom">
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>

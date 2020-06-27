@@ -6,7 +6,7 @@
 
     <mat-spinner *ngIf="users === null"></mat-spinner>
 
-    <div fxLayout="row wrap" fxLayoutGap="13px" fxLayoutAlign="flex-start" class="cardList">
+    <div fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="flex-start" class="cardList">
         <mat-card *ngFor="let user of users" class="cardListItem">
             <mat-card-header>
                 <div mat-card-avatar>
@@ -29,11 +29,11 @@
             </mat-card-content>
 
             <mat-card-actions>
-                <button [routerLink]="['profile', user.CardNumber]" mat-raised-button color="primary">View User Profile</button>
+                <button [routerLink]="['profile', user.CardNumber]" mat-raised-button color="primary" class="zoom">View User Profile</button>
             </mat-card-actions>
         </mat-card>
     </div>
-    <button mat-fab color="matblack">
+    <button mat-fab color="matblack" class="zoom-fab">
         <mat-icon>add</mat-icon>
     </button>
 </div>

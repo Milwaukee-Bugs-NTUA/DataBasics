@@ -6,7 +6,7 @@
 
     <mat-spinner *ngIf="stores === null"></mat-spinner>
 
-    <div fxLayout="row wrap" fxLayoutGap="13px" fxLayoutAlign="flex-start" class="cardList">
+    <div fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="flex-start" class="cardList">
         <mat-card *ngFor="let store of stores" class="cardListItem">
             <mat-card-header>
                 <div mat-card-avatar>
@@ -21,11 +21,11 @@
                     </mat-chip-list>
             </mat-card-header>
             <mat-card-actions>
-                <button [routerLink]="['storepage', store.StoreId]" mat-raised-button color="primary">Visit store</button>
+                <button [routerLink]="['storepage', store.StoreId]" mat-raised-button color="primary" class="zoom">Visit store</button>
             </mat-card-actions>
         </mat-card>
     </div>
-    <button mat-fab color="matblack">
+    <button mat-fab color="matblack" class="zoom-fab">
         <mat-icon>add</mat-icon>
     </button>
 </div>
