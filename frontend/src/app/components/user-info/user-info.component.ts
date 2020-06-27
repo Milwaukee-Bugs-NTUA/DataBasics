@@ -9,6 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserInfoComponent implements OnInit {
   info = null;
+  displayedColumnsT1: string[] = ['Barcode', 'Name', 'Brand'];
+  displayedColumnsT2: string[] = ['StoreID','Location'];
 
   constructor(private dataService: DataService,private route: ActivatedRoute,) { }
 
