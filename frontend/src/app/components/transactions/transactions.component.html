@@ -34,7 +34,16 @@
 </div>
 
 <div style="padding: 13px;">
-    <mat-spinner *ngIf="transactions === null"></mat-spinner>
+    <span *ngIf="transactions === null">
+        <div style="margin-top:100px">
+            <div class="wrapper">
+                <mat-spinner color="warn"></mat-spinner>
+              </div>
+              <div class="wrapper">
+                <h3 style="margin-top:10px; color: #F44336;">Sending Request</h3>
+              </div>
+        </div>
+    </span>
     <span *ngIf="transactions !== null && transactions.length === 0">
         <h1 style="text-align:center;margin-top:100px;">
             No transactions were found :(

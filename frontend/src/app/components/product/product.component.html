@@ -1,5 +1,14 @@
 <div style="padding: 13px;">
-    <mat-spinner *ngIf="product === null"></mat-spinner>
+    <span *ngIf="product === null">
+        <div style="margin-top:200px">
+            <div class="wrapper">
+                <mat-spinner color="warn"></mat-spinner>
+              </div>
+              <div class="wrapper">
+                <h3 style="margin-top:10px; color: #F44336;">Sending Request</h3>
+              </div>
+        </div>
+    </span>
     <mat-card *ngIf="product !== null">
         <mat-card-header>
             <div mat-card-avatar>
@@ -45,3 +54,4 @@
         </mat-card-actions>
     </mat-card>
 </div>
+<app-price-history *ngIf="show_price_history === true"></app-price-history>

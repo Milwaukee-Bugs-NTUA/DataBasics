@@ -1,5 +1,14 @@
 <div style="padding: 13px;">
-    <mat-spinner *ngIf="storepage === null"></mat-spinner>
+    <span *ngIf="storepage === null">
+        <div style="margin-top:200px">
+            <div class="wrapper">
+                <mat-spinner color="warn"></mat-spinner>
+              </div>
+              <div class="wrapper">
+                <h3 style="margin-top:10px; color: #F44336;">Sending Request</h3>
+              </div>
+        </div>
+    </span>
     <mat-card *ngIf="storepage !== null">
         <mat-card-header>
             <div mat-card-avatar>
