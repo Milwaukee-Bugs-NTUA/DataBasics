@@ -11,6 +11,13 @@
     color:#9E9E9E;
 }
 
+.wrapper {
+    margin-top:10px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
 .mat-matblack {
     background-color: #00BCD4;
     color: #000000;

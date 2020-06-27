@@ -26,7 +26,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatRippleModule } from '@angular/material/core'; 
 
 import { StoresComponent } from './components/stores/stores.component';
 import { StorepageComponent } from './components/storepage/storepage.component';
@@ -39,9 +38,11 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { ProductsstatisticsComponent } from './components/productsstatistics/productsstatistics.component';
 import { UsersstatisticsComponent } from './components/usersstatistics/usersstatistics.component';
 import { TransactionComponent } from './components/transaction/transaction.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
+import { PriceHistoryComponent } from './components/price-history/price-history.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, StoresComponent, UsersComponent, ProductsComponent, StorepageComponent, ProductComponent,UserComponent, StatisticsComponent, TransactionsComponent, ProductsstatisticsComponent, UsersstatisticsComponent, TransactionComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, StoresComponent, UsersComponent, ProductsComponent, StorepageComponent, ProductComponent,UserComponent, StatisticsComponent, TransactionsComponent, ProductsstatisticsComponent, UsersstatisticsComponent, TransactionComponent, UserInfoComponent, PriceHistoryComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -65,7 +66,6 @@ import { TransactionComponent } from './components/transaction/transaction.compo
     MatListModule,
     MatDividerModule,
     MatChipsModule,
-    MatRippleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -3,7 +3,14 @@
         <h1 class="my-title">Our Products</h1>
         <p class="my-subtitle">Chosen with care</p>
     </div>
-    <mat-spinner *ngIf="products === null"></mat-spinner>
+    <span *ngIf="products === null">
+        <div class="wrapper">
+          <mat-spinner color="warn"></mat-spinner>
+        </div>
+        <div class="wrapper">
+          <h3 style="margin-top:10px; color: #F44336;">Sending Request</h3>
+        </div>
+    </span>
     <mat-grid-list 
         cols="4" 
         rowHeight="160px" 

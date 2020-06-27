@@ -217,7 +217,7 @@ public class DataAccess {
     public List<User> fetchUsers() throws DataAccessException {
 
         String sqlQueryForUsers = "select card_number,first_name,last_name,email " + 
-                                    "from users order by first_name,last_name";
+                                    "from users order by card_number";
         List<User> results;
 
         try {
