@@ -6,7 +6,7 @@ mat-form-field {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   
 }
 /* Column Gap */
@@ -19,7 +19,7 @@ mat-form-field {
 /* Item sizing */
 .cardListItem {
   margin-top:13px;
-  flex: 0 1 calc(33.3% - 13px);
+  flex: 0 1 calc(50% - 13px);
 }
 
 .avatar {

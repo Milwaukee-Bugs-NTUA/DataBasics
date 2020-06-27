@@ -23,12 +23,12 @@
 </mat-form-field>
 
 <mat-form-field>
-    <mat-label>Lowest Products' Threshold</mat-label>
+    <mat-label>Minimum Products</mat-label>
     <input matInput [(ngModel)]="low" type="number" min="0" (change)="sendRequest()" oninput="validity.valid||(value='');">
 </mat-form-field>
 
 <mat-form-field>
-    <mat-label>Highest Products' Threshold</mat-label>
+    <mat-label>Maximum Products</mat-label>
     <input matInput [(ngModel)]="high" type="number" min="0" (change)="sendRequest()" oninput="validity.valid||(value='');">
 </mat-form-field>
 </div>
@@ -36,10 +36,12 @@
 <div style="padding: 13px;">
     <mat-spinner *ngIf="transactions === null"></mat-spinner>
     <span *ngIf="transactions !== null && transactions.length === 0">
-        <h1 style="text-align:center;margin-top:100px;">No transactions were found :(</h1>
+        <h1 style="text-align:center;margin-top:100px;">
+            No transactions were found :(
+        </h1>
     </span>
     <div fxLayout="row wrap" fxLayoutGap="13px" fxLayoutAlign="flex-start" class="cardList">
-        <mat-card *ngFor="let tr of transactions" style="margin-top:10px;">
+        <mat-card *ngFor="let tr of transactions" class="cardListItem">
             <mat-card-header>
                 <div mat-card-avatar>
                     <mat-icon class="avatar">receipt_long</mat-icon> 
