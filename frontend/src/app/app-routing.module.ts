@@ -27,13 +27,10 @@ const routes: Routes = [
     { path: 'home', component: HomeComponent },
 
     { path: 'stores', component: StoresComponent },
-    { path: 'stores/insert', component:InsertStoreComponent },
 
     { path: 'users', component: UsersComponent },
-    { path: 'users/insert', component: InsertUserComponent },
 
     { path: 'products', component: ProductsComponent},
-    { path: 'products/insert', component: InsertProductComponent},
 
     { path: 'statistics', component: StatisticsComponent },
     { path: 'about', component: AboutComponent },

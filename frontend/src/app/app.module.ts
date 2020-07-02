@@ -25,6 +25,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { StoresComponent } from './components/stores/stores.component';
 import { StorepageComponent } from './components/storepage/storepage.component';
@@ -70,6 +71,7 @@ import { DeleteStoreComponent } from './components/delete-store/delete-store.com
     MatTableModule,
     MatListModule,
     MatChipsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
