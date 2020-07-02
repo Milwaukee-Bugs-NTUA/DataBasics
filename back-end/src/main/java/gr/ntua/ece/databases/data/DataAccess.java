@@ -287,7 +287,7 @@ public class DataAccess {
         int dayOfLastWeek = dateOfLastWeek.getDayOfWeek().getValue();
         String lastMonday = dateOfLastWeek.minusDays(dayOfLastWeek - 1).toString();
         String lastSunday = dateOfLastWeek.plusDays(7 - dayOfLastWeek).toString();
-        Object[] sqlParamsForMeanTrsPerWeek = new Object[]{"2018-01-16", "2019-06-17", userId}; //Hard Coded for now
+        Object[] sqlParamsForMeanTrsPerWeek = new Object[]{lastMonday,lastSunday, userId}; //Hard Coded for now
 
         String sqlQueryForCommonProducts = "select c.product_id, p.name, p.brand_name from contains as c, " +
                                             "products as p " + 
