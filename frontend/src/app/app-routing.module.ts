@@ -15,22 +15,43 @@ import { TransactionsComponent } from './../app/components/transactions/transact
 import { TransactionComponent } from './../app/components/transaction/transaction.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { PriceHistoryComponent } from './components/price-history/price-history.component';
+import { InsertStoreComponent } from './components/insert-store/insert-store.component';
+import { InsertUserComponent } from './components/insert-user/insert-user.component';
+import { InsertProductComponent } from './components/insert-product/insert-product.component';
+import { DeleteStoreComponent } from './components/delete-store/delete-store.component';
+import { DeleteProductComponent } from './components/delete-product/delete-product.component';
+import { DeleteUserComponent } from './components/delete-user/delete-user.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
+
     { path: 'stores', component: StoresComponent },
+    { path: 'stores/insert', component:InsertStoreComponent },
+
     { path: 'users', component: UsersComponent },
+    { path: 'users/insert', component: InsertUserComponent },
+
     { path: 'products', component: ProductsComponent},
-    { path: 'about', component: AboutComponent },
+    { path: 'products/insert', component: InsertProductComponent},
+
     { path: 'statistics', component: StatisticsComponent },
+    { path: 'about', component: AboutComponent },
+
     { path: 'stores/storepage/:storeId', component: StorepageComponent },
+    { path: 'stores/storepage/:storeId/delete', component: DeleteStoreComponent },
+
     { path: 'products/product/:barcode', component: ProductComponent },
+    { path: 'products/product/:barcode/delete', component: DeleteProductComponent },
     { path: 'products/product/:barcode/priceHistory', component: PriceHistoryComponent },
+
     { path: 'users/profile/:cardNumber', component: UserComponent },
+    { path: 'users/profile/:cardNumber/delete', component: DeleteUserComponent },
     { path: 'users/profile/:cardNumber/userInfo', component: UserInfoComponent },
+
     { path: 'stores/storepage/:storeId/transactions', component: TransactionsComponent },
     { path: 'transaction/:date/:time/:cardNumber', component: TransactionComponent },
+
     { path: 'statistics/productsStatistics', component: ProductsstatisticsComponent },
     { path: 'statistics/usersStatistics', component: UsersstatisticsComponent }
 

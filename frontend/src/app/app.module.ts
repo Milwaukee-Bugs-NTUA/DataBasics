@@ -23,7 +23,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs'; 
 import { MatTableModule } from '@angular/material/table';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 
@@ -40,9 +39,15 @@ import { UsersstatisticsComponent } from './components/usersstatistics/usersstat
 import { TransactionComponent } from './components/transaction/transaction.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { PriceHistoryComponent } from './components/price-history/price-history.component';
+import { InsertStoreComponent } from './components/insert-store/insert-store.component';
+import { InsertUserComponent } from './components/insert-user/insert-user.component';
+import { InsertProductComponent } from './components/insert-product/insert-product.component';
+import { DeleteProductComponent } from './components/delete-product/delete-product.component';
+import { DeleteUserComponent } from './components/delete-user/delete-user.component';
+import { DeleteStoreComponent } from './components/delete-store/delete-store.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, StoresComponent, UsersComponent, ProductsComponent, StorepageComponent, ProductComponent,UserComponent, StatisticsComponent, TransactionsComponent, ProductsstatisticsComponent, UsersstatisticsComponent, TransactionComponent, UserInfoComponent, PriceHistoryComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, StoresComponent, UsersComponent, ProductsComponent, StorepageComponent, ProductComponent,UserComponent, StatisticsComponent, TransactionsComponent, ProductsstatisticsComponent, UsersstatisticsComponent, TransactionComponent, UserInfoComponent, PriceHistoryComponent, InsertStoreComponent, InsertUserComponent, InsertProductComponent, DeleteProductComponent, DeleteUserComponent, DeleteStoreComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -64,7 +69,6 @@ import { PriceHistoryComponent } from './components/price-history/price-history.
     MatTabsModule,
     MatTableModule,
     MatListModule,
-    MatDividerModule,
     MatChipsModule,
   ],
   providers: [],
