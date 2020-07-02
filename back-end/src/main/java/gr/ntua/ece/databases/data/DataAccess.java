@@ -296,9 +296,9 @@ public class DataAccess {
         String sqlQueryForCommonStores = "select distinct tr.purchased_from as common_store, " +
                                             "s.address_city as name from transactions as tr, stores as s "+
                                             "where tr.purchased_from = s.store_id and card_number = ?";
-        String sqlQueryForHappyHours = "select hour(datetime) as time_field, count(*) " +
-                                        "from transactions where card_number = ? " +
-                                        "group by time_field";
+        // String sqlQueryForHappyHours = "select hour(datetime) as time_field, count(*) " +
+        //                                 "from transactions where card_number = ? " +
+        //                                 "group by time_field";
         String sqlQueryForMeanTrsPerWeek = "select cast(avg(total_cost) as decimal(7,2)) as mean " +
                                             "from transactions " +
                                             "where date(datetime) between ? and ? " +
@@ -330,14 +330,14 @@ public class DataAccess {
             });
             userInfo.setCommonStores(commonStores);
 
-            List<HappyHour> happyHours;
-            happyHours = jdbcTemplate.query(sqlQueryForHappyHours, sqlParamsForUser, (ResultSet rs, int rowNum) -> {
-                HappyHour dataload = new HappyHour();
-                dataload.setHour(rs.getInt(1));
-                dataload.setCount(rs.getInt(2));
-                return dataload;
-            });
-            userInfo.setHappyHours(happyHours);
+            // List<HappyHour> happyHours;
+            // happyHours = jdbcTemplate.query(sqlQueryForHappyHours, sqlParamsForUser, (ResultSet rs, int rowNum) -> {
+            //     HappyHour dataload = new HappyHour();
+            //     dataload.setHour(rs.getInt(1));
+            //     dataload.setCount(rs.getInt(2));
+            //     return dataload;
+            // });
+            // userInfo.setHappyHours(happyHours);
 
             Float meanTrsPerWeek;
             meanTrsPerWeek = jdbcTemplate.queryForObject(sqlQueryForMeanTrsPerWeek, sqlParamsForMeanTrsPerWeek, (ResultSet rs, int rowNum) -> {
