@@ -10,6 +10,17 @@
         </div>
     </span>
     <span *ngIf="info !== null">
+        <div fxLayout="row wrap" fxLayoutGap="200px" fxLayoutAlign="center" class="cardList">
+            <div class="cardListItem">
+                <h2 style="text-align:center;">Mean Cost of Transactions the Last Week</h2>
+                <h2 style="text-align:center;color: #673AB7;">{{info.MeanTransactionsPW}} €</h2>
+            </div>
+            <div class="cardListItem">
+                <h2 style="text-align:center;">Mean Cost of Transactions the Last Month</h2>
+                <h2 style="text-align:center;color: #673AB7;">{{info.MeanTransactionsPM}} €</h2>
+            </div>
+        </div>
+        
         <h2 style="text-align:center;">Top Products</h2>
         <div style="margin:25px;">
         <table mat-table [dataSource]="info.CommonProducts" class="mat-elevation-z4">
@@ -34,10 +45,7 @@
         </table>
         </div>
         
-        <div style="margin:25px;">
         <h2 style="text-align:center;">Common Stores</h2>
-        </div>
-        
         <div style="margin:25px;">
         <table mat-table [dataSource]="info.CommonStores" class="mat-elevation-z4">
         

@@ -2,6 +2,26 @@ table {
     width: 100%;
 }
 
+.cardList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+  }
+  /* Column Gap */
+  .cardList > * {
+    box-sizing: border-box;
+  }
+  .cardList > *:not(:last-child) {
+    margin-right: 200px;
+  }
+  /* Item sizing */
+  .cardListItem {
+    margin-top:13px;
+    flex: 0 1 calc(50% - 200px);
+  }
+
 .wrapper {
     margin-top:10px;
     display: flex; 
