@@ -5,6 +5,7 @@ import java.util.*;
 public class CommonProduct {
     private Long barcode;
     private String productName;
+    private String brandName;
 
     public CommonProduct(){
     }
@@ -28,5 +29,13 @@ public class CommonProduct {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 }

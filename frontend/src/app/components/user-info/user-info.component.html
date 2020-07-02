@@ -1,0 +1,67 @@
+<div style="padding: 13px;">
+    <span *ngIf="info === null">
+        <div style="margin-top:150px">
+            <div class="wrapper">
+                <mat-spinner color="warn"></mat-spinner>
+              </div>
+              <div class="wrapper">
+                <h3 style="margin-top:10px; color: #F44336;">Sending Request</h3>
+              </div>
+        </div>
+    </span>
+    <span *ngIf="info !== null">
+        <div fxLayout="row wrap" fxLayoutGap="200px" fxLayoutAlign="center" class="cardList">
+            <div class="cardListItem">
+                <h2 style="text-align:center;">Mean Cost of Transactions the Last Week</h2>
+                <h2 style="text-align:center;color: #673AB7;">{{info.MeanTransactionsPW}} €</h2>
+            </div>
+            <div class="cardListItem">
+                <h2 style="text-align:center;">Mean Cost of Transactions the Last Month</h2>
+                <h2 style="text-align:center;color: #673AB7;">{{info.MeanTransactionsPM}} €</h2>
+            </div>
+        </div>
+        
+        <h2 style="text-align:center;">Top Products</h2>
+        <div style="margin:25px;">
+        <table mat-table [dataSource]="info.CommonProducts" class="mat-elevation-z4">
+        
+            <ng-container matColumnDef="Barcode">
+            <th mat-header-cell *matHeaderCellDef> Barcode </th>
+            <td mat-cell *matCellDef="let element"> {{element.Barcode}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="Name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.ProductName}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="Brand">
+            <th mat-header-cell *matHeaderCellDef> Brand </th>
+            <td mat-cell *matCellDef="let element"> {{element.BrandName}} </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsT1"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsT1;"></tr>
+        </table>
+        </div>
+        
+        <h2 style="text-align:center;">Common Stores</h2>
+        <div style="margin:25px;">
+        <table mat-table [dataSource]="info.CommonStores" class="mat-elevation-z4">
+        
+            <ng-container matColumnDef="StoreID">
+            <th mat-header-cell *matHeaderCellDef> Store ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.StoreId}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="Location">
+            <th mat-header-cell *matHeaderCellDef> Location </th>
+            <td mat-cell *matCellDef="let element"> {{element.StoreName}} </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsT2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsT2;"></tr>
+        </table>
+        </div>
+    </span>
+</div>

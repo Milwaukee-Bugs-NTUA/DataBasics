@@ -3,7 +3,14 @@
         <h1 class="my-title">Our Products</h1>
         <p class="my-subtitle">Chosen with care</p>
     </div>
-    <mat-spinner *ngIf="products === null"></mat-spinner>
+    <span *ngIf="products === null">
+        <div class="wrapper">
+          <mat-spinner color="warn"></mat-spinner>
+        </div>
+        <div class="wrapper">
+          <h3 style="margin-top:10px; color: #F44336;">Sending Request</h3>
+        </div>
+    </span>
     <mat-grid-list 
         cols="4" 
         rowHeight="160px" 
@@ -14,7 +21,7 @@
         [style.border] = "'3px solid #7c51c8'"
         [routerLink] = "['product', product.Barcode]"
         style="cursor: pointer;"
-        class="mat-elevation-z4">
+        class="zoom mat-elevation-z4">
         <mat-grid-tile-header [style.background]= "'white'" class="mat-grid-header">
             <h1 style="color:'#7c51c8'">{{product.ProductName}} {{product.ProductBrandName}}</h1>
         </mat-grid-tile-header>
@@ -24,5 +31,9 @@
         </mat-grid-tile-footer>
         </mat-grid-tile>
     </mat-grid-list>
+
+    <button mat-fab color="matblack" class="zoom-fab" routerLink="./insert">
+        <mat-icon>add</mat-icon>
+    </button>
 </div>
 

@@ -185,20 +185,21 @@ public enum Format implements RepresentationGenerator {
                         w.beginObject(); // {
                         w.name("Barcode").value(Long.toString(uinf.getBarcode()));
                         w.name("ProductName").value(uinf.getProductName());
+                        w.name("BrandName").value(uinf.getBrandName());
                         w.endObject(); // }
                         w.flush();
                     }
                     w.endArray(); // ]
-                    w.name("HappyHour");
-                    w.beginArray(); // [
-                        for(HappyHour uinf: userInfo.getHappyHours()) {
-                            w.beginObject(); // {
-                            w.name("Hour").value(Integer.toString(uinf.getHour()));
-                            w.name("Count").value(Integer.toString(uinf.getCount()));
-                            w.endObject(); // }
-                            w.flush();
-                        }
-                    w.endArray(); // ]
+                    // w.name("HappyHour");
+                    // w.beginArray(); // [
+                    //     for(HappyHour uinf: userInfo.getHappyHours()) {
+                    //         w.beginObject(); // {
+                    //         w.name("Hour").value(Integer.toString(uinf.getHour()));
+                    //         w.name("Count").value(Integer.toString(uinf.getCount()));
+                    //         w.endObject(); // }
+                    //         w.flush();
+                    //     }
+                    // w.endArray(); // ]
                     w.endObject(); // }
                     w.flush();
                 } catch (IOException e) {

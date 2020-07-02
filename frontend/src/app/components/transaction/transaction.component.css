@@ -1,3 +1,16 @@
 table {
     width: 100%;
 }
+
+.wrapper {
+    margin-top:10px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+  }
+
+.avatar {
+    transform: scale(2.5);
+    margin-left:5px;
+    margin-top:5px;
+}

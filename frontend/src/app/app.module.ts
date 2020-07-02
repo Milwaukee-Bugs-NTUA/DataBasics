@@ -23,8 +23,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs'; 
 import { MatTableModule } from '@angular/material/table';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { StoresComponent } from './components/stores/stores.component';
 import { StorepageComponent } from './components/storepage/storepage.component';
@@ -37,9 +37,17 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { ProductsstatisticsComponent } from './components/productsstatistics/productsstatistics.component';
 import { UsersstatisticsComponent } from './components/usersstatistics/usersstatistics.component';
 import { TransactionComponent } from './components/transaction/transaction.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
+import { PriceHistoryComponent } from './components/price-history/price-history.component';
+import { InsertStoreComponent } from './components/insert-store/insert-store.component';
+import { InsertUserComponent } from './components/insert-user/insert-user.component';
+import { InsertProductComponent } from './components/insert-product/insert-product.component';
+import { DeleteProductComponent } from './components/delete-product/delete-product.component';
+import { DeleteUserComponent } from './components/delete-user/delete-user.component';
+import { DeleteStoreComponent } from './components/delete-store/delete-store.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, StoresComponent, UsersComponent, ProductsComponent, StorepageComponent, ProductComponent,UserComponent, StatisticsComponent, TransactionsComponent, ProductsstatisticsComponent, UsersstatisticsComponent, TransactionComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, StoresComponent, UsersComponent, ProductsComponent, StorepageComponent, ProductComponent,UserComponent, StatisticsComponent, TransactionsComponent, ProductsstatisticsComponent, UsersstatisticsComponent, TransactionComponent, UserInfoComponent, PriceHistoryComponent, InsertStoreComponent, InsertUserComponent, InsertProductComponent, DeleteProductComponent, DeleteUserComponent, DeleteStoreComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -61,7 +69,7 @@ import { TransactionComponent } from './components/transaction/transaction.compo
     MatTabsModule,
     MatTableModule,
     MatListModule,
-    MatDividerModule,
+    MatChipsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -10,3 +10,31 @@
     text-align:center;
     color:#9E9E9E;
 }
+
+.wrapper {
+    margin-top:10px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.mat-matblack {
+    background-color: #00BCD4;
+    color: #000000;
+    right: 40px;
+    bottom: 20px;
+    left: auto;
+    position: fixed;
+}
+.zoom {
+    transition: transform .2s;
+}
+.zoom:hover {
+    transform: scale(1.05);
+}
+.zoom-fab {
+    transition: transform .2s;
+}
+.zoom-fab:hover {
+    transform: scale(1.2);
+}

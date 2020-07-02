@@ -1,17 +1,55 @@
 <div style="padding: 13px;">
-    <mat-spinner *ngIf="storepage === storepageDummy"></mat-spinner>
-    <mat-card *ngIf="storepage !== storepageDummy">
+    <span *ngIf="storepage === null">
+        <div style="margin-top:200px">
+            <div class="wrapper">
+                <mat-spinner color="warn"></mat-spinner>
+              </div>
+              <div class="wrapper">
+                <h3 style="margin-top:10px; color: #F44336;">Sending Request</h3>
+              </div>
+        </div>
+    </span>
+    <mat-card *ngIf="storepage !== null">
         <mat-card-header>
+            <div mat-card-avatar>
+                <mat-icon class="avatar">local_grocery_store</mat-icon> 
+            </div>
             <mat-card-title><h1>{{storepage.AddressCity}}</h1></mat-card-title>
-            <mat-card-subtitle>Address: {{storepage.AddressStreet}} {{storepage.AddressNumber}}, {{storepage.AddressCity}}</mat-card-subtitle>
-            <mat-card-subtitle>Postal code: {{storepage.AddressPostalCode}}</mat-card-subtitle>
-            <mat-card-subtitle>Size: {{storepage.Size}} square meters</mat-card-subtitle>
-            <mat-card-subtitle>Working Hours: Monday-Friday / {{storepage.OpeningHour}} - {{storepage.ClosingHour}}</mat-card-subtitle>
         </mat-card-header>
+
+        <mat-card-content style="margin-top:15px">
+            <mat-chip-list #chipList [disabled]="true">
+                <mat-chip>
+                    <mat-icon>room</mat-icon> 
+                    <div style="margin-left:5px;">{{storepage.AddressStreet}} {{storepage.AddressNumber}}, {{storepage.AddressCity}}</div>
+                </mat-chip>
+                <mat-chip>ZIP: {{storepage.AddressPostalCode}}</mat-chip>
+                <mat-chip>
+                    {{storepage.Size}} square meters
+                </mat-chip>
+                <mat-chip>
+                    <mat-icon>query_builder</mat-icon> 
+                    <div style="margin-left:5px;">Monday-Friday / {{storepage.OpeningHour}} - {{storepage.ClosingHour}}</div>
+                </mat-chip>
+              </mat-chip-list>
+        </mat-card-content>
         <mat-card-actions>
-            <button mat-stroked-button color="primary" (click)="onClickMe()" *ngIf="show_transactions === false">
-                Fetch Transactions
-            </button>
+            <div class="button-row">
+                <span *ngIf="show_transactions===false">
+                    <button mat-raised-button (click)="onClickMe()" class="zoom">
+                        <div style="color:#673AB7">Fetch Transactions</div>
+                    </button>
+                </span>
+                <span *ngIf="show_transactions===true">
+                    <button mat-raised-button disabled>Fetch Transactions</button>
+                </span>
+                <button mat-mini-fab color="primary" class="zoom">
+                    <mat-icon>create</mat-icon>
+                </button>
+                <button mat-mini-fab color="matblack" class="zoom">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
         </mat-card-actions>
     </mat-card>
 </div>

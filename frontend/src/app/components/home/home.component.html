@@ -1,7 +1,23 @@
 <div style="padding: 13px;">
-  <mat-spinner *ngIf="status === 'not ok'"></mat-spinner>
-
-  <p>
-    {{ status | json }}
-  </p>
+  <div>
+    <h1 class="my-title">DataStore</h1>
+    <p class="my-subtitle">Explore DataStore</p>
+  </div>
+  <span *ngIf="status === null">
+    <div class="wrapper">
+      <mat-spinner color="warn"></mat-spinner>
+    </div>
+    <div class="wrapper">
+      <h3 style="margin-top:10px; color: #F44336;">Connecting to Database</h3>
+    </div>
+  </span>
+  <span *ngIf="status !== null">
+    <div class="wrapper">
+      <mat-icon class="my-icon-1" style="margin-right:100px;">done_outline</mat-icon>
+      <mat-icon class="my-icon-2">dns</mat-icon>
+    </div>
+    <div class="wrapper">
+      <h3 style="margin-top:10px;color:#9E9E9E;">Connection with Database Established</h3>
+    </div>
+  </span>
 </div>

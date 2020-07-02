@@ -2,3 +2,47 @@ mat-form-field {
   margin-right: 10px;
   margin-left: 10px;
 }
+.cardList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  
+}
+/* Column Gap */
+.cardList > * {
+  box-sizing: border-box;
+}
+.cardList > *:not(:last-child) {
+  margin-right: 13px;
+}
+/* Item sizing */
+.cardListItem {
+  margin-top:13px;
+  flex: 0 1 calc(50% - 13px);
+}
+
+.wrapper {
+  margin-top:10px;
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+}
+
+.avatar {
+  transform: scale(2.5);
+  margin-left:5px;
+  margin-top:5px;
+}
+
+.with-icon {
+  display: flex;
+  align-items: center;
+}
+
+.zoom {
+  transition: transform .2s;
+}
+.zoom:hover {
+  transform: scale(1.05);
+}

@@ -7,9 +7,7 @@ import { DataService } from './../../services/data.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  products = [];
-
-  status = 'not ok';
+  status = null;
 
   constructor(private dataService: DataService) {}
 
