@@ -24,6 +24,7 @@ export class InsertStoreComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
 
   onNoClick(): void {

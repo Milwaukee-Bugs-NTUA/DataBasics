@@ -16,7 +16,7 @@ export class DataService {
 
   public sendPostRequest(url: String, httpParams: HttpParams) {
     this.REST_API_SERVER = 'https://localhost:8765/datastore/api/' + url;
-    
+    console.log(httpParams.toString());
     return this.httpClient.post(this.REST_API_SERVER, 
                                 httpParams.toString(),
                                 {
