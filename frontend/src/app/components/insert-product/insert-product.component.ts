@@ -10,6 +10,8 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class InsertProductComponent implements OnInit {
   stores = null;
+  minDate:Date;
+  maxDate: Date;
 
   constructor(private dataService: DataService,public dialogRef: MatDialogRef<InsertProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: FormGroup) {
@@ -23,6 +25,7 @@ export class InsertProductComponent implements OnInit {
     AlleyNumber: new FormControl('', [Validators.required, Validators.pattern('^[A-Z][0-9]+$')]),
     ShelfNumber: new FormControl('', [Validators.required, Validators.pattern('^[A-Z][0-9]+$')]),
     })
+
   }
 
   ngOnInit(): void {
