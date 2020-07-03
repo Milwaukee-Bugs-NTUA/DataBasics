@@ -43,7 +43,7 @@
                 <span *ngIf="show_transactions===true">
                     <button mat-raised-button disabled>Fetch Transactions</button>
                 </span>
-                <button mat-mini-fab color="primary" class="zoom">
+                <button mat-mini-fab color="primary" class="zoom" (click)="openDialog()">
                     <mat-icon>create</mat-icon>
                 </button>
                 <button mat-mini-fab color="matblack" class="zoom">

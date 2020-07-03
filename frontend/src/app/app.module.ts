@@ -46,9 +46,12 @@ import { InsertProductComponent } from './components/insert-product/insert-produ
 import { DeleteProductComponent } from './components/delete-product/delete-product.component';
 import { DeleteUserComponent } from './components/delete-user/delete-user.component';
 import { DeleteStoreComponent } from './components/delete-store/delete-store.component';
+import { UpdateUserComponent } from './components/update-user/update-user.component';
+import { UpdateStoreComponent } from './components/update-store/update-store.component';
+import { UpdateProductComponent } from './components/update-product/update-product.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, StoresComponent, UsersComponent, ProductsComponent, StorepageComponent, ProductComponent,UserComponent, StatisticsComponent, TransactionsComponent, ProductsstatisticsComponent, UsersstatisticsComponent, TransactionComponent, UserInfoComponent, PriceHistoryComponent, InsertStoreComponent, InsertUserComponent, InsertProductComponent, DeleteProductComponent, DeleteUserComponent, DeleteStoreComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, StoresComponent, UsersComponent, ProductsComponent, StorepageComponent, ProductComponent,UserComponent, StatisticsComponent, TransactionsComponent, ProductsstatisticsComponent, UsersstatisticsComponent, TransactionComponent, UserInfoComponent, PriceHistoryComponent, InsertStoreComponent, InsertUserComponent, InsertProductComponent, DeleteProductComponent, DeleteUserComponent, DeleteStoreComponent, UpdateUserComponent, UpdateStoreComponent, UpdateProductComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

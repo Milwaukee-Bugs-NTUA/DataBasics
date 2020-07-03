@@ -26,7 +26,7 @@ export class StoresComponent implements OnInit {
     const dialogRef = this.dialog.open(InsertStoreComponent, {
       width: '250px',
       height : 'auto',
-      data: {}
+      data: null
     });
 
     dialogRef.afterClosed().subscribe(result => {

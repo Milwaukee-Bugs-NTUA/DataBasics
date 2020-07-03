@@ -26,7 +26,7 @@ export class ProductsComponent implements OnInit {
     const dialogRef = this.dialog.open(InsertProductComponent, {
       width: '250px',
       height : 'auto',
-      data: {}
+      data: null
     });
 
     dialogRef.afterClosed().subscribe(result => {

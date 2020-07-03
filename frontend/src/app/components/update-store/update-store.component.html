@@ -1,0 +1,50 @@
+<h2 mat-dialog-title style="margin-left:13px;">Update Store</h2>
+<div mat-dialog-content>
+    <div style="padding: 13px;">
+        <form #insertStoreForm="ngForm" [formGroup]="data">
+            <mat-form-field appearance="legacy">
+                <mat-label>Store Name</mat-label>
+                <input matInput formControlName="AddressCity">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="legacy">
+                <mat-label>Address Street</mat-label>
+                <input matInput formControlName="AddressStreet">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="legacy">
+                <mat-label>Address Number</mat-label>
+                <input matInput type="number" min="0" formControlName="AddressNumber">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="legacy">
+                <mat-label>Postal Code</mat-label>
+                <input matInput formControlName="AddressPostalCode">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="legacy">
+                <mat-label>Size</mat-label>
+                <input matInput type="number" min="0" formControlName="Size">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="legacy">
+                <mat-label>Opening Hour</mat-label>
+                <input matInput type="time" formControlName="OpeningHour">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="legacy">
+                <mat-label>Closing Hour</mat-label>
+                <input matInput type="time" formControlName="ClosingHour">
+            </mat-form-field>
+            <br>
+         </form>                
+    </div>
+</div>
+
+<div mat-dialog-actions>
+    <div class="button-row" style="margin-left:40px;">
+        <button mat-stroked-button color="warn" class="zoom" (click)="onNoClick()">Cancel</button>
+        <button mat-raised-button [disabled]="true" *ngIf="!insertStoreForm.valid">Ok</button>
+        <button mat-raised-button color="primary" class="zoom" *ngIf="insertStoreForm.valid" [mat-dialog-close]="data">Ok</button>
+    </div>
+</div>

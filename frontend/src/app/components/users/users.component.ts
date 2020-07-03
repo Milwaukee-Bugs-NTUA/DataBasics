@@ -27,7 +27,7 @@ export class UsersComponent implements OnInit {
     const dialogRef = this.dialog.open(InsertUserComponent, {
       width: '250px',
       height : 'auto',
-      data: {}
+      data: null
     });
 
     dialogRef.afterClosed().subscribe(result => {
