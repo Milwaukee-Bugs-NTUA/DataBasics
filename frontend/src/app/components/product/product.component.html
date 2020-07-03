@@ -44,10 +44,13 @@
                 <span *ngIf="show_price_history===true">
                     <button mat-raised-button disabled>Show Price History</button>
                 </span>
-                <button mat-mini-fab color="primary" class="zoom">
+                <button mat-mini-fab color="accent" class="zoom" (click)="openPriceDialog()">
+                    <mat-icon>local_offer</mat-icon>
+                </button>
+                <button mat-mini-fab color="primary" class="zoom" (click)="openDialog()">
                     <mat-icon>create</mat-icon>
                 </button>
-                <button mat-mini-fab color="matblack" class="zoom">
+                <button mat-mini-fab color="matblack" class="zoom" (click)="openDeleteDialog()">
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>

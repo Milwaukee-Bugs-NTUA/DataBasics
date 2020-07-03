@@ -53,12 +53,12 @@ public class StorePageResource extends DatastoreResource {
         // Specify barcode of product
         Form form = new Form(entity);
         Integer size = Integer.valueOf(form.getFirstValue("Size"));
-        String addressCity = form.getFirstValue("Address City");
-        String addressStreet = form.getFirstValue("Address Street");
-        Integer addressNumnber = Integer.valueOf(form.getFirstValue("Address Number"));
-        String addressPostalCode = form.getFirstValue("Address Postal Code");
-        Time openingHour = Time.valueOf(form.getFirstValue("Opening Hour"));
-        Time closingHour = Time.valueOf(form.getFirstValue("Closing Hour"));
+        String addressCity = form.getFirstValue("AddressCity");
+        String addressStreet = form.getFirstValue("AddressStreet");
+        Integer addressNumnber = Integer.valueOf(form.getFirstValue("AddressNumber"));
+        String addressPostalCode = form.getFirstValue("AddressPostalCode");
+        Time openingHour = Time.valueOf(form.getFirstValue("OpeningHour"));
+        Time closingHour = Time.valueOf(form.getFirstValue("ClosingHour"));
 
         try {
             dataAccess.updateStore(

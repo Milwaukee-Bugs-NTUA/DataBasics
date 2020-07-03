@@ -1,7 +1,12 @@
-<h2 mat-dialog-title style="margin-left:13px;">Insert New Product</h2>
+<h2 mat-dialog-title style="margin-left:13px;">Update Product</h2>
 <div mat-dialog-content>
     <div style="padding: 13px;">
         <form #insertStoreForm="ngForm" [formGroup]="data">
+            <mat-form-field appearance="legacy">
+                <mat-label>Barcode</mat-label>
+                <input matInput formControlName="Barcode">
+            </mat-form-field>
+            <br>
             <mat-form-field appearance="legacy">
                 <mat-label>Product Name</mat-label>
                 <input matInput formControlName="Name">
@@ -14,7 +19,7 @@
             <br>
             <mat-form-field appearance="legacy">
                 <mat-label>Price</mat-label>
-                <input matInput type="number" min="0" step="0.01" formControlName="Price">
+                <input matInput formControlName="Price">
             </mat-form-field>
             <br>
             <mat-form-field appearance="legacy">
@@ -29,25 +34,6 @@
                 </mat-select>
             </mat-form-field>
             <br>
-            <mat-form-field appearance="legacy">
-                <mat-label>Offered In Store</mat-label>
-                <mat-select matNativeControl formControlName="OfferedInStore">
-                    <mat-option *ngFor="let st of stores" value="{{st.StoreId}}">
-                        {{st.City}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <br>
-            <mat-form-field appearance="legacy">
-                <mat-label>Alley Number</mat-label>
-                <input matInput placeholder="{A-Z}{0-9}*" formControlName="AlleyNumber">
-            </mat-form-field>
-            <br>
-            <mat-form-field appearance="legacy">
-                <mat-label>Shelf Number</mat-label>
-                <input matInput placeholder="{A-Z}{0-9}*" formControlName="ShelfNumber">
-            </mat-form-field>
-            <br>
          </form>                
     </div>
 </div>
@@ -59,3 +45,4 @@
         <button mat-raised-button color="primary" class="zoom" *ngIf="insertStoreForm.valid" [mat-dialog-close]="data">Ok</button>
     </div>
 </div>
+

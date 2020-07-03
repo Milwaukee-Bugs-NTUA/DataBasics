@@ -37,6 +37,25 @@
     flex: 0 1 calc(33.3% - 20px);
 }
 
+/* Column Gap */
+.fieldList {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.fieldList > * {
+    box-sizing: border-box;
+}
+.fieldList > *:not(:last-child) {
+    margin-bottom: 13px;
+}
+/* Item sizing */
+.fieldListItem {
+    margin-bottom: 13px;
+    flex: 0 1 calc(16.6% - 13px);
+}
+
 .mat-matblack {
     background-color: #00BCD4;
     color: #000000;

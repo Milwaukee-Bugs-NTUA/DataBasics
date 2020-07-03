@@ -1,7 +1,11 @@
-<h2 mat-dialog-title style="margin-left:13px;">Insert New User</h2>
+<h2 mat-dialog-title style="margin-left:13px;">Update User</h2>
 <div mat-dialog-content>
     <div style="padding: 13px;">
         <form #insertStoreForm="ngForm" [formGroup]="data">
+            <mat-form-field appearance="legacy">
+                <mat-label>Card Number</mat-label>
+                <input matInput formControlName="CardNumber">
+            </mat-form-field>
             <mat-form-field appearance="legacy">
                 <mat-label>Email</mat-label>
                 <input matInput placeholder="example@mail.com" formControlName="Email">

@@ -52,7 +52,7 @@ public class ProductResource extends DatastoreResource {
         Long barcode = Long.valueOf(getMandatoryAttribute("Barcode", "Barcode is missing"));
         String name = form.getFirstValue("Name");
         String brand = form.getFirstValue("Brand");
-        Long categoryId = Long.valueOf(form.getFirstValue("Category"));
+        Long categoryId = Long.valueOf(form.getFirstValue("CategoryId"));
 
         try {
             dataAccess.updateProduct(barcode,name,brand,categoryId);

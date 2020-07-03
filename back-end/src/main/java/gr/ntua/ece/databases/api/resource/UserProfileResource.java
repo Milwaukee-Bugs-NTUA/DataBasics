@@ -52,19 +52,19 @@ public class UserProfileResource extends DatastoreResource {
         Long userId = Long.valueOf(getMandatoryAttribute("UserId", "UserId is missing"));
         // Specify barcode of product
         Form form = new Form(entity);
-        String email = form.getFirstValue("E-mail");
-        String firstName = form.getFirstValue("First Name");
-        String lastName = form.getFirstValue("Last Name");
-        Date dateOfBirth = Date.valueOf(form.getFirstValue("Date of Birth"));
+        String email = form.getFirstValue("Email");
+        String firstName = form.getFirstValue("FirstName");
+        String lastName = form.getFirstValue("LastName");
+        Date dateOfBirth = Date.valueOf(form.getFirstValue("DateOfBirth"));
         String sex = form.getFirstValue("Sex");
-        String addressCity = form.getFirstValue("Address City");
-        String addressStreet = form.getFirstValue("Address Street");
-        Integer addressNumber = Integer.valueOf(form.getFirstValue("Address Number"));
-        String addressPostalCode = form.getFirstValue("Address Postal Code");
-        String phoneNumber = form.getFirstValue("Phone Number");
-        String maritalStatus = form.getFirstValue("Marital Status");
-        Integer numberOfChildren = Integer.valueOf(form.getFirstValue("Number of Children"));
-        Integer points = Integer.valueOf(form.getFirstValue("points"));
+        String addressCity = form.getFirstValue("AddressCity");
+        String addressStreet = form.getFirstValue("AddressStreet");
+        Integer addressNumber = Integer.valueOf(form.getFirstValue("AddressNumber"));
+        String addressPostalCode = form.getFirstValue("AddressPostalCode");
+        String phoneNumber = form.getFirstValue("PhoneNumber");
+        String maritalStatus = form.getFirstValue("MaritalStatus");
+        Integer numberOfChildren = Integer.valueOf(form.getFirstValue("NumberOfChildren"));
+        Integer points = Integer.valueOf(form.getFirstValue("Points"));
 
 
         try {

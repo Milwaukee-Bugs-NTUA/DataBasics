@@ -20,6 +20,10 @@
         <mat-card-content style="margin-top:15px">
             <mat-chip-list #chipList [disabled]="true">
                 <mat-chip>
+                    <mat-icon>label</mat-icon>
+                    <div style="margin-left:5px">ID: {{storepage.StoreId}}</div>
+                </mat-chip>
+                <mat-chip>
                     <mat-icon>room</mat-icon> 
                     <div style="margin-left:5px;">{{storepage.AddressStreet}} {{storepage.AddressNumber}}, {{storepage.AddressCity}}</div>
                 </mat-chip>
@@ -43,10 +47,10 @@
                 <span *ngIf="show_transactions===true">
                     <button mat-raised-button disabled>Fetch Transactions</button>
                 </span>
-                <button mat-mini-fab color="primary" class="zoom">
+                <button mat-mini-fab color="primary" class="zoom" (click)="openDialog()">
                     <mat-icon>create</mat-icon>
                 </button>
-                <button mat-mini-fab color="matblack" class="zoom">
+                <button mat-mini-fab color="matblack" class="zoom" (click)="openDeleteDialog()">
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>
