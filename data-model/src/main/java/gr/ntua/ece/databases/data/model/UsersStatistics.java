@@ -7,6 +7,9 @@ public class UsersStatistics {
     private Integer maximumSalesHourZone;
     private List<PercentagesPerHour> percentagesPerHour;
 
+    private UsersMaritalTransactions maritalTransactions;
+    private UsersParentalTransactions parentalTransactions;
+
     public UsersStatistics() {
     }
 
@@ -25,5 +28,23 @@ public class UsersStatistics {
     public void setMaximumSalesHourZone(Integer hourZone) {
         this.maximumSalesHourZone = hourZone;
     }
+
+    public UsersMaritalTransactions getMaritalTransactions() {
+        return maritalTransactions;
+    }
+
+    public void setMaritalTransactions(UsersMaritalTransactions Mtrans) {
+        this.maritalTransactions = Mtrans;
+    }
+
+    public UsersParentalTransactions getParentalTransactions() {
+        return parentalTransactions;
+    }
+
+    public void setParentalTransactions(UsersParentalTransactions Ptrans){
+        this.parentalTransactions = Ptrans;
+    }
+
+    
     
 }
