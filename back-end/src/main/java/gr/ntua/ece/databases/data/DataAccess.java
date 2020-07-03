@@ -296,9 +296,6 @@ public class DataAccess {
         String sqlQueryForCommonStores = "select distinct tr.purchased_from as common_store, " +
                                             "s.address_city as name from transactions as tr, stores as s "+
                                             "where tr.purchased_from = s.store_id and card_number = ?";
-        // String sqlQueryForHappyHours = "select hour(datetime) as time_field, count(*) " +
-        //                                 "from transactions where card_number = ? " +
-        //                                 "group by time_field";
         String sqlQueryForMeanTrsPerWeek = "select cast(avg(total_cost) as decimal(7,2)) as mean " +
                                             "from transactions " +
                                             "where date(datetime) between ? and ? " +
@@ -330,15 +327,6 @@ public class DataAccess {
             });
             userInfo.setCommonStores(commonStores);
 
-            // List<HappyHour> happyHours;
-            // happyHours = jdbcTemplate.query(sqlQueryForHappyHours, sqlParamsForUser, (ResultSet rs, int rowNum) -> {
-            //     HappyHour dataload = new HappyHour();
-            //     dataload.setHour(rs.getInt(1));
-            //     dataload.setCount(rs.getInt(2));
-            //     return dataload;
-            // });
-            // userInfo.setHappyHours(happyHours);
-
             Float meanTrsPerWeek;
             meanTrsPerWeek = jdbcTemplate.queryForObject(sqlQueryForMeanTrsPerWeek, sqlParamsForMeanTrsPerWeek, (ResultSet rs, int rowNum) -> {
                 Float dataload = rs.getFloat(1);
@@ -364,6 +352,39 @@ public class DataAccess {
             }
 
             return userInfo;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public List<HappyHour> fetchUserInfoHappyHours(Long userId, Long storeId) throws DataAccessException {
+
+        String sqlQueryForHappyHours = "with r as " + 
+                                        "(select count(*) as total from transactions " +
+                                        "where card_number = ? and purchased_from = ? " +
+                                        "group by card_number), " +
+                                        "tr as " +
+                                        "(select hour(datetime) as hour_zone, count(*) as count " +
+                                        "from transactions " +
+                                        "where card_number = ? and purchased_from = ? " +
+                                        "group by hour_zone " +
+                                        "order by hour_zone) " +
+                                        "select tr.hour_zone,cast((tr.count/r.total)*100 as decimal(5,2)) " +
+                                        "from tr,r";
+
+        Object[] sqlParamsForHappyHours = new Object[]{userId, storeId,userId, storeId};
+
+        try {         
+            List<HappyHour> happyHours;
+            happyHours = jdbcTemplate.query(sqlQueryForHappyHours, sqlParamsForHappyHours, (ResultSet rs, int rowNum) -> {
+                HappyHour dataload = new HappyHour();
+                dataload.setHour(rs.getInt(1));
+                dataload.setCount(rs.getFloat(2));
+                return dataload;
+            });
+            return happyHours;
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

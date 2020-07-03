@@ -190,16 +190,6 @@ public enum Format implements RepresentationGenerator {
                         w.flush();
                     }
                     w.endArray(); // ]
-                    // w.name("HappyHour");
-                    // w.beginArray(); // [
-                    //     for(HappyHour uinf: userInfo.getHappyHours()) {
-                    //         w.beginObject(); // {
-                    //         w.name("Hour").value(Integer.toString(uinf.getHour()));
-                    //         w.name("Count").value(Integer.toString(uinf.getCount()));
-                    //         w.endObject(); // }
-                    //         w.flush();
-                    //     }
-                    // w.endArray(); // ]
                     w.endObject(); // }
                     w.flush();
                 } catch (IOException e) {
@@ -217,7 +207,7 @@ public enum Format implements RepresentationGenerator {
                         for(HappyHour rec: result) {
                             w.beginObject(); // {
                             w.name("Hour").value(Integer.toString(rec.getHour()));
-                            w.name("Count").value(Integer.toString(rec.getCount()));
+                            w.name("Count").value(Float.toString(rec.getCount()));
                             w.endObject(); // }
                             w.flush();
                         }
