@@ -48,7 +48,7 @@ export class ProductsComponent implements OnInit {
                       .set('AlleyNumber',this.new_product.AlleyNumber)
                       .set('ShelfNumber',this.new_product.ShelfNumber);
     this.dataService.sendPostRequest("products/insert",httpParams).subscribe(
-      (response) => {console.log(response);location.reload();},
+      (response) => {console.log(response);this.ngOnInit();},
       (error) => console.log(error)
     );
   }

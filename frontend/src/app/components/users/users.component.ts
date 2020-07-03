@@ -55,7 +55,7 @@ export class UsersComponent implements OnInit {
                       .set('NumberOfChildren',this.new_user.NumberOfChildren)
                       .set('Points',this.new_user.Points);
     this.dataService.sendPostRequest("users/insert",httpParams).subscribe(
-      (response) => {console.log(response);location.reload();},
+      (response) => {console.log(response);this.ngOnInit();},
       (error) => console.log(error)
     );
   }

@@ -44,11 +44,11 @@ export class StoresComponent implements OnInit {
                       .set('AddressStreet',this.new_store.AddressStreet)
                       .set('AddressNumber',this.new_store.AddressNumber)
                       .set('AddressPostalCode',this.new_store.AddressPostalCode)
-                      .set('OpeningHour',this.new_store.OpeningHour.toString() + ":00")
-                      .set('ClosingHour',this.new_store.ClosingHour.toString() + ":00")
+                      .set('OpeningHour',this.new_store.OpeningHour.toString())
+                      .set('ClosingHour',this.new_store.ClosingHour.toString())
                       .set('Size',this.new_store.Size);
     this.dataService.sendPostRequest("stores/insert",httpParams).subscribe(
-      (response) => {console.log(response);location.reload();},
+      (response) => {console.log(response);this.ngOnInit();},
       (error) => console.log(error)
     );
   }
