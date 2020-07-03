@@ -12,3 +12,6 @@
 .zoom:hover {
     transform: scale(1.05);
 }
+.mat-dialog-content {
+    overflow-y: hidden !important;
+}

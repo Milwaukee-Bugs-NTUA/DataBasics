@@ -28,11 +28,10 @@ export class InsertUserComponent implements OnInit {
       NumberOfChildren: new FormControl('', [Validators.required]),
       Points: new FormControl('', [Validators.required]),
     })
-
-    this.maxDate = new Date();
   }
 
   ngOnInit(): void {
+    this.maxDate = new Date();
   }
 
   onNoClick(): void {

@@ -20,6 +20,10 @@
         <mat-card-content style="margin-top:15px">
             <mat-chip-list #chipList [disabled]="true">
                 <mat-chip>
+                    <mat-icon>label</mat-icon>
+                    <div style="margin-left:5px">ID: {{storepage.StoreId}}</div>
+                </mat-chip>
+                <mat-chip>
                     <mat-icon>room</mat-icon> 
                     <div style="margin-left:5px;">{{storepage.AddressStreet}} {{storepage.AddressNumber}}, {{storepage.AddressCity}}</div>
                 </mat-chip>

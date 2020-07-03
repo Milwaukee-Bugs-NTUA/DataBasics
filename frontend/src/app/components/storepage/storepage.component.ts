@@ -37,6 +37,7 @@ export class StorepageComponent implements OnInit {
         width: '250px',
         height : 'auto',
         data: new FormGroup({
+                StoreId: new FormControl({value:this.storepage.StoreId,disabled: true}, [Validators.required]),
                 AddressCity: new FormControl(this.storepage.AddressCity, [Validators.required]),
                 AddressStreet: new FormControl(this.storepage.AddressStreet, [Validators.required]),
                 AddressNumber: new FormControl(this.storepage.AddressNumber, [Validators.required]),
