@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from './../../services/data.service';
 import { MatDialog } from '@angular/material/dialog';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UpdateProductComponent } from '../update-product/update-product.component';
+import { DeleteProductComponent } from '../delete-product/delete-product.component';
 import { UpdateProductPriceComponent } from '../update-product-price/update-product-price.component';
 import { HttpParams } from '@angular/common/http';
 
@@ -18,7 +19,7 @@ export class ProductComponent implements OnInit {
     new_product = null;
     new_price = null;
 
-  constructor(private dataService: DataService,private route: ActivatedRoute,public dialog: MatDialog) { }
+  constructor(private dataService: DataService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -91,6 +92,28 @@ export class ProductComponent implements OnInit {
         (response) => {console.log(response);this.ngOnInit();},
         (error) => console.log(error)
     );
-}
+  }
+
+  openDeleteDialog(): void {
+    const dialogRef = this.dialog.open(DeleteProductComponent, {
+        width: '400px',
+        height : 'auto',
+        data: null
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        console.log('Dialog Closed');
+        if (result.event === 'Delete') {
+            this.delete();
+        }
+    });
+    }
+        
+    delete(): void {
+        this.dataService.sendDeleteRequest("product/" + this.product.Barcode + "/delete").subscribe(
+            (response) => {console.log(response);  this.router.navigate(['/products']);},
+            (error) => console.log(error)
+        );
+    }
 
 }

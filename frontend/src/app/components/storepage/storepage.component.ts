@@ -82,7 +82,7 @@ export class StorepageComponent implements OnInit {
     
         dialogRef.afterClosed().subscribe(result => {
             console.log('Dialog Closed');
-            if (result.event === 'Delete') {
+            if (result !== undefined && result.event === 'Delete') {
                 this.delete();
             }
         });
