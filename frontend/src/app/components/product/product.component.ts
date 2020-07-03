@@ -4,6 +4,7 @@ import { DataService } from './../../services/data.service';
 import { MatDialog } from '@angular/material/dialog';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import { UpdateProductComponent } from '../update-product/update-product.component';
+import { UpdateProductPriceComponent } from '../update-product-price/update-product-price.component';
 import { HttpParams } from '@angular/common/http';
 
 @Component({
@@ -15,6 +16,7 @@ export class ProductComponent implements OnInit {
     product = null;
     show_price_history = false;
     new_product = null;
+    new_price = null;
 
   constructor(private dataService: DataService,private route: ActivatedRoute,public dialog: MatDialog) { }
 
@@ -47,21 +49,48 @@ export class ProductComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
         console.log('Dialog Closed');
         if (result !== undefined) {
-        this.new_product = result.value;
-        this.submitForm();
+          this.new_product = result.value;
+          this.submitForm();
         }
     });
   }
     
-    submitForm(): void {
-        let httpParams = new HttpParams()
-                              .set('Name',this.new_product.Name)
-                              .set('Brand',this.new_product.Brand)
-                              .set('CategoryId',this.new_product.CategoryId);
-        this.dataService.sendPutRequest("product/" + this.product.Barcode + "/update",httpParams).subscribe(
-            (response) => {console.log(response);this.ngOnInit();},
-            (error) => console.log(error)
-        );
-    }
+  submitForm(): void {
+      let httpParams = new HttpParams()
+                            .set('Name',this.new_product.Name)
+                            .set('Brand',this.new_product.Brand)
+                            .set('CategoryId',this.new_product.CategoryId);
+      this.dataService.sendPutRequest("product/" + this.product.Barcode + "/update",httpParams).subscribe(
+          (response) => {console.log(response);this.ngOnInit();},
+          (error) => console.log(error)
+      );
+  }
+
+  openPriceDialog(): void {
+    const dialogRef = this.dialog.open(UpdateProductPriceComponent, {
+        width: '250px',
+        height : 'auto',
+        data: new FormGroup({
+                Price: new FormControl(this.product.Price, [Validators.required]),
+              })
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        console.log('Dialog Closed');
+        if (result !== undefined) {
+          this.new_price = result.value.Price;
+          this.submitNewPrice();
+        }
+    });
+  }
+
+  submitNewPrice(): void {
+    let httpParams = new HttpParams()
+                          .set('Price',this.new_price);
+    this.dataService.sendPostRequest("product/" + this.product.Barcode + "/updatePrice",httpParams).subscribe(
+        (response) => {console.log(response);this.ngOnInit();},
+        (error) => console.log(error)
+    );
+}
 
 }
