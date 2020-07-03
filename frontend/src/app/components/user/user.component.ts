@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import { UpdateUserComponent } from '../update-user/update-user.component';
+import { DeleteUserComponent } from '../delete-user/delete-user.component';
 import { HttpParams } from '@angular/common/http';
 import * as moment from 'moment';
 
@@ -16,7 +17,7 @@ export class UserComponent implements OnInit {
     user = null;
     new_user = null;
     show_user_info=false;
-    constructor(private dataService: DataService,private route: ActivatedRoute,public dialog: MatDialog) { }
+    constructor(private dataService: DataService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) { }
 
   ngOnInit(): void {
       this.route.paramMap.subscribe(params => {
@@ -79,6 +80,28 @@ export class UserComponent implements OnInit {
                             .set('Points',this.new_user.Points);
         this.dataService.sendPutRequest("profile/" + this.user.CardNumber + "/update",httpParams).subscribe(
             (response) => {console.log(response);this.ngOnInit();},
+            (error) => console.log(error)
+        );
+    }
+
+    openDeleteDialog(): void {
+        const dialogRef = this.dialog.open(DeleteUserComponent, {
+            width: '400px',
+            height : 'auto',
+            data: null
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('Dialog Closed');
+            if (result !== undefined && result.event === 'Delete') {
+                this.delete();
+            }
+        });
+    }
+        
+    delete(): void {
+        this.dataService.sendDeleteRequest("profile/" + this.user.CardNumber + "/delete").subscribe(
+            (response) => {console.log(response);  this.router.navigate(['/users']);},
             (error) => console.log(error)
         );
     }
