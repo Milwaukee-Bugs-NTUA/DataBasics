@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from './../../services/data.service';
 import { MatDialog } from '@angular/material/dialog';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import { UpdateStoreComponent } from '../update-store/update-store.component';
+import { DeleteStoreComponent } from '../delete-store/delete-store.component';
 import { HttpParams } from '@angular/common/http';
 
 @Component({
@@ -17,7 +18,7 @@ export class StorepageComponent implements OnInit {
 
     show_transactions = false;
     
-    constructor(private dataService: DataService,private route: ActivatedRoute,public dialog: MatDialog) { }
+    constructor(private dataService: DataService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) { }
 
     ngOnInit(): void {
         this.route.paramMap.subscribe(params => {
@@ -51,8 +52,8 @@ export class StorepageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
         console.log('Dialog Closed');
         if (result !== undefined) {
-        this.new_store = result.value;
-        this.submitForm();
+            this.new_store = result.value;
+            this.submitForm();
         }
     });
     }
@@ -68,6 +69,28 @@ export class StorepageComponent implements OnInit {
                             .set('Size',this.new_store.Size);
         this.dataService.sendPutRequest("storePage/" + this.storepage.StoreId + "/update",httpParams).subscribe(
             (response) => {console.log(response);this.ngOnInit();},
+            (error) => console.log(error)
+        );
+    }
+
+    openDeleteDialog(): void {
+        const dialogRef = this.dialog.open(DeleteStoreComponent, {
+            width: '400px',
+            height : 'auto',
+            data: null
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('Dialog Closed');
+            if (result.event === 'Delete') {
+                this.delete();
+            }
+        });
+    }
+        
+    delete(): void {
+        this.dataService.sendDeleteRequest("storePage/" + this.storepage.StoreId + "/delete").subscribe(
+            (response) => {console.log(response);  this.router.navigate(['/stores']);},
             (error) => console.log(error)
         );
     }
