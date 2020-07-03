@@ -329,7 +329,21 @@ public enum Format implements RepresentationGenerator {
                         w.flush();
                     }
                     w.endArray();
+                    w.name("ParentalTransactions");
+                    w.beginObject(); // {
+                        w.name("ParentPercentages").value(Float.toString(result.getParentalTransactions().getPercentageOfParents()));
+                        w.name("NonParentPercentages").value(Float.toString(result.getParentalTransactions().getPercentageOfNonParents()));
                     w.endObject(); // }
+                    w.flush();
+                    w.name("MaritalTransactions");
+                    w.beginObject(); //{
+                        w.name("MarriedPercentages").value(Float.toString(result.getMaritalTransactions().getpercentageOfMarried()));
+                        w.name("DivorcedPercentages").value(Float.toString(result.getMaritalTransactions().getpercentageOfDivorced()));
+                        w.name("SinglePercentages").value(Float.toString(result.getMaritalTransactions().getpercentageOfSingle()));
+                        w.name("InRelationshipPercentages").value(Float.toString(result.getMaritalTransactions().getpercentageOfInRelationship()));
+                    w.endObject();
+                    w.flush();
+                    w.endObject();
                     w.flush();
                 }
                 catch (IOException e) {
