@@ -208,6 +208,28 @@ public enum Format implements RepresentationGenerator {
             });
         }
 
+        public Representation generateRepresentationUserInfoHappyHour(List<HappyHour> result) {
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                    w.beginObject(); // {
+                    w.name("HappyHour");
+                    w.beginArray(); // [
+                        for(HappyHour rec: result) {
+                            w.beginObject(); // {
+                            w.name("Hour").value(Integer.toString(rec.getHour()));
+                            w.name("Count").value(Integer.toString(rec.getCount()));
+                            w.endObject(); // }
+                            w.flush();
+                        }
+                    w.endArray(); // ]
+                    w.endObject(); // }
+                    w.flush();
+                } catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
+
         public Representation generateRepresentationTransactions(List<Transaction> result) {
             return new CustomJsonRepresentation((JsonWriter w) -> {
                 try {
