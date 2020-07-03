@@ -17,12 +17,28 @@ export class DataService {
   public sendPostRequest(url: String, httpParams: HttpParams) {
     this.REST_API_SERVER = 'https://localhost:8765/datastore/api/' + url;
     console.log(httpParams.toString());
-    return this.httpClient.post(this.REST_API_SERVER, 
+    return this.httpClient.post(this.REST_API_SERVER,
                                 httpParams.toString(),
                                 {
                                   headers: new HttpHeaders()
                                     .set('Content-Type', 'application/x-www-form-urlencoded')
                                 });
+  }
+
+  public sendPutRequest(url: String, httpParams: HttpParams) {
+    this.REST_API_SERVER = 'https://localhost:8765/datastore/api/' + url;
+    console.log(httpParams.toString());
+    return this.httpClient.put(this.REST_API_SERVER, 
+                                httpParams.toString(),
+                                {
+                                  headers: new HttpHeaders()
+                                    .set('Content-Type', 'application/x-www-form-urlencoded')
+                                });
+  }
+
+  public sendDeleteRequest(url: String) {
+    this.REST_API_SERVER = 'https://localhost:8765/datastore/api/' + url;
+    return this.httpClient.delete(this.REST_API_SERVER);
   }
 
 }
