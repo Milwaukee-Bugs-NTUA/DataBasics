@@ -63,5 +63,29 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumnsT2;"></tr>
         </table>
         </div>
+
+        <span *ngIf="stores !== null">
+            <div style="margin-top:25px;margin-left:25px;">
+                <mat-form-field>
+                    <mat-label>Common hours for Store</mat-label>
+                    <mat-select [(value)]="whichStore" (selectionChange)="sendHappyHoursRequest()">
+                        <mat-option *ngFor="let st of stores" value="{{st.StoreId}}">
+                            {{st.City}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <h2 style="text-align:center;">Common Hours for Store {{whichStore}}</h2>
+            <div style="display: block;margin:25px;">
+                <canvas baseChart
+                  [datasets]="barChartData"
+                  [labels]="barChartLabels"
+                  [options]="barChartOptions"
+                  [plugins]="barChartPlugins"
+                  [legend]="barChartLegend"
+                  [chartType]="barChartType">
+                </canvas>
+            </div>
+        </span>
     </span>
 </div>

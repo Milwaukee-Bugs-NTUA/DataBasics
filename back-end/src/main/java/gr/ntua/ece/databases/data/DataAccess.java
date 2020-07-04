@@ -281,7 +281,7 @@ public class DataAccess {
         LocalDate lastDate = localDate.minusMonths(1);
         int lastMonth = lastDate.getMonthValue();
         int lastYear = lastDate.getYear();
-        Object[] sqlParamsForMeanTrsPerMonth = new Object[]{1, 2018, userId}; //Hard Coded for now
+        Object[] sqlParamsForMeanTrsPerMonth = new Object[]{lastMonth, lastYear, userId}; //Hard Coded for now
 
         LocalDate dateOfLastWeek = localDate.minusDays(7);
         int dayOfLastWeek = dateOfLastWeek.getDayOfWeek().getValue();
