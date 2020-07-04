@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `databasics` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `databasics`;
--- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for Linux (x86_64)
 --
 -- Host: localhost    Database: databasics
 -- ------------------------------------------------------
--- Server version	8.0.18
+-- Server version	8.0.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,14 +25,14 @@ DROP TABLE IF EXISTS `contains`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contains` (
-  `product_id` bigint(255) NOT NULL,
+  `product_id` bigint NOT NULL,
   `datetime` datetime NOT NULL,
-  `card_number` bigint(255) NOT NULL,
-  `pieces` int(10) unsigned NOT NULL,
+  `card_number` bigint NOT NULL,
+  `pieces` int unsigned NOT NULL,
   PRIMARY KEY (`product_id`,`datetime`,`card_number`),
   KEY `datetime_idx` (`datetime`),
   KEY `card_number_idx` (`card_number`),
-  CONSTRAINT `FK_barcode_contains` FOREIGN KEY (`product_id`) REFERENCES `products` (`barcode`),
+  CONSTRAINT `FK_barcode_contains` FOREIGN KEY (`product_id`) REFERENCES `products` (`barcode`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `FK_card_number_contains` FOREIGN KEY (`card_number`) REFERENCES `transactions` (`card_number`),
   CONSTRAINT `FK_datetime_contains` FOREIGN KEY (`datetime`) REFERENCES `transactions` (`datetime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-14 21:10:03
+-- Dump completed on 2020-07-04 18:11:11
