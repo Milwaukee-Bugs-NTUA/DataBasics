@@ -33,6 +33,9 @@ CREATE TABLE `transactions` (
   PRIMARY KEY (`datetime`,`card_number`),
   KEY `card_id_idx` (`card_number`),
   KEY `FK_transactions_stores_idx` (`purchased_from`),
+  KEY `total_cost_idx` (`total_cost`) USING BTREE,
+  KEY `purchased_from_idx` (`purchased_from`),
+  KEY `payment_method_idx` (`payment_method`) USING BTREE,
   CONSTRAINT `card_number` FOREIGN KEY (`card_number`) REFERENCES `users` (`card_number`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `FK_transactions_stores` FOREIGN KEY (`purchased_from`) REFERENCES `stores` (`store_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -57,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-04 18:11:11
+-- Dump completed on 2020-07-04 18:34:13

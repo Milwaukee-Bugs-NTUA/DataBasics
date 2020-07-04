@@ -33,6 +33,7 @@ CREATE TABLE `products` (
   `starting_sale_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`barcode`),
   KEY `FK_products_category_idx` (`category`),
+  KEY `category_idx` (`category`) USING BTREE,
   CONSTRAINT `FK_products_categories` FOREIGN KEY (`category`) REFERENCES `product_category` (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2157126 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -56,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-04 18:11:11
+-- Dump completed on 2020-07-04 18:34:13
