@@ -17,6 +17,15 @@ export class UserInfoComponent implements OnInit {
   whichStore = null;
   stores = null;
   happyHours = null;
+  HappyHoursArray: number[] = [0,0,0,0,0,0,0,0,0,0,0,0,0];
+  public barChartLabels: Label[] = ['7:00 - 8:00','8:00 - 9:00','9:00 - 10:00','10:00 - 11:00','11:00 - 12:00','12:00 - 13:00','13:00 - 14:00','14:00 - 15:00','15:00 - 16:00','16:00 - 17:00','17:00 - 18:00','18:00 - 19:00','19:00 - 20:00'];
+  public barChartType: ChartType = 'bar';
+  public barChartLegend = true;
+  public barChartPlugins = [pluginDataLabels];
+
+  public barChartData: ChartDataSets[] = [
+    { data: [0,0,0,0,0,0,0,0,0,0,0,0,0], label: 'Dataset' }
+  ];
 
   constructor(private dataService: DataService,private route: ActivatedRoute,) { }
 
@@ -31,12 +40,7 @@ export class UserInfoComponent implements OnInit {
       console.log(data);
       this.stores = data;
       this.whichStore = this.stores[0]['StoreId'];
-      this.route.paramMap.subscribe(params => {
-        this.dataService.sendGetRequest("profile/" + params.get('cardNumber') + "/userInfo/" + this.stores[0]['StoreId']).subscribe((data: any) => {
-          console.log(data);
-          this.happyHours = data;
-        });
-      });
+      this.sendHappyHoursRequest();     
     });
   }
 
@@ -44,9 +48,21 @@ export class UserInfoComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.dataService.sendGetRequest("profile/" + params.get('cardNumber') + "/userInfo/" + this.whichStore).subscribe((data: any) => {
         console.log(data);
-        this.happyHours = data;
+        this.happyHours = data.HappyHour;
+        this.formatDataset();
       });
     });
+  }
+
+  formatDataset(): void {
+    this.HappyHoursArray = [0,0,0,0,0,0,0,0,0,0,0,0,0];
+    for (var el in this.happyHours) {
+      if (this.happyHours[el].hasOwnProperty('Count')) {
+        this.HappyHoursArray[Number(this.happyHours[el]['Hour']) - 7] = this.happyHours[el]['Count'];
+      }
+    }
+    this.barChartData[0].data = this.HappyHoursArray;
+    console.log(this.HappyHoursArray);
   }
 
   public barChartOptions: ChartOptions = {
@@ -61,16 +77,6 @@ export class UserInfoComponent implements OnInit {
     }
   };
 
-  public barChartLabels: Label[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  public barChartType: ChartType = 'bar';
-  public barChartLegend = true;
-  public barChartPlugins = [pluginDataLabels];
-
-  public barChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
-  ];
-
   public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
     console.log(event, active);
   }
@@ -78,6 +84,5 @@ export class UserInfoComponent implements OnInit {
   public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
     console.log(event, active);
   }
-
 
 }
