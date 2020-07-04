@@ -15,3 +15,8 @@ For the directories of this project, we choose the structure mentioned above:
 * The source code for the front-end is locate in the folder `front-end`.
 
 As far as the dump files are concerned, we do not recommend you to include them in your project repos. However, we did just for presentation purposes to the teachers of this class.
+
+
+## Installation Process
+
+A detailed guide for the installation and testing of our platfom can be found on the [INSTALLATION.md](https://github.com/Milwaukee-Bugs-NTUA/DataBasics/blob/front-end-v2/INSTALLATION.md) file.
