@@ -31,6 +31,11 @@
     <mat-label>Maximum Products</mat-label>
     <input matInput [(ngModel)]="high" type="number" min="0" (change)="sendRequest()" oninput="validity.valid||(value='');">
 </mat-form-field>
+
+<mat-label>Maximum Cost    </mat-label>    
+<input [(ngModel)]="maximumCost" type="range" min="100" max="2000" (change)="sendRequest()">
+
+
 </div>
 
 <div style="padding: 13px;">

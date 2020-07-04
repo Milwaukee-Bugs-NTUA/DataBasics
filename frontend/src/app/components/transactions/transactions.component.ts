@@ -22,6 +22,7 @@ export class TransactionsComponent implements OnInit {
     endingDate:string = null;
     // url for back-end GET request
     url = "/transactions/null/null/any/null/null";
+    maximumCost = null;
 
     constructor(private dataService: DataService, private route: ActivatedRoute,) {
         const currentYear = new Date();
