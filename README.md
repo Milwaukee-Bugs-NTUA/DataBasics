@@ -19,4 +19,18 @@ As far as the dump files are concerned, we do not recommend you to include them 
 
 ## Installation Process
 
-A detailed guide for the installation and testing of our platfom can be found on the [INSTALLATION.md](https://github.com/Milwaukee-Bugs-NTUA/DataBasics/blob/front-end-v2/INSTALLATION.md) file.
+A detailed guide for the installation and testing of our platfom can be found on the `INSTALLATION.md` file
+
+## Technologies used
+
+In this project we implemented several different techonologies and frameworks. 
+
+* The build tool that we used was Gradle.
+* To implement the database we specifically used MySQL.
+* To achieve communication between the database and the back-end we used the spring JDBC.
+* For the back-end server we used Jetty Server and Java Servlets from the Restlet Framework.
+* The implementation of the back-end and data-model was written in Java 11.
+* The implementation of the front-end was written in TypeScript/HTML5/CSS using the Angular Framework v.9, relying mainly on Angular Material.
+* Our package manager was npm 
+* The diagrams used were based on Ng2-Charts directives.
+
