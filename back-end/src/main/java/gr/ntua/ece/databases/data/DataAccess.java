@@ -162,6 +162,43 @@ public class DataAccess {
         }
     }
 
+    public List<Transaction> fetchUserTransactions(Long userId) throws DataAccessException {
+
+        String sqlQueryForUserTransactions = "select tr.*,count(*) as count " +
+                                                "from " + 
+                                                "(select datetime,card_number,total_cost,payment_method,address_city " +
+                                                    "from transactions, stores " + 
+                                                    "where purchased_from=store_id " +
+                                                    "and card_number = ?) as tr, contains as c " +
+                                                "where (tr.datetime,tr.card_number) = (c.datetime,c.card_number) " +
+                                                "group by tr.datetime,tr.card_number " +
+                                                "order by tr.total_cost"; 
+        
+        Object[] sqlParamsForTransactions = new Object[]{userId};
+        
+        List<Transaction> results;
+
+        try {
+            results = jdbcTemplate.query(sqlQueryForUserTransactions, sqlParamsForTransactions, (ResultSet rs, int rowNum) -> {
+                Transaction dataload = new Transaction();
+                dataload.setDatetime(rs.getTimestamp(1));
+                dataload.setCardNumber(rs.getLong(2));
+                dataload.setTotalCost(rs.getFloat(3));
+                dataload.setPaymentMethod(rs.getString(4));
+                dataload.setPurchasedFrom(rs.getString(5));
+                dataload.setNumberOfProducts(rs.getInt(6));
+                return dataload;
+            });
+
+            return results;
+        } 
+        
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
     public List<TransactionProduct> fetchTransactionProducts(Timestamp datetime, Long cardNumber) throws DataAccessException {
         String sqlQueryForTransactionProducts = "select p.barcode,p.name,p.brand_name,c.pieces " +
                                                 "from contains as c, products as p " +

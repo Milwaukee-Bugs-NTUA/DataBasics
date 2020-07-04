@@ -34,6 +34,7 @@ public class RestfulApp extends Application {
         router.attach("/profile/{UserId}/update", UserProfileResource.class);
         router.attach("/profile/{UserId}/delete", UserProfileResource.class);
         router.attach("/profile/{UserId}/userInfo",UserInfoResource.class);
+        router.attach("/profile/{UserId}/transactions",UserTransactionsResource.class);        
         router.attach("/profile/{UserId}/userInfo/{StoreId}",UserInfoHappyHourResource.class);
         // Products related requests
         router.attach("/products",ProductsResource.class);
