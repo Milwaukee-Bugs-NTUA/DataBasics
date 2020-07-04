@@ -26,6 +26,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ChartsModule } from 'ng2-charts';
 
 import { StoresComponent } from './components/stores/stores.component';
 import { StorepageComponent } from './components/storepage/storepage.component';
@@ -76,6 +77,7 @@ import { UpdateProductPriceComponent } from './components/update-product-price/u
     MatListModule,
     MatChipsModule,
     MatDialogModule,
+    ChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
