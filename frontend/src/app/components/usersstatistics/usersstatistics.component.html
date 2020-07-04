@@ -44,6 +44,21 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     </div>
+
+    <div style="margin:25px">
+      <h2 style="text-align:center;">Percentages of Final Income from Transactions</h2>
+    </div>
+    <div fxLayout="row wrap" fxLayoutGap="50px" fxLayoutAlign="center" class="cardList" style="margin:25px;">
+      <div class="cardListItem">
+          <h2 style="text-align:center;">For Parents:</h2>
+          <h2 style="text-align:center;color: #673AB7;">{{userStats.ParentalTransactions.ParentPercentage}} %</h2>
+      </div>
+      <div class="cardListItem">
+          <h2 style="text-align:center;">For Non-Parents</h2>
+          <h2 style="text-align:center;color: #673AB7;">{{userStats.ParentalTransactions.NonParentPercentage}} %</h2>
+      </div>
+    </div>
+
   </span>
 </div>
 
