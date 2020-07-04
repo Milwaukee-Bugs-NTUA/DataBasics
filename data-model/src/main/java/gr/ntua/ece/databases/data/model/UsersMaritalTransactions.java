@@ -2,45 +2,24 @@ package gr.ntua.ece.databases.data.model;
 
 public class UsersMaritalTransactions {
 
-    private Float percentageOfMarried;
-    private Float percentageOfDivorced;
-    private Float percentageOfSingle;
-    private Float percentageOfInRelationship;
+    private Float percentage;
+    private String maritalStatus;
 
     public UsersMaritalTransactions(){
 
     }
 
-    public Float getpercentageOfMarried() {
-        return percentageOfMarried;
+    public Float getPercentage() {
+        return percentage;
     }
-
-    public void setpercentageOfMarried(Float percentM){
-        this.percentageOfMarried = percentM;
+    public void setPercentage(Float percentage) {
+        this.percentage = percentage;
     }
-
-    public Float getpercentageOfDivorced() {
-        return percentageOfDivorced;
+    public String getMaritalStatus() {
+        return maritalStatus;
     }
-
-    public void setpercentageOfDivorced(Float percentD){
-        this.percentageOfDivorced = percentD;
-    }
-
-    public Float getpercentageOfSingle() {
-        return percentageOfSingle;
-    }
-
-    public void setpercentageOfSingle(Float percentS){
-        this.percentageOfSingle = percentS;
-    }
-
-    public Float getpercentageOfInRelationship() {
-        return percentageOfInRelationship;
-    }
-
-    public void setpercentageOfInRelationship(Float percentR){
-        this.percentageOfInRelationship = percentR;
+    public void setMaritalStatus(String maritalStatus) {
+        this.maritalStatus = maritalStatus;
     }
     
 }

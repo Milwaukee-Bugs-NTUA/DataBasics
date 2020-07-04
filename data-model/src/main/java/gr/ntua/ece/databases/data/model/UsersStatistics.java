@@ -7,7 +7,7 @@ public class UsersStatistics {
     private Integer maximumSalesHourZone;
     private List<PercentagesPerHour> percentagesPerHour;
 
-    private UsersMaritalTransactions maritalTransactions;
+    private List<UsersMaritalTransactions> maritalTransactions;
     private UsersParentalTransactions parentalTransactions;
 
     public UsersStatistics() {
@@ -29,11 +29,11 @@ public class UsersStatistics {
         this.maximumSalesHourZone = hourZone;
     }
 
-    public UsersMaritalTransactions getMaritalTransactions() {
+    public List<UsersMaritalTransactions> getMaritalTransactions() {
         return maritalTransactions;
     }
 
-    public void setMaritalTransactions(UsersMaritalTransactions Mtrans) {
+    public void setMaritalTransactions(List<UsersMaritalTransactions> Mtrans) {
         this.maritalTransactions = Mtrans;
     }
 

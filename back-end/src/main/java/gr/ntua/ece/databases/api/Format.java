@@ -317,6 +317,7 @@ public enum Format implements RepresentationGenerator {
                 try {
                     w.beginObject(); // {
                     w.name("HourZonewithmaximumsales").value(Integer.toString(result.getMaximumSalesHourZone()));
+                    w.flush();
                     w.name("PercentagesperAgeandHourZone");
                     w.beginArray();
                     for(PercentagesPerHour pph: result.getPercentagesPerHour()){
@@ -329,20 +330,23 @@ public enum Format implements RepresentationGenerator {
                         w.flush();
                     }
                     w.endArray();
+                    w.flush();
                     w.name("ParentalTransactions");
                     w.beginObject(); // {
-                        w.name("ParentPercentages").value(Float.toString(result.getParentalTransactions().getPercentageOfParents()));
-                        w.name("NonParentPercentages").value(Float.toString(result.getParentalTransactions().getPercentageOfNonParents()));
+                        w.name("ParentPercentage").value(Float.toString(result.getParentalTransactions().getPercentageOfParents()));
+                        w.name("NonParentPercentage").value(Float.toString(result.getParentalTransactions().getPercentageOfNonParents()));
                     w.endObject(); // }
                     w.flush();
                     w.name("MaritalTransactions");
-                    w.beginObject(); //{
-                        w.name("MarriedPercentages").value(Float.toString(result.getMaritalTransactions().getpercentageOfMarried()));
-                        w.name("DivorcedPercentages").value(Float.toString(result.getMaritalTransactions().getpercentageOfDivorced()));
-                        w.name("SinglePercentages").value(Float.toString(result.getMaritalTransactions().getpercentageOfSingle()));
-                        w.name("InRelationshipPercentages").value(Float.toString(result.getMaritalTransactions().getpercentageOfInRelationship()));
-                    w.endObject();
-                    w.flush();
+                    w.beginArray();
+                    for(UsersMaritalTransactions mp: result.getMaritalTransactions()){
+                        w.beginObject();
+                        w.name("MaritalStatus").value(mp.getMaritalStatus());
+                        w.name("Percentage").value(Float.toString(mp.getPercentage()));
+                        w.endObject();
+                        w.flush();
+                    }
+                    w.endArray();
                     w.endObject();
                     w.flush();
                 }
