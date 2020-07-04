@@ -190,16 +190,28 @@ public enum Format implements RepresentationGenerator {
                         w.flush();
                     }
                     w.endArray(); // ]
-                    // w.name("HappyHour");
-                    // w.beginArray(); // [
-                    //     for(HappyHour uinf: userInfo.getHappyHours()) {
-                    //         w.beginObject(); // {
-                    //         w.name("Hour").value(Integer.toString(uinf.getHour()));
-                    //         w.name("Count").value(Integer.toString(uinf.getCount()));
-                    //         w.endObject(); // }
-                    //         w.flush();
-                    //     }
-                    // w.endArray(); // ]
+                    w.endObject(); // }
+                    w.flush();
+                } catch (IOException e) {
+                    throw new ResourceException(Status.SERVER_ERROR_INTERNAL);
+                }
+            });
+        }
+
+        public Representation generateRepresentationUserInfoHappyHour(List<HappyHour> result) {
+            return new CustomJsonRepresentation((JsonWriter w) -> {
+                try {
+                    w.beginObject(); // {
+                    w.name("HappyHour");
+                    w.beginArray(); // [
+                        for(HappyHour rec: result) {
+                            w.beginObject(); // {
+                            w.name("Hour").value(Integer.toString(rec.getHour()));
+                            w.name("Count").value(Float.toString(rec.getCount()));
+                            w.endObject(); // }
+                            w.flush();
+                        }
+                    w.endArray(); // ]
                     w.endObject(); // }
                     w.flush();
                 } catch (IOException e) {
@@ -305,6 +317,7 @@ public enum Format implements RepresentationGenerator {
                 try {
                     w.beginObject(); // {
                     w.name("HourZonewithmaximumsales").value(Integer.toString(result.getMaximumSalesHourZone()));
+                    w.flush();
                     w.name("PercentagesperAgeandHourZone");
                     w.beginArray();
                     for(PercentagesPerHour pph: result.getPercentagesPerHour()){
@@ -317,7 +330,24 @@ public enum Format implements RepresentationGenerator {
                         w.flush();
                     }
                     w.endArray();
+                    w.flush();
+                    w.name("ParentalTransactions");
+                    w.beginObject(); // {
+                        w.name("ParentPercentage").value(Float.toString(result.getParentalTransactions().getPercentageOfParents()));
+                        w.name("NonParentPercentage").value(Float.toString(result.getParentalTransactions().getPercentageOfNonParents()));
                     w.endObject(); // }
+                    w.flush();
+                    w.name("MaritalTransactions");
+                    w.beginArray();
+                    for(UsersMaritalTransactions mp: result.getMaritalTransactions()){
+                        w.beginObject();
+                        w.name("MaritalStatus").value(mp.getMaritalStatus());
+                        w.name("Percentage").value(Float.toString(mp.getPercentage()));
+                        w.endObject();
+                        w.flush();
+                    }
+                    w.endArray();
+                    w.endObject();
                     w.flush();
                 }
                 catch (IOException e) {

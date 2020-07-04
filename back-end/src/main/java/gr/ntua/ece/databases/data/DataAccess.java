@@ -296,9 +296,6 @@ public class DataAccess {
         String sqlQueryForCommonStores = "select distinct tr.purchased_from as common_store, " +
                                             "s.address_city as name from transactions as tr, stores as s "+
                                             "where tr.purchased_from = s.store_id and card_number = ?";
-        // String sqlQueryForHappyHours = "select hour(datetime) as time_field, count(*) " +
-        //                                 "from transactions where card_number = ? " +
-        //                                 "group by time_field";
         String sqlQueryForMeanTrsPerWeek = "select cast(avg(total_cost) as decimal(7,2)) as mean " +
                                             "from transactions " +
                                             "where date(datetime) between ? and ? " +
@@ -330,15 +327,6 @@ public class DataAccess {
             });
             userInfo.setCommonStores(commonStores);
 
-            // List<HappyHour> happyHours;
-            // happyHours = jdbcTemplate.query(sqlQueryForHappyHours, sqlParamsForUser, (ResultSet rs, int rowNum) -> {
-            //     HappyHour dataload = new HappyHour();
-            //     dataload.setHour(rs.getInt(1));
-            //     dataload.setCount(rs.getInt(2));
-            //     return dataload;
-            // });
-            // userInfo.setHappyHours(happyHours);
-
             Float meanTrsPerWeek;
             meanTrsPerWeek = jdbcTemplate.queryForObject(sqlQueryForMeanTrsPerWeek, sqlParamsForMeanTrsPerWeek, (ResultSet rs, int rowNum) -> {
                 Float dataload = rs.getFloat(1);
@@ -364,6 +352,39 @@ public class DataAccess {
             }
 
             return userInfo;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public List<HappyHour> fetchUserInfoHappyHours(Long userId, Long storeId) throws DataAccessException {
+
+        String sqlQueryForHappyHours = "with r as " + 
+                                        "(select count(*) as total from transactions " +
+                                        "where card_number = ? and purchased_from = ? " +
+                                        "group by card_number), " +
+                                        "tr as " +
+                                        "(select hour(datetime) as hour_zone, count(*) as count " +
+                                        "from transactions " +
+                                        "where card_number = ? and purchased_from = ? " +
+                                        "group by hour_zone " +
+                                        "order by hour_zone) " +
+                                        "select tr.hour_zone,cast((tr.count/r.total)*100 as decimal(7,2)) " +
+                                        "from tr,r";
+
+        Object[] sqlParamsForHappyHours = new Object[]{userId, storeId,userId, storeId};
+
+        try {         
+            List<HappyHour> happyHours;
+            happyHours = jdbcTemplate.query(sqlQueryForHappyHours, sqlParamsForHappyHours, (ResultSet rs, int rowNum) -> {
+                HappyHour dataload = new HappyHour();
+                dataload.setHour(rs.getInt(1));
+                dataload.setCount(rs.getFloat(2));
+                return dataload;
+            });
+            return happyHours;
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -487,7 +508,7 @@ public class DataAccess {
                                             "from total_sales_per_product as tsp " +
                                             "where tsp.brand_name = \'Datastore\' " +
                                             "group by tsp.category_id) " +
-                                            "select t.category_id,t.category,ifnull(cast((d.sales/t.sales)*100 as decimal(5,2)),0) as percentage " +
+                                            "select t.category_id,t.category,ifnull(cast((d.sales/t.sales)*100 as decimal(7,2)),0) as percentage " +
                                             "from total_sales_datastore as d " +
                                             "right join total_sales as t using(category_id) " +
                                             "order by t.category_id";
@@ -579,13 +600,52 @@ public class DataAccess {
                                                     "group by r.hour_zone " +
                                                     "order by hour_zone) " +
                                                     "select hour_zone, " +
-                                                    "cast((ifnull(y.trs,0)/t.trs)*100 as decimal(5,2)) as young_p, " +
-                                                    "cast((ifnull(m.trs,0)/t.trs)*100 as decimal(5,2)) as middle_p, " +
-                                                    "cast((ifnull(e.trs,0)/t.trs)*100 as decimal(5,2)) as elderly_p " +
+                                                    "cast((ifnull(y.trs,0)/t.trs)*100 as decimal(7,2)) as young_p, " +
+                                                    "cast((ifnull(m.trs,0)/t.trs)*100 as decimal(7,2)) as middle_p, " +
+                                                    "cast((ifnull(e.trs,0)/t.trs)*100 as decimal(7,2)) as elderly_p " +
                                                     "from total as t " +
                                                     "left join young as y using(hour_zone) " +
                                                     "left join middle as m using(hour_zone) " +
                                                     "left join elderly as e using(hour_zone)";
+        String sqlQueryForUsersParentalTransactions = "select cast((pr.sum/tr.sum)*100 as decimal(7,2)) as percentage " +
+                                                        "from " +
+                                                        "(select sum(total_cost) as sum " + 
+                                                        "from transactions) as tr, " +
+                                                        "(select sum(tr.total_cost) as sum " +
+                                                        "from transactions as tr,users as u " +
+                                                        "where tr.card_number = u.card_number " +
+                                                        "and number_of_children > 0) as pr";
+        String sqlQueryForUsersMaritalTransactions = "with tr as " +
+                                                        "(select sum(total_cost) as sum " +
+                                                        "from transactions), " +
+                                                        "m as"+
+                                                        "(select sum(total_cost) as sum,u.marital_status " +
+                                                        "from transactions as tr,users as u " +
+                                                        "where tr.card_number = u.card_number " +
+                                                        "and u.marital_status = 'married'), " +
+                                                        "s as "+
+                                                        "(select sum(total_cost)as sum,u.marital_status " +
+                                                        "from transactions as tr,users as u " +
+                                                        "where tr.card_number = u.card_number " +
+                                                        "and u.marital_status = 'single'), " +
+                                                        "d as "+
+                                                        "(select sum(total_cost) as sum,u.marital_status " +
+                                                        "from transactions as tr,users as u " +
+                                                        "where tr.card_number = u.card_number " +
+                                                        "and u.marital_status = 'divorced'), " +
+                                                        "r as "+
+                                                        "(select sum(total_cost) as sum,u.marital_status " +
+                                                        "from transactions as tr,users as u " +
+                                                        "where tr.card_number = u.card_number " +
+                                                        "and u.marital_status = 'in_relationship') " +
+                                                        "(select m.marital_status,cast((m.sum/tr.sum)*100 as decimal(7,2)) as percentage " +
+                                                        "from m,tr) union " +
+                                                        "(select  s.marital_status, cast((s.sum/tr.sum)*100 as decimal(7,2)) as percentage " +
+                                                        "from s,tr) union " +
+                                                        "(select  d.marital_status, cast((d.sum/tr.sum)*100 as decimal(7,2)) as percentage " +
+                                                        "from d,tr) union " +
+                                                        "(select r.marital_status, cast((r.sum/tr.sum)*100 as decimal(7,2)) as percentage " +
+                                                        "from r,tr)";
 
         UsersStatistics usersStatistics = new UsersStatistics();
 
@@ -597,6 +657,24 @@ public class DataAccess {
                                                 });
             usersStatistics.setMaximumSalesHourZone(hourZoneWithMaximumSales);
             
+            List<UsersMaritalTransactions> usersMaritalTransactions;
+            usersMaritalTransactions = jdbcTemplate.query(sqlQueryForUsersMaritalTransactions, (ResultSet rs, int rowNum) -> {
+                UsersMaritalTransactions dataload = new UsersMaritalTransactions();
+                dataload.setMaritalStatus(rs.getString(1));
+                dataload.setPercentage(rs.getFloat(2));
+                return dataload;
+            });
+            usersStatistics.setMaritalTransactions(usersMaritalTransactions);
+
+            UsersParentalTransactions usersParentalTransactions;
+            usersParentalTransactions = jdbcTemplate.queryForObject(sqlQueryForUsersParentalTransactions, (ResultSet rs, int rowNum) -> {
+                UsersParentalTransactions dataload = new UsersParentalTransactions();
+                dataload.setPercentageOfParents(rs.getFloat(1));
+                dataload.setPercentageOfNonParents(100 - dataload.getPercentageOfParents());
+                return dataload;
+            });
+            usersStatistics.setParentalTransactions(usersParentalTransactions);
+
             List<PercentagesPerHour> percentagesPerHourZone;
             percentagesPerHourZone = jdbcTemplate.query(sqlQueryForPercentagesPerHourZone, (ResultSet rs, int rowNum) -> {
                 PercentagesPerHour dataload = new PercentagesPerHour();

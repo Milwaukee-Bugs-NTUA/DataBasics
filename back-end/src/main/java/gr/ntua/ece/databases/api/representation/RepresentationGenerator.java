@@ -18,4 +18,5 @@ public interface RepresentationGenerator {
     Representation generateRepresentationTransactionProducts(List<TransactionProduct> result);
     Representation generateRepresentationProductsStatistics(ProductsStatistics result);
     Representation generateRepresentationUsersStatistics(UsersStatistics result);
+    Representation generateRepresentationUserInfoHappyHour(List<HappyHour> result);
 }

@@ -4,7 +4,7 @@ import java.util.*;
 
 public class HappyHour {
     private int hour;
-    private int count;
+    private float count;
 
     public HappyHour(){
     }
@@ -18,7 +18,7 @@ public class HappyHour {
         return hour;
     }
 
-    public int getCount() {
+    public float getCount() {
         return count;
     }
 
@@ -26,7 +26,7 @@ public class HappyHour {
         this.hour = hour;
     }
 
-    public void setCount(int count) {
+    public void setCount(float count) {
         this.count = count;
     }
 }
