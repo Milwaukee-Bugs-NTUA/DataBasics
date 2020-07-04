@@ -19,7 +19,7 @@ As far as the dump files are concerned, we do not recommend you to include them 
 
 ## Installation Process
 
-A detailed guide for the installation and testing of our platfom can be found on the `INSTALLATION.md` file
+A detailed guide for the installation and testing of our platfom can be found inside the `INSTALLATION.md` file
 
 ## Technologies used
 
