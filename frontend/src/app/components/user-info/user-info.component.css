@@ -28,3 +28,9 @@ table {
     justify-content: center; 
     align-items: center;
   }
+
+.my-chart {
+  display: block;
+  margin-left: 200px;
+  margin-right:200px;
+}

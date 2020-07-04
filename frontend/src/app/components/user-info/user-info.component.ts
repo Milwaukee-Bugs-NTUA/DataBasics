@@ -24,7 +24,7 @@ export class UserInfoComponent implements OnInit {
   public barChartPlugins = [pluginDataLabels];
 
   public barChartData: ChartDataSets[] = [
-    { data: [0,0,0,0,0,0,0,0,0,0,0,0,0], label: 'Dataset' }
+    { data: [0,0,0,0,0,0,0,0,0,0,0,0,0], label: 'Dataset: Percentages of Transactions' }
   ];
 
   constructor(private dataService: DataService,private route: ActivatedRoute,) { }

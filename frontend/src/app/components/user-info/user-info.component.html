@@ -67,7 +67,7 @@
         <span *ngIf="stores !== null">
             <div style="margin-top:25px;margin-left:25px;">
                 <mat-form-field>
-                    <mat-label>Common hours for Store</mat-label>
+                    <mat-label>Common hours for Store in</mat-label>
                     <mat-select [(value)]="whichStore" (selectionChange)="sendHappyHoursRequest()">
                         <mat-option *ngFor="let st of stores" value="{{st.StoreId}}">
                             {{st.City}}
@@ -76,7 +76,7 @@
                 </mat-form-field>
             </div>
             <h2 style="text-align:center;">Common Hours for Store {{whichStore}}</h2>
-            <div style="display: block;margin-top:13px;margin-left:200px;margin-right:200px;">
+            <div class="my-chart">
                 <canvas baseChart
                   [datasets]="barChartData"
                   [labels]="barChartLabels"
