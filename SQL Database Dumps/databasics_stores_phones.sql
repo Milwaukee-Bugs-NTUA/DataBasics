@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `databasics` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `databasics`;
--- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for Linux (x86_64)
 --
 -- Host: localhost    Database: databasics
 -- ------------------------------------------------------
--- Server version	8.0.18
+-- Server version	8.0.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,12 +25,12 @@ DROP TABLE IF EXISTS `stores_phones`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `stores_phones` (
-  `phone_id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `store_id` bigint(255) NOT NULL,
+  `phone_id` bigint NOT NULL AUTO_INCREMENT,
+  `store_id` bigint NOT NULL,
   `phone_number` varchar(15) NOT NULL,
   PRIMARY KEY (`phone_id`,`store_id`),
   KEY `store_id_idx` (`store_id`),
-  CONSTRAINT `FK_store_stores_phones` FOREIGN KEY (`store_id`) REFERENCES `stores` (`store_id`)
+  CONSTRAINT `FK_store_stores_phones` FOREIGN KEY (`store_id`) REFERENCES `stores` (`store_id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-14 21:10:05
+-- Dump completed on 2020-07-04 18:34:13

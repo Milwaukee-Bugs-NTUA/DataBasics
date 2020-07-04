@@ -64,11 +64,19 @@ public class TransactionsResource extends DatastoreResource {
             // Do nothing
             numPrdHigh = null;
         }
+        Integer totalCost;
+        try {
+            totalCost = Integer.parseInt(getMandatoryAttribute("totalCost", "Maximum Total Cost is missing"));
+        }
+        catch (NumberFormatException e) {
+            // Do nothing
+            totalCost = null;
+        }
         // Our platfom supports only JSON formating
         Format format = Format.valueOf("JSON");
 
         try {
-            List<Transaction> result = dataAccess.fetchTransactions(storeId, startingDate, endingDate, paymentMethod, numPrdLow, numPrdHigh);
+            List<Transaction> result = dataAccess.fetchTransactions(storeId, startingDate, endingDate, paymentMethod, numPrdLow, numPrdHigh,totalCost);
             return format.generateRepresentationTransactions(result);
         } 
         catch (Exception e) {

@@ -15,8 +15,10 @@ import * as moment from 'moment';
 })
 export class UserComponent implements OnInit {
     user = null;
+    userId = null;
     new_user = null;
-    show_user_info=false;
+    show_user_info = false;
+    show_user_transactions = false;
     constructor(private dataService: DataService,private route: ActivatedRoute, private router: Router,public dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -24,12 +26,19 @@ export class UserComponent implements OnInit {
           this.dataService.sendGetRequest("profile/" + params.get('cardNumber')).subscribe((data: any) => {
               console.log(data);
               this.user = data;
+              this.userId = Number(this.user.CardNumber);
           });
       });
   }
   
   onClickMe():void {
     this.show_user_info = true;
+    this.show_user_transactions = false;
+  }
+
+  onClickMeT():void {
+    this.show_user_info = false;
+    this.show_user_transactions = true;
   }
 
   openDialog(): void {

@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `databasics` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `databasics`;
--- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for Linux (x86_64)
 --
 -- Host: localhost    Database: databasics
 -- ------------------------------------------------------
--- Server version	8.0.18
+-- Server version	8.0.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,15 +26,18 @@ DROP TABLE IF EXISTS `transactions`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `transactions` (
   `datetime` datetime NOT NULL,
-  `card_number` bigint(255) NOT NULL,
+  `card_number` bigint NOT NULL,
   `total_cost` float(7,2) DEFAULT NULL,
   `payment_method` enum('cash','card') NOT NULL,
-  `purchased_from` bigint(255) NOT NULL,
+  `purchased_from` bigint NOT NULL,
   PRIMARY KEY (`datetime`,`card_number`),
   KEY `card_id_idx` (`card_number`),
   KEY `FK_transactions_stores_idx` (`purchased_from`),
-  CONSTRAINT `FK_transactions_stores` FOREIGN KEY (`purchased_from`) REFERENCES `stores` (`store_id`),
-  CONSTRAINT `card_number` FOREIGN KEY (`card_number`) REFERENCES `users` (`card_number`)
+  KEY `total_cost_idx` (`total_cost`) USING BTREE,
+  KEY `purchased_from_idx` (`purchased_from`),
+  KEY `payment_method_idx` (`payment_method`) USING BTREE,
+  CONSTRAINT `card_number` FOREIGN KEY (`card_number`) REFERENCES `users` (`card_number`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `FK_transactions_stores` FOREIGN KEY (`purchased_from`) REFERENCES `stores` (`store_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -57,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-14 21:10:03
+-- Dump completed on 2020-07-04 18:34:13

@@ -88,7 +88,8 @@ public class DataAccess {
                                                 Date endingDate,
                                                 String paymentMethod,
                                                 Integer numOfProductsLow,
-                                                Integer numOfProductsHigh) throws DataAccessException {
+                                                Integer numOfProductsHigh,
+                                                Integer totalCost) throws DataAccessException {
 
         String sqlQueryFirstPart = "select tr.*,count(*) as count " +
                                             "from " + 
@@ -113,6 +114,9 @@ public class DataAccess {
         }
         if (!(paymentMethod.equals("any"))) {
             joiner.add("tr.payment_method = \'" + paymentMethod + "\'");
+        }
+        if (totalCost != null) {
+            joiner.add("tr.total_cost <= " + totalCost);
         }
 
         String sqlQueryForTransactions = joiner.toString() + 
@@ -139,6 +143,43 @@ public class DataAccess {
 
         try {
             results = jdbcTemplate.query(sqlQueryForTransactions, sqlParamsForTransactions, (ResultSet rs, int rowNum) -> {
+                Transaction dataload = new Transaction();
+                dataload.setDatetime(rs.getTimestamp(1));
+                dataload.setCardNumber(rs.getLong(2));
+                dataload.setTotalCost(rs.getFloat(3));
+                dataload.setPaymentMethod(rs.getString(4));
+                dataload.setPurchasedFrom(rs.getString(5));
+                dataload.setNumberOfProducts(rs.getInt(6));
+                return dataload;
+            });
+
+            return results;
+        } 
+        
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public List<Transaction> fetchUserTransactions(Long userId) throws DataAccessException {
+
+        String sqlQueryForUserTransactions = "select tr.*,count(*) as count " +
+                                                "from " + 
+                                                "(select datetime,card_number,total_cost,payment_method,address_city " +
+                                                    "from transactions, stores " + 
+                                                    "where purchased_from=store_id " +
+                                                    "and card_number = ?) as tr, contains as c " +
+                                                "where (tr.datetime,tr.card_number) = (c.datetime,c.card_number) " +
+                                                "group by tr.datetime,tr.card_number " +
+                                                "order by tr.datetime desc"; 
+        
+        Object[] sqlParamsForTransactions = new Object[]{userId};
+        
+        List<Transaction> results;
+
+        try {
+            results = jdbcTemplate.query(sqlQueryForUserTransactions, sqlParamsForTransactions, (ResultSet rs, int rowNum) -> {
                 Transaction dataload = new Transaction();
                 dataload.setDatetime(rs.getTimestamp(1));
                 dataload.setCardNumber(rs.getLong(2));
