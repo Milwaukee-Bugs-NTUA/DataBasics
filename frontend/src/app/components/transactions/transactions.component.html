@@ -32,10 +32,11 @@
     <input matInput [(ngModel)]="high" type="number" min="0" (change)="sendRequest()" oninput="validity.valid||(value='');">
 </mat-form-field>
 
-<mat-label>Maximum Cost    </mat-label>    
-<input [(ngModel)]="maximumCost" type="range" min="100" max="2000" (change)="sendRequest()">
-
-
+<mat-label style="margin-left:10px;margin-right:10px;color: darkgray;">Maximum Cost</mat-label>    
+<input [(ngModel)]="maximumCost" type="range" min="150" max="2000" (change)="sendRequest()">
+    <span *ngIf="maximumCost !== null">
+        <mat-label style="margin-left:10px;margin-right:10px;color: darkgray;">{{maximumCost}}</mat-label>    
+    </span>
 </div>
 
 <div style="padding: 13px;">

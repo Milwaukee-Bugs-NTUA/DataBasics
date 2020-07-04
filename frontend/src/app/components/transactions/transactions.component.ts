@@ -21,7 +21,7 @@ export class TransactionsComponent implements OnInit {
     startingDate:string = null;
     endingDate:string = null;
     // url for back-end GET request
-    url = "/transactions/null/null/any/null/null";
+    url = "/transactions/null/null/any/null/null/null";
     maximumCost = null;
 
     constructor(private dataService: DataService, private route: ActivatedRoute,) {
@@ -65,7 +65,8 @@ export class TransactionsComponent implements OnInit {
                     this.endingDate + "/" + 
                     this.returnAny(this.paymentMethod) + "/" + 
                     this.low + "/" + 
-                    this.high;
+                    this.high + "/" +
+                    this.maximumCost;
         this.transactions = null;
         this.dataService.sendGetRequest("storePage/" + this.storeId + this.url).subscribe((data: any) => {
             console.log(data);

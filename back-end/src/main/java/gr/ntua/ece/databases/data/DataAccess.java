@@ -88,7 +88,8 @@ public class DataAccess {
                                                 Date endingDate,
                                                 String paymentMethod,
                                                 Integer numOfProductsLow,
-                                                Integer numOfProductsHigh) throws DataAccessException {
+                                                Integer numOfProductsHigh,
+                                                Integer totalCost) throws DataAccessException {
 
         String sqlQueryFirstPart = "select tr.*,count(*) as count " +
                                             "from " + 
@@ -113,6 +114,9 @@ public class DataAccess {
         }
         if (!(paymentMethod.equals("any"))) {
             joiner.add("tr.payment_method = \'" + paymentMethod + "\'");
+        }
+        if (totalCost != null) {
+            joiner.add("tr.total_cost <= " + totalCost);
         }
 
         String sqlQueryForTransactions = joiner.toString() + 
