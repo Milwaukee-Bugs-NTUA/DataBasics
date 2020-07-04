@@ -10,6 +10,7 @@ export class UsersstatisticsComponent implements OnInit {
   userStats = null;
   nexthour = 0;
   displayedColumns: string[] = ['Hour','Young','Middle','Elder'];
+  displayedColumns2: string[] = ['MaritalStatus', 'Percentage'];
 
   constructor(private dataService: DataService) { }
 
