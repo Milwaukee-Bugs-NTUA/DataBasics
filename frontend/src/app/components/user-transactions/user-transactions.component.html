@@ -1,0 +1,47 @@
+<div style="padding: 13px;">
+    <span *ngIf="transactions === null">
+        <div style="margin-top:100px">
+            <div class="wrapper">
+                <mat-spinner color="warn"></mat-spinner>
+                </div>
+                <div class="wrapper">
+                <h3 style="margin-top:10px; color: #F44336;">Sending Request</h3>
+                </div>
+        </div>
+    </span>
+    <span *ngIf="transactions !== null && transactions.length === 0">
+        <h1 style="text-align:center;margin-top:100px;">
+            No transactions were found :(
+        </h1>
+    </span>
+    <div fxLayout="row wrap" fxLayoutGap="13px" fxLayoutAlign="flex-start" class="cardList">
+        <mat-card *ngFor="let tr of transactions" class="cardListItem">
+            <mat-card-header>
+                <div mat-card-avatar>
+                    <mat-icon class="avatar">receipt_long</mat-icon> 
+                </div>
+                <mat-card-title class="with-icon">
+                    <mat-icon style="margin-right:5px">fingerprint</mat-icon>
+                    Card Number: {{tr.CardNumber}},
+                    <mat-icon style="margin-left:5px;margin-right:5px">calendar_today</mat-icon>
+                    {{tr.Datetime}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content style="margin-top:15px;">
+                <ul>
+                    <li>Total Cost: {{tr.TotalCost}} €</li>
+                    <li>Payment Method: {{tr.PaymentMethod}}</li>
+                    <li>Purchased From: {{tr.PurchasedFrom}}</li>
+                    <li>Number Of Products: {{tr.NumberOfProducts}}</li>
+                </ul>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="accent" 
+                [routerLink]="['/transaction',tr.Datetime.split(' ')[0],tr.Datetime.split(' ')[1],tr.CardNumber]"
+                class="zoom">
+                    Transaction's Details
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

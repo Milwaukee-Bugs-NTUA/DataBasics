@@ -14,6 +14,7 @@ import { UserComponent } from './../app/components/user/user.component';
 import { TransactionsComponent } from './../app/components/transactions/transactions.component';
 import { TransactionComponent } from './../app/components/transaction/transaction.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
+import { UserTransactionsComponent } from './components/user-transactions/user-transactions.component';
 import { PriceHistoryComponent } from './components/price-history/price-history.component';
 
 const routes: Routes = [

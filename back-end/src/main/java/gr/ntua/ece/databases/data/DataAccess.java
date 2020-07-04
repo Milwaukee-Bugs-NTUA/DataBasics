@@ -172,7 +172,7 @@ public class DataAccess {
                                                     "and card_number = ?) as tr, contains as c " +
                                                 "where (tr.datetime,tr.card_number) = (c.datetime,c.card_number) " +
                                                 "group by tr.datetime,tr.card_number " +
-                                                "order by tr.total_cost"; 
+                                                "order by tr.datetime desc"; 
         
         Object[] sqlParamsForTransactions = new Object[]{userId};
         
