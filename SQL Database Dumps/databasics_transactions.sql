@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE `transactions` (
   `datetime` datetime NOT NULL,
   `card_number` bigint NOT NULL,
-  `total_cost` float(7,2) DEFAULT NULL,
+  `total_cost` float(7,2) NOT NULL,
   `payment_method` enum('cash','card') NOT NULL,
   `purchased_from` bigint NOT NULL,
   PRIMARY KEY (`datetime`,`card_number`),
@@ -60,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-05 16:28:39
+-- Dump completed on 2020-07-05 19:41:29

@@ -25,13 +25,11 @@ DROP TABLE IF EXISTS `stores_phones`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `stores_phones` (
-  `phone_id` bigint NOT NULL AUTO_INCREMENT,
   `store_id` bigint NOT NULL,
   `phone_number` varchar(15) NOT NULL,
-  PRIMARY KEY (`phone_id`,`store_id`),
-  KEY `store_id_idx` (`store_id`),
-  CONSTRAINT `FK_store_stores_phones` FOREIGN KEY (`store_id`) REFERENCES `stores` (`store_id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`store_id`,`phone_number`),
+  CONSTRAINT `fk_stores_phones_1` FOREIGN KEY (`store_id`) REFERENCES `stores` (`store_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +38,7 @@ CREATE TABLE `stores_phones` (
 
 LOCK TABLES `stores_phones` WRITE;
 /*!40000 ALTER TABLE `stores_phones` DISABLE KEYS */;
-INSERT INTO `stores_phones` VALUES (1,1,'30-628-653-1380'),(2,1,'30-523-960-8907'),(3,2,'30-627-198-2051'),(4,2,'30-889-474-6036'),(5,3,'30-717-637-6862'),(6,3,'30-686-958-2129'),(7,4,'30-819-504-2146'),(8,4,'30-446-648-9448'),(9,5,'30-221-860-2324'),(10,5,'30-178-426-9494'),(11,6,'30-932-528-3554'),(12,6,'30-308-837-5008'),(13,7,'30-459-216-2014'),(14,7,'30-688-867-0372'),(15,8,'30-473-392-7855'),(16,8,'30-630-487-2027'),(17,9,'30-186-851-9954'),(18,9,'30-238-458-5202'),(19,10,'30-921-621-7355'),(20,10,'30-834-156-5787');
+INSERT INTO `stores_phones` VALUES (1,'30-523-960-8907'),(1,'30-628-653-1380'),(2,'30-627-198-2051'),(2,'30-889-474-6036'),(3,'30-686-958-2129'),(3,'30-717-637-6862'),(4,'30-446-648-9448'),(4,'30-819-504-2146'),(5,'30-178-426-9494'),(5,'30-221-860-2324'),(6,'30-308-837-5008'),(6,'30-932-528-3554'),(7,'30-459-216-2014'),(7,'30-688-867-0372'),(8,'30-473-392-7855'),(8,'30-630-487-2027'),(9,'30-186-851-9954'),(9,'30-238-458-5202'),(10,'30-834-156-5787'),(10,'30-921-621-7355');
 /*!40000 ALTER TABLE `stores_phones` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-05 16:28:40
+-- Dump completed on 2020-07-05 19:41:30
