@@ -12,6 +12,6 @@ tr.payment_method = ?
 and
 tr.total_cost <= ? 
 group by tr.datetime,tr.card_number 
- having count(*) between 
+ having count(*) between ? and ?
  order by tr.total_cost;
 
