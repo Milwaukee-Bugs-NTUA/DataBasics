@@ -1,53 +1,12 @@
-<div>
-<mat-form-field color="accent">
-    <mat-label>Starting Date</mat-label>
-    <input matInput [matDatepicker]="picker1" [min]="minDate" [max]="maxDate" (dateChange)="startingDateChange($event.value)">
-    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-    <mat-datepicker #picker1></mat-datepicker>
-</mat-form-field>
-
-<mat-form-field color="accent">
-    <mat-label>Ending Date</mat-label>
-    <input matInput [matDatepicker]="endDate" [min]="minDate" [max]="maxDate" (dateChange)="endingDateChange($event.value)">
-    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-    <mat-datepicker #endDate></mat-datepicker>
-</mat-form-field>
-
-<mat-form-field>
-    <mat-label>Payment Method</mat-label>
-    <mat-select [(value)]="paymentMethod" (selectionChange)="sendRequest()">
-        <mat-option *ngFor="let pm of paymentMethods" [value]="pm">
-            {{pm}}
-        </mat-option>
-    </mat-select>
-</mat-form-field>
-
-<mat-form-field>
-    <mat-label>Minimum Products</mat-label>
-    <input matInput [(ngModel)]="low" type="number" min="0" (change)="sendRequest()" oninput="validity.valid||(value='');">
-</mat-form-field>
-
-<mat-form-field>
-    <mat-label>Maximum Products</mat-label>
-    <input matInput [(ngModel)]="high" type="number" min="0" (change)="sendRequest()" oninput="validity.valid||(value='');">
-</mat-form-field>
-
-<mat-label style="margin-left:10px;margin-right:10px;color: darkgray;">Maximum Cost</mat-label>    
-<input [(ngModel)]="maximumCost" type="range" min="150" max="2000" (change)="sendRequest()">
-    <span *ngIf="maximumCost !== null">
-        <mat-label style="margin-left:10px;margin-right:10px;color: darkgray;">{{maximumCost}}</mat-label>    
-    </span>
-</div>
-
 <div style="padding: 13px;">
     <span *ngIf="transactions === null">
         <div style="margin-top:100px">
             <div class="wrapper">
                 <mat-spinner color="warn"></mat-spinner>
-              </div>
-              <div class="wrapper">
+                </div>
+                <div class="wrapper">
                 <h3 style="margin-top:10px; color: #F44336;">Sending Request</h3>
-              </div>
+                </div>
         </div>
     </span>
     <span *ngIf="transactions !== null && transactions.length === 0">

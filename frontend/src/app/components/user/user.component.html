@@ -59,6 +59,14 @@
                 <span *ngIf="show_user_info===true">
                     <button mat-raised-button disabled>User Info</button>
                 </span>
+                <span *ngIf="show_user_transactions===false">
+                    <button mat-raised-button (click)="onClickMeT()" class="zoom">
+                        <div style="color:#673AB7">User Transactions</div>
+                    </button>
+                </span>
+                <span *ngIf="show_user_transactions===true">
+                    <button mat-raised-button disabled>User Transactions</button>
+                </span>
                 <button mat-mini-fab color="primary" class="zoom" (click)="openDialog()">
                     <mat-icon>create</mat-icon>
                 </button>
@@ -70,3 +78,4 @@
     </mat-card>
 </div>
 <app-user-info *ngIf="show_user_info === true"></app-user-info>
+<app-user-transactions *ngIf="show_user_transactions === true" [userId]="userId"></app-user-transactions>
