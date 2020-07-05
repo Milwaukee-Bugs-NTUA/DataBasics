@@ -15,7 +15,7 @@ import { HttpParams } from '@angular/common/http';
 })
 export class ProductComponent implements OnInit {
     product = null;
-    show_price_history = false;
+    show_price_history = null;
     new_product = null;
     new_price = null;
 
@@ -26,6 +26,7 @@ export class ProductComponent implements OnInit {
       this.dataService.sendGetRequest("product/" + params.get('barcode')).subscribe((data: any) =>{
         console.log(data);
         this.product = data;
+        this.show_price_history = false;
       });
     });
   }
