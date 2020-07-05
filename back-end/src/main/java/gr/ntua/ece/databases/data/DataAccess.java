@@ -343,8 +343,7 @@ public class DataAccess {
                                             "and card_number = ?";
         String sqlQueryForMeanTrsPerMonth = "select cast(avg(total_cost) as decimal(7, 2)) as mean " +
                                                 "from transactions where month(datetime) = ? " + 
-                                                "and year(datetime) = ? and card_number = ? " +
-                                                "group by month(datetime)";
+                                                "and year(datetime) = ? and card_number = ? ";
 
         UserInfo userInfo = new UserInfo();
 
