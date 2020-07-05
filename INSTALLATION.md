@@ -15,6 +15,16 @@ Following the steps mentioned bellow, you will be able to try this platform in y
 
 After cloning or downloading this repo to your local machine, navigate to the directory that you have chose, open two terminals and execute the following commands:
 
+### Database - Backend Server communication configuration
+
+Follow the commands bellow (Information for this step exist also inside the README.md file of the directory mentioned bellow):
+
+```
+cd /home/john/Documents/E.C.E._Exercises/8th_Semester/DataBases/DataBasics/back-end/src/main/resources/gr/ntua/ece/databases
+cp app-default.properties app.properties // Or just copy this file manually
+```
+Finally put your db credentials in the app.properties file that you have created. The time zone of db and its data have been set to Europe/Athens (UTC+03:00).
+
 ### Running the Back-end Server
 
 On the first terminal type and run the following commands:
