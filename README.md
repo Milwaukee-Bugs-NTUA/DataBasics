@@ -1,4 +1,12 @@
 # Databases 2020: DataBasics platform
+[![MySQL](https://img.shields.io/badge/MySQL-8.0.24-9cf.svg)](https://www.mongodb.com/2)
+[![Java](https://img.shields.io/badge/Java-11-yellow.svg)](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+[![Angular](https://img.shields.io/badge/AngularCLI-9.1.15-red.svg)](https://angular.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3.8.3-blue.svg)](https://www.typescriptlang.org/)
+[![Charts](https://img.shields.io/badge/Charts-ng2charts-blueviolet.svg)](https://www.typescriptlang.org/)<br/>
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/john98nf/Eir-Appathon-NTUA/blob/master/LICENSE)
+[![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+
 School of Electrical & Computer Engineering, NTUA<br/>
 Project for the course [Databases](https://www.ece.ntua.gr/en/undergraduate/courses/flow/2), Spring Semester 2020
 
