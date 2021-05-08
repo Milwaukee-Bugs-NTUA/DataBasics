@@ -21,7 +21,7 @@ Follow the commands bellow (Information for this step exist also inside the READ
 
 ```
 cd DataBasics/back-end/src/main/resources/gr/ntua/ece/databases
-cp app-default.properties app.properties // Or just copy this file manually
+cp app-default.properties app.properties # Or just copy this file manually
 ```
 Finally put your db credentials in the app.properties file that you have created. The time zone of db and its data have been set to Europe/Athens (UTC+03:00).
 
